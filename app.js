@@ -1,9 +1,18 @@
+const express = require('express');
+
 const rp = require('request-promise');
 const $ = require('cheerio');
+
 const hh = 'https://yaroslavl.hh.ru/search/vacancy?area=112&st=searchVacancy&text=react';
-//const url = 'https://yaroslavl.hh.ru/search/vacancy?L_is_autosearch=false&amp;area=112&amp;clusters=true&amp;enable_snippets=true&amp;text=react&amp;page=1';
 
 //const hhParse = require('./parser');
+
+const app = express();
+app.listen(9000, () => console.log('Nightcrawler app listening on port 9000!'));
+
+const cors = require("cors")
+app.use(cors())
+
 
 const getFirstPage = function(url = hh, count = 20) {
   return rp(url, count)
@@ -13,7 +22,7 @@ const getFirstPage = function(url = hh, count = 20) {
     for (let i = 0; i < count; i++) {
       jobLinks.push($('span.g-user-content > a.bloko-link', html)[i].attribs.href);
     }
-    console.log(jobLinks);
+    // console.log(jobLinks);
     return jobLinks;
   })
   .catch(function(err) {
@@ -26,75 +35,58 @@ const getNextPage = function(url, count) {
   .then(function(html) {
 
     const jobLinks = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < count; i++) {
       jobLinks.push($('span.g-user-content > a.bloko-link', html)[i].attribs.href);
     }
-    console.log(jobLinks);
+    // console.log(jobLinks);
     return jobLinks;
   })
   .catch(function(err) {
     //handle error
   });
 };
-
-const getNextPageInfo = function(html, headerNumber) {
+const getNextPageInfo = function(html, vacanciesAmount) {
     const nextPageBtnHref = $('.HH-Pager-Controls-Next', html)[0].attribs.href;
     const nextPageUrl = 'https://yaroslavl.hh.ru' + nextPageBtnHref;
-    const count = headerNumber - 20;
-    console.log(nextPageUrl, count);
-    getNextPage(nextPageUrl, count);
+    const count = vacanciesAmount - 20;
+    //console.log(nextPageUrl, count);
+    return getNextPage(nextPageUrl, count);
 /*     return Promise(
       getNextPage(nextPageUrl, count)
     ); */
 }
 
+const parseArr = () => {
+
+}
+
 rp(hh)
   .then(function(html) {
-    const headerText = $('.HH-SearchVacancyDropClusters-Header', html).text();
-    const headerNumber = headerText.replace(/\D/g,'');
-    console.log(headerNumber, 'main fn');
-    getFirstPage()
-    if (headerNumber > 20) {
-      getNextPageInfo(html, headerNumber)
-    }
+    const vacanciesAmountText = $('.HH-SearchVacancyDropClusters-Header', html).text();
+    const vacanciesAmount = vacanciesAmountText.replace(/\D/g,'');
+    // console.log(vacanciesAmount, 'main fn');
+
+/*     if (vacanciesAmount > 20) {
+      return Promise.all(
+        [getNextPageInfo(html, vacanciesAmount), getFirstPage()]
+      )
+    } else {
+      return Promise.all(
+        [getFirstPage()]
+      )
+      
+    } */
+  })
+  .then(function(item) {
+    //console.log(item)
+    const linksArr = item[0].concat(item[1]);
+    console.log(linksArr);
+    //return linksArr;
+/*     app.get('/api', (req, res) => {
+      res.status(200).send(linksArr);
+    }); */
   })
   .catch(function(err) {
     //handle error
   });
 
-/* const potusParse = function(url) {
-  return rp(url)
-    .then(function(html) {
-      return {
-        name: $('.firstHeading', html).text(),
-        birthday: $('.bday', html).text(),
-      };
-    })
-    .catch(function(err) {
-      //handle error
-    });
-};
-
-const url = 'https://en.wikipedia.org/wiki/List_of_Presidents_of_the_United_States';
-
-rp(url)
-  .then(function(html) {
-    //success!
-    const wikiUrls = [];
-    for (let i = 0; i < 5; i++) {
-      wikiUrls.push($('big > a', html)[i].attribs.href);
-    }
-    return Promise.all(
-      wikiUrls.map(function(url) {
-        return potusParse('https://en.wikipedia.org' + url);
-      })
-    );
-  })
-  .then(function(presidents) {
-    console.log(presidents);
-  })
-  .catch(function(err) {
-    //handle error
-    console.log(err);
-  });
- */
