@@ -2,49 +2,51 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [jobLinks, setJobLinks] = useState(null)
+  const [jobLinks, setJobLinks] = useState(null);
 
   const handleFetch = () => {
     fetch('http://localhost:9000/api')
-      .then(response =>
-        response.json()
-      ).then((data) => {
-        //console.log(data)
-        //console.log(data[0])
-        setJobLinks(data)
-      })
-  }
+      .then(response => response.json())
+      .then(data => {
+        // console.log(data)
+        // console.log(data[0])
+        setJobLinks(data);
+      }).catch(err => {
+        console.log(err)
+      });
+  };
 
   if (jobLinks) {
-    console.log(jobLinks)
+    console.log(jobLinks);
   }
 
   if (true) {
     return (
       <div className="App">
         <header className="App-header">
-          <button onClick={handleFetch} className={"fetchBtn"}>
+          <button onClick={handleFetch} className="fetchBtn">
             Fetch
           </button>
-          {jobLinks ? (
-            jobLinks.map(item => {
+          {jobLinks
+            ? jobLinks.map(item => {
               return (
                 <a
                   className="App-link"
                   href={item.link}
                   target="_blank"
+                  rel="noopener noreferrer"
                   key={item.link}
                 >
                   {item.link}
                 </a>
-              )
+              );
             })
-          ) : null}
+            : null}
         </header>
       </div>
-    )
+    );
   } else {
-    return null
+    return null;
   }
 }
 
