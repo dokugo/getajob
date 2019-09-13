@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
@@ -6,13 +6,13 @@ function App() {
 
   const handleFetch = () => {
     fetch('http://localhost:9000/api')
-    .then(response => 
-      response.json()
-    ).then((data) => {
-      //console.log(data)
-      //console.log(data[0])
-      setJobLinks(data)
-    })
+      .then(response =>
+        response.json()
+      ).then((data) => {
+        //console.log(data)
+        //console.log(data[0])
+        setJobLinks(data)
+      })
   }
 
   if (jobLinks) {
@@ -26,24 +26,20 @@ function App() {
           <button onClick={handleFetch} className={"fetchBtn"}>
             Fetch
           </button>
-          <a
-            className="App-link"
-            href={jobLinks ? jobLinks[0] : null}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {jobLinks ? jobLinks[0] : null}
-          </a>
-
-          <a
-            className="App-link"
-            href={jobLinks ? jobLinks[1] : null}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {jobLinks ? jobLinks[1] : null}
-          </a>
-
+          {jobLinks ? (
+            jobLinks.map(item => {
+              return (
+                <a
+                  className="App-link"
+                  href={item.link}
+                  target="_blank"
+                  key={item.link}
+                >
+                  {item.link}
+                </a>
+              )
+            })
+          ) : null}
         </header>
       </div>
     )

@@ -4,15 +4,10 @@ const rp = require('request-promise');
 const $ = require('cheerio');
 
 // const URL = 'https://yaroslavl.hh.ru/search/vacancy?order_by=publication_time&area=112&text=react+native';
-// const URL = 'https://yaroslavl.hh.ru/search/vacancy?order_by=publication_time&area=112&text=react';
-const URL = 'https://yaroslavl.hh.ru/search/vacancy?order_by=publication_time&area=112&text=javascript';
+// const URL = 'https://yaroslavl.hh.ru/search/vacancy?order_by=publication_time&area=112&text=vue';
+const URL = 'https://yaroslavl.hh.ru/search/vacancy?order_by=publication_time&area=112&text=react';
+// const URL = 'https://yaroslavl.hh.ru/search/vacancy?order_by=publication_time&area=112&text=javascript';
 
-
-/* const URL = 'https://yaroslavl.hh.ru/search/vacancy?L_is_autosearch=false&area=112&clusters=true&enable_snippets=true&text=react&page=1';
- */
-
-/* const URL = 'https://yaroslavl.hh.ru/search/vacancy?area=112&st=searchVacancy&text=javascript';
- */
 //const hhParse = require('./parser');
 
 const app = express();
@@ -39,7 +34,7 @@ const getNextPage = (nextPageUrl) => {
 
       let vacancies = [];
 
-      for (let i = 0; i < 1; i++) {
+      for (let i = 0; i < vacanciesAmountOnPage; i++) {
         vacancies.push({
           page: paginationBtnTxt,
           number: i,
@@ -48,8 +43,7 @@ const getNextPage = (nextPageUrl) => {
           link: $('span.g-user-content > a.bloko-link', html)[i].attribs.href
         });
       }
-      // console.log(vacancies);
-      // console.log(nextPageUrl);
+
       if (nextPageUrl) {
         return { vacancies, nextPageUrl };
       } else {
@@ -58,7 +52,8 @@ const getNextPage = (nextPageUrl) => {
 
     })
     .catch(function (err) {
-      //handle error
+      console.log('Error: ', err)
+      console.error('Error: ', err)
     });
 };
 
@@ -82,7 +77,7 @@ rp(URL)
     console.log(paginationBtnTxt, 'page')
 
     let vacancies = [];
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < vacanciesAmountOnPage; i++) {
       vacancies.push({
         page: paginationBtnTxt,
         number: i,
@@ -110,7 +105,7 @@ rp(URL)
       const nextPageUrl = result.nextPageUrl
       const getNextPageLoop = (url) =>
         getNextPage(url).then(result => {
-          output.push(result.vacancies)
+          output.push(...result.vacancies)
           //console.log(result)
           if (result.nextPageUrl) {
             return getNextPageLoop(result.nextPageUrl)
@@ -120,11 +115,23 @@ rp(URL)
         })
       getNextPageLoop(nextPageUrl).then(() => console.log('end', output))
 
+      return output
+
     } else {
       console.log('last page')
-      console.log('end')
+      console.log('end', output)
+      return output
     }
   })
+  .then(output => {
+    app.get('/', (req, res) => {
+      return res.send('GET HTTP method on user resource');
+    });
+    app.get('/api', (req, res) => {
+      res.status(200).send(output);
+    });
+  })
   .catch(function (err) {
-    //handle error
+    console.log('Error: ', err)
+    console.error('Error: ', err)
   });
