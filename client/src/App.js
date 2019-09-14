@@ -23,24 +23,39 @@ function App() {
   if (true) {
     return (
       <main className="container">
-        <button onClick={handleFetch} className="fetchBtn">
-          Fetch
-        </button>
-        {jobLinks
-          ? jobLinks.map(item => {
-              return (
-                <div
-                  className="link-item"
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  key={item.link}
-                >
-                  {item.link}
-                </div>
-              );
-            })
-          : null}
+        <section className="box">
+          <button onClick={handleFetch} className="fetchBtn">
+            Fetch
+          </button>
+          {jobLinks
+            ? jobLinks.map(item => {
+                return (
+                  <a
+                    className="link-item"
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={item.link}
+                  >
+                    <div className="link-item__box">
+                      <div className="link-item__data link-item__title">
+                        {item.title}
+                      </div>
+                      <div className="link-item__data link-item__title">
+                        {item.compensation}
+                      </div>
+                      <div className="link-item__data link-item__title">
+                        {item.employer}
+                      </div>
+                      <div className="link-item__data link-item__date">
+                        {item.date}
+                      </div>
+                    </div>
+                  </a>
+                );
+              })
+            : null}
+        </section>
       </main>
     );
   } else {

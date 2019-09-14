@@ -1,12 +1,13 @@
 {
   "extends": [
-    "stylelint-config-standard",
+    "stylelint-config-recommended",
     "stylelint-config-prettier"
   ],
   "plugins": [
     "stylelint-prettier"
   ],
   "rules": {
-    "prettier/prettier": true
+    "prettier/prettier": true,
+    "rule-empty-line-before": "always"
   }
 }

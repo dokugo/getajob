@@ -7,9 +7,9 @@ const rootDomain = `https://yaroslavl.hh.ru/search/vacancy?`;
 const params = `order_by=publication_time&area=112&text=`;
 
 // const URL = `${rootDomain}${params}react+native`
-// const URL = `${rootDomain}${params}vue`
-const URL = `${rootDomain}${params}react`;
-// const URL = `${rootDomain}${params}javascript`
+const URL = `${rootDomain}${params}vue`;
+// const URL = `${rootDomain}${params}react`;
+// const URL = `${rootDomain}${params}javascript`;
 
 const app = express();
 app.listen(9000, () => console.log('Nightcrawler app listening on port 9000'));
@@ -37,6 +37,14 @@ const getPage = url => {
         : '1';
       console.log(paginationBtnTxt, 'page');
 
+      const getData = i => {
+        return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
+          .parent.next.children[0]
+          ? $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
+              .parent.next.children[0].children[0].data
+          : 'Зарплата не указана';
+      };
+
       // get vacancies data and put it into array of objects
       const vacanciesAmountOnPage = $(
         'span.g-user-content > a.bloko-link',
@@ -46,10 +54,15 @@ const getPage = url => {
       for (let i = 0; i < vacanciesAmountOnPage; i++) {
         vacancies.push({
           page: paginationBtnTxt,
-          number: i.toString(),
-          title: $('.HH-LinkModifier', html)[i].children[0].data,
-          date: $('.vacancy-serp-item__publication-date', html)[i].children[0]
+          number: i + 1 + '',
+          title: $('[data-qa=vacancy-serp__vacancy-title]', html)[i].children[0]
             .data,
+          compensation: getData(i),
+          employer: $('[data-qa=vacancy-serp__vacancy-employer]', html)[
+            i
+          ].children[0].data.trim(),
+          date: $('[data-qa=vacancy-serp__vacancy-date] span', html)[i]
+            .children[0].data,
           link: $('span.g-user-content > a.bloko-link', html)[i].attribs.href
         });
       }
