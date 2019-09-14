@@ -11,8 +11,9 @@ function App() {
         // console.log(data)
         // console.log(data[0])
         setJobLinks(data);
-      }).catch(err => {
-        console.log(err)
+      })
+      .catch(err => {
+        console.log(err);
       });
   };
 
@@ -29,18 +30,18 @@ function App() {
           </button>
           {jobLinks
             ? jobLinks.map(item => {
-              return (
-                <a
-                  className="App-link"
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  key={item.link}
-                >
-                  {item.link}
-                </a>
-              );
-            })
+                return (
+                  <a
+                    className="App-link"
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={item.link}
+                  >
+                    {item.link}
+                  </a>
+                );
+              })
             : null}
         </header>
       </div>

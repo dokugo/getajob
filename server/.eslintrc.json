@@ -1,7 +1,7 @@
 {
   "extends": [
     "standard",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "plugins": [
     "prettier"
@@ -10,10 +10,10 @@
     "prettier/prettier": [
       "error"
     ]
-  },
-  "globals": {
-    "fetch": false
   }
+  /*   "globals": {
+    "fetch": false
+  } */
   /*   "env": {
     "browser": true
   } */
