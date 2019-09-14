@@ -1,7 +1,4 @@
 {
-  "extends": [
-    "prettier/react"
-  ],
   "singleQuote": true,
   "trailingComma": "none",
   "printWidth": 80,

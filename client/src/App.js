@@ -3,7 +3,6 @@ import './App.css';
 
 function App() {
   const [jobLinks, setJobLinks] = useState(null);
-
   const handleFetch = () => {
     fetch('http://localhost:9000/api')
       .then(response => response.json())
@@ -23,28 +22,26 @@ function App() {
 
   if (true) {
     return (
-      <div className="App">
-        <header className="App-header">
-          <button onClick={handleFetch} className="fetchBtn">
-            Fetch
-          </button>
-          {jobLinks
-            ? jobLinks.map(item => {
-                return (
-                  <a
-                    className="App-link"
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={item.link}
-                  >
-                    {item.link}
-                  </a>
-                );
-              })
-            : null}
-        </header>
-      </div>
+      <main className="container">
+        <button onClick={handleFetch} className="fetchBtn">
+          Fetch
+        </button>
+        {jobLinks
+          ? jobLinks.map(item => {
+              return (
+                <div
+                  className="link-item"
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={item.link}
+                >
+                  {item.link}
+                </div>
+              );
+            })
+          : null}
+      </main>
     );
   } else {
     return null;
