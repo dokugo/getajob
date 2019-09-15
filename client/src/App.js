@@ -1,62 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import Vacancy from './components/Vacancy';
 import './App.css';
 
 function App() {
-  const [jobLinks, setJobLinks] = useState(null);
-  const handleFetch = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
     fetch('http://localhost:9000/api')
       .then(response => response.json())
       .then(data => {
-        // console.log(data)
-        // console.log(data[0])
-        setJobLinks(data);
+        setData(data);
       })
       .catch(err => {
         console.log(err);
       });
-  };
+  }, []);
 
-  if (jobLinks) {
-    console.log(jobLinks);
+  /*   const handleFetch = () => {
+    fetch('http://localhost:9000/api')
+      .then(response => response.json())
+      .then(response => {
+        // console.log(response)
+        // console.log(response[0])
+        setData(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }; */
+
+  if (data) {
+    //console.log(data);
   }
 
   if (true) {
     return (
-      <main className="container">
-        <section className="box">
-          <button onClick={handleFetch} className="fetchBtn">
-            Fetch
-          </button>
-          {jobLinks
-            ? jobLinks.map(item => {
-                return (
-                  <a
-                    className="link-item"
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={item.link}
-                  >
-                    <div className="link-item__box">
-                      <div className="link-item__data link-item__title">
-                        {item.title}
-                      </div>
-                      <div className="link-item__data link-item__title">
-                        {item.compensation}
-                      </div>
-                      <div className="link-item__data link-item__title">
-                        {item.employer}
-                      </div>
-                      <div className="link-item__data link-item__date">
-                        {item.date}
-                      </div>
-                    </div>
-                  </a>
-                );
-              })
-            : null}
-        </section>
-      </main>
+      <BrowserRouter>
+        <div className="App">
+          <main className="container">
+            <section className="box">
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={props => <Dashboard {...props} data={data} />}
+                />
+                <Route
+                  path="/vacancy/:id"
+                  render={props => <Vacancy {...props} data={data} />}
+                />
+              </Switch>
+            </section>
+          </main>
+        </div>
+      </BrowserRouter>
     );
   } else {
     return null;

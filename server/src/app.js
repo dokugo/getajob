@@ -37,6 +37,7 @@ const getPage = url => {
         : '1';
       console.log(paginationBtnTxt, 'page');
 
+      //
       const getData = i => {
         return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
           .parent.next.children[0]
@@ -63,7 +64,10 @@ const getPage = url => {
           ].children[0].data.trim(),
           date: $('[data-qa=vacancy-serp__vacancy-date] span', html)[i]
             .children[0].data,
-          link: $('span.g-user-content > a.bloko-link', html)[i].attribs.href
+          link: $('span.g-user-content > a.bloko-link', html)[i].attribs.href,
+          id: $('span.g-user-content > a.bloko-link', html)[
+            i
+          ].attribs.href.replace(/[^0-9]+/g, '')
         });
       }
 
