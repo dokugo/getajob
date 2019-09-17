@@ -7,36 +7,25 @@ const VacanciesList = props => {
   }, [props.data]);
 
   // console.log(props.data);
+  const { data } = props;
   return (
     <section>
-      {props.data
-        ? props.data.map(item => {
-            return (
-              <Link
-                to={`/vacancy/${item.id}`}
-                className="link-item"
-                key={item.link}
-              >
-                <div className="link-item__box">
-                  <div className="link-item__data link-item__title">
-                    {item.title}
-                  </div>
-                  <div className="link-item__data link-item__title">
-                    {item.compensation}
-                  </div>
-                  <div className="link-item__data link-item__title">
-                    {item.employer}
-                  </div>
-                  <div className="link-item__data link-item__date">
-                    {item.date}
-                  </div>
-                  <div className="link-item__data link-item__date">
-                    {item.link}
-                  </div>
-                </div>
-              </Link>
-            );
-          })
+      {data
+        ? data.map(item => (
+            <Link
+              to={`/vacancy/${item.id}`}
+              className="link-item"
+              key={item.id}
+            >
+              <div className="link-item__box">
+                <div className="link-item__data">{item.title}</div>
+                <div className="link-item__data">{item.compensation}</div>
+                <div className="link-item__data">{item.employer}</div>
+                <div className="link-item__data">{item.date}</div>
+                <div className="link-item__data">{item.link}</div>
+              </div>
+            </Link>
+          ))
         : null}
     </section>
   );
