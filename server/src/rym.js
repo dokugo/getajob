@@ -12,33 +12,63 @@ app.listen(9000, () => console.log('Nightcrawler app listening on port 9000'));
 const cors = require('cors');
 app.use(cors());
 
-/* const puppeteer = require('puppeteer');
-const browser = await puppeteer.launch();
-const page = await browser.newPage(); */
+/* const puppeteer = require('puppeteer'); */
 
 const URL = `https://rateyourmusic.com/~Arves`;
-// const URL = `https://intoli.com/blog/not-possible-to-block-chrome-headless/chrome-headless-test.html`;
-// const URL = `https://antoinevastel.com/bots/`;
+
+// testing
+// const URL = `https://bot.sannysoft.com`;
+// const URL = `https://antoinevastel.com/bots`;
+// const URL = `https://arh.antoinevastel.com/bots/areyouheadless`;
+
+// const URL = `https://www.whoishostingthis.com/tools/user-agent`;
 
 (async function test() {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(URL);
-    // await page.waitFor(5000);
-    // await page.screenshot({ path: 'stealth-test-result.png', fullPage: true });
+
+    await page.setRequestInterception(true);
+    page.on('request', req => {
+      if (
+        req.resourceType() === 'stylesheet' ||
+        req.resourceType() === 'font' ||
+        req.resourceType() === 'image'
+      ) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
+
+    await page.setViewport({ width: 1920, height: 926 });
+    await page.goto(URL, { waitUntil: 'networkidle2', timeout: 0 });
+
+    // await page.waitFor(1000);
+
     const result = await page.content();
     const targetHtmlContainer = await $('.mbgen', result)[11];
     const items = await targetHtmlContainer.children[0].children[1].children[0]
-      .children[1];
-    console.log(items);
+      .children[1].children;
+    const dataArr = await items.filter(item => {
+      return item.name === 'a';
+    });
+    const data = await dataArr.map(item => {
+      return item.attribs.class === 'artist'
+        ? item.children[0].data
+        : { albumTitle: item.children[0].data, albumLink: item.attribs.href };
+    });
+    console.log(dataArr);
+    console.log(data);
+
     // console.log(targetHtmlContainer);
     // const targetHtmlContainer = await page.$('.mbgen');
     // console.log(targetHtmlContainer);
 
+    // await page.screenshot({ path: 'stealth-test-result.png', fullPage: true });
     await browser.close();
   } catch (e) {
-    console.log('Error: ', e);
+    console.error('Error: ', e);
   }
 })();
 
