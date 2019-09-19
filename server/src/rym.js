@@ -55,11 +55,18 @@ const URL = `https://rateyourmusic.com/~Arves`;
     });
     const data = await dataArr.map(item => {
       return item.attribs.class === 'artist'
-        ? item.children[0].data
-        : { albumTitle: item.children[0].data, albumLink: item.attribs.href };
+        ? { albumArtist: item.children[0].data }
+        : {
+            albumTitle: item.children[0].data,
+            albumLink: `https://rateyourmusic.com${item.attribs.href}`
+          };
     });
-    console.log(dataArr);
-    console.log(data);
+    const abc = await data.forEach(index => {
+      return data[index];
+    });
+    console.log(abc);
+    // console.log(dataArr);
+    // console.log(data);
 
     // console.log(targetHtmlContainer);
     // const targetHtmlContainer = await page.$('.mbgen');
