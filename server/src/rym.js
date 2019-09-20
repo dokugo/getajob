@@ -23,6 +23,8 @@ const URL = `https://rateyourmusic.com/~Arves`;
 
 // const URL = `https://www.whoishostingthis.com/tools/user-agent`;
 
+console.clear();
+
 (async function test() {
   try {
     const browser = await puppeteer.launch();
@@ -47,25 +49,26 @@ const URL = `https://rateyourmusic.com/~Arves`;
     // await page.waitFor(1000);
 
     const result = await page.content();
-    const targetHtmlContainer = await $('.mbgen', result)[11];
-    const items = await targetHtmlContainer.children[0].children[1].children[0]
-      .children[1].children;
-    const dataArr = await items.filter(item => {
+    const targetHtmlContainer = $('.mbgen', result)[11];
+    const items =
+      targetHtmlContainer.children[0].children[1].children[0].children[1]
+        .children;
+    const dataArr = items.filter(item => {
       return item.name === 'a';
     });
-    const data = await dataArr.map(item => {
+    /*     const data = await dataArr.map(item => {
       return item.attribs.class === 'artist'
         ? { albumArtist: item.children[0].data }
         : {
             albumTitle: item.children[0].data,
             albumLink: `https://rateyourmusic.com${item.attribs.href}`
           };
+    }); */
+    /*     const abc = dataArr.forEach(element => {
+      return element;
     });
-    const abc = await data.forEach(index => {
-      return data[index];
-    });
-    console.log(abc);
-    // console.log(dataArr);
+    console.log(abc); */
+    console.log(dataArr);
     // console.log(data);
 
     // console.log(targetHtmlContainer);
