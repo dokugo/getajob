@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 const VacanciesList = props => {
-  useEffect(() => {
+  /*   useEffect(() => {
     console.log(props.data);
-  }, [props.data]);
+  }, [props.data]); */
 
   // console.log(props.data);
   const { data } = props;
@@ -12,10 +11,12 @@ const VacanciesList = props => {
     <section className="box">
       {data
         ? data.map(item => (
-            <Link
-              to={`/vacancy/${item.id}`}
-              className="link-item"
+            <a
+              href={item.link}
               key={item.id}
+              className="link-item"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <div className="link-item__box">
                 <div className="link-item__row">
@@ -40,7 +41,7 @@ const VacanciesList = props => {
                   {item.compensation}
                 </div>
               </div>
-            </Link>
+            </a>
           ))
         : null}
     </section>
@@ -48,3 +49,11 @@ const VacanciesList = props => {
 };
 
 export default VacanciesList;
+/* 
+<Link
+  to={`/vacancy/${item.id}`}
+  className="link-item"
+  key={item.id}
+>
+</Link>
+*/
