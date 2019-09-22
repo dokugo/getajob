@@ -13,13 +13,14 @@ app.listen(9000, () => console.log('Nightcrawler app listening on port 9000'));
 const cors = require('cors');
 app.use(cors());
 
-const rootDomain = `https://yaroslavl.hh.ru/search/vacancy?`;
-const params = `order_by=publication_time&area=112&text=`;
+const search = searchRequest => {
+  const rootDomain = `https://yaroslavl.hh.ru/search/vacancy?`;
+  const params = `order_by=publication_time&area=112&text=`;
+  const URL = `${rootDomain}${params}${searchRequest}`;
+  return URL;
 
-// const URL = `${rootDomain}${params}react+native`
-// const URL = `${rootDomain}${params}vue`;
-const URL = `${rootDomain}${params}react`;
-// const URL = `${rootDomain}${params}javascript`;
+  // let searchRequest = searchRequests.react;
+};
 
 console.clear();
 
@@ -100,7 +101,8 @@ async function getPage(URL, page) {
   }
 }
 
-async function crawl() {
+async function crawl(searchRequest) {
+  const URL = search(searchRequest);
   try {
     // console.clear();
     const browser = await puppeteer.launch({ headless: true });
@@ -142,15 +144,16 @@ async function crawl() {
       await getNextPageLoop(nextPageUrl).then(() =>
         console.log('end' /* , output */)
       );
+      await browser.close();
       return output;
     } else {
       console.log('last page');
       console.log('end' /* , output */);
+      await browser.close();
       return output;
     }
     // console.log(output);
     // await page.screenshot({ path: 'stealth-ma-result.png', fullPage: true });
-    // await browser.close();
   } catch (e) {
     console.error('Error: ', e);
   }
@@ -159,7 +162,7 @@ async function crawl() {
 app.use(express.json());
 
 async function server() {
-  const data = await crawl();
+  const data = await crawl('vue');
   try {
     console.log(data);
     app.get('/', (req, res) => {
@@ -168,18 +171,27 @@ async function server() {
     app.get('/api', (req, res) => {
       res.status(200).send(data);
     });
-    app.post('/api/crawling', (req, res) => {
-      // const newCrawlingRequest = req.body.newCrawlingRequest;
-      console.log(req.body);
-      res.status(200).send(200, req.body);
-      // execute crawling with newCrawlingRequest
-    });
   } catch (e) {
     console.error('Error: ', e);
   }
 }
 
 server();
+
+app.post('/api/crawling', (req, res) => {
+  const searchRequest = req.body.newCrawlingRequest;
+  crawl(searchRequest)
+    .then(data => {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).send(data);
+    })
+    .then(data => console.log(data));
+
+  /*       console.log(req.body);
+  res.status(200).send(req.body); */
+
+  // execute crawling with newCrawlingRequest
+});
 
 /* crawl()
   .then(data => {
