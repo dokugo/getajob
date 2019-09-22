@@ -17,7 +17,6 @@ const Vacancy = props => {
             {data.employer}
           </div>
           <div className="link-item__data link-item__date">{data.date}</div>
-          <div className="link-item__data link-item__date">{data.link}</div>
         </div>
       </div>
     );

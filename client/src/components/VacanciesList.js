@@ -9,7 +9,7 @@ const VacanciesList = props => {
   // console.log(props.data);
   const { data } = props;
   return (
-    <section>
+    <section className="box">
       {data
         ? data.map(item => (
             <Link
@@ -18,11 +18,27 @@ const VacanciesList = props => {
               key={item.id}
             >
               <div className="link-item__box">
-                <div className="link-item__data">{item.title}</div>
-                <div className="link-item__data">{item.compensation}</div>
-                <div className="link-item__data">{item.employer}</div>
-                <div className="link-item__data">{item.date}</div>
-                <div className="link-item__data">{item.link}</div>
+                <div className="link-item__row">
+                  <div className="link-item__data link-item__data-title">
+                    {item.title}
+                  </div>
+                  <div className="link-item__data link-item__data-date">
+                    {item.date}
+                  </div>
+                </div>
+                <div className="link-item__data link-item__data-employer">
+                  {item.employer}
+                </div>
+                <div
+                  className={
+                    'link-item__data link-item__data-compensation' +
+                    (item.compensation === 'Зарплата не указана'
+                      ? ' no-data'
+                      : '')
+                  }
+                >
+                  {item.compensation}
+                </div>
               </div>
             </Link>
           ))

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Vacancy from './components/Vacancy';
+import Navbar from './components/Navbar';
+import Form from './components/Form';
 import './App.css';
 
 function App() {
@@ -35,30 +37,30 @@ function App() {
     //console.log(data);
   }
 
-  if (true) {
+  if (data) {
     return (
       <BrowserRouter>
         <div className="App">
+          <Navbar />
+          <Form />
           <main className="container">
-            <section className="box">
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={props => <Dashboard {...props} data={data} />}
-                />
-                <Route
-                  path="/vacancy/:id"
-                  render={props => <Vacancy {...props} data={data} />}
-                />
-              </Switch>
-            </section>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => <Dashboard {...props} data={data} />}
+              />
+              <Route
+                path="/vacancy/:id"
+                render={props => <Vacancy {...props} data={data} />}
+              />
+            </Switch>
           </main>
         </div>
       </BrowserRouter>
     );
   } else {
-    return null;
+    return <div className="loader">Loading...</div>;
   }
 }
 
