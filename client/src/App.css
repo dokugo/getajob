@@ -3,6 +3,10 @@ body {
   background: #f5fcf5;
 }
 
+.App {
+  padding: 100px 0;
+}
+
 /* footer {
   background: #f5f7f9;
 } */
@@ -17,7 +21,7 @@ body {
 .navbar {
   display: flex;
   justify-content: center;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
 .home-link {
@@ -37,7 +41,7 @@ body {
   justify-content: space-between;
   margin: 0 auto;
   width: 640px;
-  padding-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .request-input {
@@ -51,6 +55,12 @@ body {
   border: 1px solid seagreen;
   border-radius: 3px;
   color: #464646;
+}
+
+input:focus,
+button:focus {
+  box-shadow: 1px 1px 1px seagreen inset, -1px -1px 1px seagreen inset;
+  outline: 0 none;
 }
 
 .request-btn {
@@ -103,6 +113,11 @@ body {
   color: #000;
   width: 640px;
   box-sizing: border-box;
+}
+
+.link-item:focus {
+  box-shadow: 2px 2px 1px seagreen inset, -2px -2px 1px seagreen inset;
+  outline: 0 none;
 }
 
 .link-item__box {
