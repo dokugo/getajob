@@ -1,10 +1,33 @@
 body {
   /* background: #fff; */
-  background: #f2f2f2;
+  background: #f5fcf5;
 }
 
 footer {
   background: #f5f7f9;
+}
+
+.loader {
+  font-size: 60px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.home-link {
+  color: #000;
+  text-decoration: none;
+  font-size: 32px;
+  padding: 10px;
+}
+
+.home-link:hover {
+  color: seagreen;
 }
 
 .container {
@@ -12,17 +35,92 @@ footer {
   align-items: center;
   flex-direction: column;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 25px;
 }
 
 .box {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  width: 500px;
 }
 
-.fetchBtn {
+.link-item {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 12px 18px;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  background-color: rgb(223, 241, 230);
+  text-decoration: none;
+  color: #000;
+  width: 640px;
+  box-sizing: border-box;
+}
+
+.link-item__box {
+  width: inherit;
+}
+
+.link-item__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link-item__data {
+  margin-bottom: 2.5px;
+}
+
+.link-item__data-date {
+  color: grey;
+  font-size: 14px;
+}
+
+.link-item__data-title {
+  color: #464646;
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.link-item:hover .link-item__data-title {
+  text-decoration: underline;
+  color: seagreen;
+}
+
+.link-item__data-compensation {
+  margin-bottom: 0;
+  font-weight: 500;
+  color: #6aac00;
+}
+
+.no-data {
+  color: grey;
+  font-weight: 400;
+}
+
+.input-field {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 640px;
+}
+
+.request-input {
+  font-size: 16px;
+  font-weight: 600;
+  width: 315px;
+  height: 40px;
+  line-height: 40px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  background-color: #f7f9fa;
+  border: 1px solid #dbe3e7;
+  border-radius: 3px;
+  color: #536171;
+  display: block;
+}
+
+.request-btn {
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 18px;
@@ -42,25 +140,10 @@ footer {
   text-decoration: none;
   cursor: pointer;
   box-sizing: border-box;
-  margin-bottom: 10px;
+  width: 315px;
 }
 
-.fetchBtn:hover {
+.request-btn:hover {
   background-color: #3884ff;
   color: #fff;
-}
-
-.link-item {
-  display: flex;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  text-decoration: none;
-  color: #000;
-}
-
-.link-item__data {
-  margin-bottom: 5px;
 }
