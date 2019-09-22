@@ -18,8 +18,8 @@ const params = `order_by=publication_time&area=112&text=`;
 
 // const URL = `${rootDomain}${params}react+native`
 // const URL = `${rootDomain}${params}vue`;
-// const URL = `${rootDomain}${params}react`;
-const URL = `${rootDomain}${params}javascript`;
+const URL = `${rootDomain}${params}react`;
+// const URL = `${rootDomain}${params}javascript`;
 
 console.clear();
 
@@ -36,20 +36,41 @@ async function getPage(URL, page) {
       : null;
     // console.log(nextPageUrl);
 
-    const paginationBtnTxt = $(
+    /*     const paginationBtnTxt = $(
       '[data-qa=pager-block] .bloko-button_pressed',
       html
     ).length
       ? $('[data-qa=pager-block] .bloko-button_pressed', html).text()
-      : '1';
+      : '1'; */
     // console.log(paginationBtnTxt, 'page');
 
-    const getData = i => {
+    const getTitle = i => {
+      return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].children[0]
+        .data;
+    };
+    const getCompensation = i => {
       return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
         .parent.next.children[0]
         ? $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
             .parent.next.children[0].children[0].data
         : 'Зарплата не указана';
+    };
+    const getEmployer = i => {
+      return $('[data-qa=vacancy-serp__vacancy-employer]', html)[
+        i
+      ].children[0].data.trim();
+    };
+    const getDate = i => {
+      return $('[data-qa=vacancy-serp__vacancy-date] span', html)[i].children[0]
+        .data;
+    };
+    const getLink = i => {
+      return $('span.g-user-content > a.bloko-link', html)[i].attribs.href;
+    };
+    const getId = i => {
+      return $('span.g-user-content > a.bloko-link', html)[
+        i
+      ].attribs.href.replace(/[^0-9]+/g, '');
     };
 
     // get vacancies data and put it into array of objects
@@ -58,20 +79,14 @@ async function getPage(URL, page) {
     const vacancies = [];
     for (let i = 0; i < vacanciesAmountOnPage; i++) {
       vacancies.push({
-        page: paginationBtnTxt,
-        number: i + 1 + '',
-        title: $('[data-qa=vacancy-serp__vacancy-title]', html)[i].children[0]
-          .data,
-        compensation: getData(i),
-        employer: $('[data-qa=vacancy-serp__vacancy-employer]', html)[
-          i
-        ].children[0].data.trim(),
-        date: $('[data-qa=vacancy-serp__vacancy-date] span', html)[i]
-          .children[0].data,
-        link: $('span.g-user-content > a.bloko-link', html)[i].attribs.href,
-        id: $('span.g-user-content > a.bloko-link', html)[
-          i
-        ].attribs.href.replace(/[^0-9]+/g, '')
+        /*         page: paginationBtnTxt,
+        number: i + 1 + '', */
+        title: getTitle(i),
+        compensation: getCompensation(i),
+        employer: getEmployer(i),
+        date: getDate(i),
+        link: getLink(i),
+        id: getId(i)
       });
     }
 
@@ -150,6 +165,10 @@ async function server() {
     });
     app.get('/api', (req, res) => {
       res.status(200).send(data);
+    });
+    app.post('/api/crawling', (req, res) => {
+      const newCrawlRequest = req.body.newCrawlRequest;
+      // execute crawling with newCrawlRequest
     });
   } catch (e) {
     console.error('Error: ', e);
