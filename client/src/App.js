@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Vacancy from './components/Vacancy';
-import Navbar from './components/Navbar';
-import Form from './components/Form';
+/* import Navbar from './components/Navbar';
+ */ import Form from './components/Form';
 import './App.css';
 
 function App() {
   const [data, setData] = useState(null);
+
+  const handleDataUpdate = newData => {
+    setData(newData);
+  };
 
   useEffect(() => {
     fetch('http://localhost:9000/api')
@@ -34,15 +38,15 @@ function App() {
   }; */
 
   if (data) {
-    //console.log(data);
+    console.log(data);
   }
 
   if (data) {
     return (
       <BrowserRouter>
         <div className="App">
-          <Navbar />
-          <Form />
+          {/* <Navbar /> */}
+          <Form handleDataUpdate={handleDataUpdate} />
           <main className="container">
             <Switch>
               <Route

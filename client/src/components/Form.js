@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Form = () => {
+const Form = ({ handleDataUpdate }) => {
   const [inputData, setInputData] = useState({ newCrawlingRequest: null });
 
   const handleInputChange = e => {
@@ -21,7 +21,8 @@ const Form = () => {
     console.log(response);
   } */
 
-  const handleRequest = () => {
+  const handleRequest = e => {
+    e.preventDefault();
     fetch('http://localhost:9000/api/crawling', {
       method: 'POST',
       headers: {
@@ -30,19 +31,22 @@ const Form = () => {
       body: JSON.stringify(inputData)
     })
       .then(res => res.json())
-      .then(data => console.log('Success: ', data));
+      .then(data => {
+        handleDataUpdate(data);
+        console.log('Data successfully updated');
+      });
   };
   return (
-    <div className="input-field">
-      <input
-        onChange={handleInputChange}
-        className="request-input"
-        type="text"
-      />
-      <button onClick={handleRequest} className="request-btn">
-        Fetch
-      </button>
-    </div>
+    <form onSubmit={handleRequest}>
+      <div className="input-field">
+        <input
+          onChange={handleInputChange}
+          className="request-input"
+          type="text"
+        />
+        <button className="request-btn">Fetch</button>
+      </div>
+    </form>
   );
 };
 
