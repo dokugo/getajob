@@ -156,6 +156,8 @@ async function crawl() {
   }
 }
 
+app.use(express.json());
+
 async function server() {
   const data = await crawl();
   try {
@@ -167,8 +169,10 @@ async function server() {
       res.status(200).send(data);
     });
     app.post('/api/crawling', (req, res) => {
-      const newCrawlRequest = req.body.newCrawlRequest;
-      // execute crawling with newCrawlRequest
+      // const newCrawlingRequest = req.body.newCrawlingRequest;
+      console.log(req.body);
+      res.status(200).send(200, req.body);
+      // execute crawling with newCrawlingRequest
     });
   } catch (e) {
     console.error('Error: ', e);
