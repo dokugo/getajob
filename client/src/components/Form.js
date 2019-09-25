@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const Form = ({ handleDataUpdate }) => {
   const [inputData, setInputData] = useState({ newCrawlingRequest: null });
+  const [isLoading, setIsLoading] = useState('Fetch');
 
   const handleInputChange = e => {
     setInputData({ newCrawlingRequest: e.target.value });
@@ -23,6 +24,7 @@ const Form = ({ handleDataUpdate }) => {
 
   const handleRequest = e => {
     e.preventDefault();
+    setIsLoading('Loading...');
     fetch('http://localhost:9000/api/crawling', {
       method: 'POST',
       headers: {
@@ -35,7 +37,9 @@ const Form = ({ handleDataUpdate }) => {
         handleDataUpdate(data);
         console.log('Data successfully updated');
       });
+    // setIsLoading('Fetch');
   };
+
   return (
     <form onSubmit={handleRequest}>
       <div className="input-field">
@@ -44,7 +48,7 @@ const Form = ({ handleDataUpdate }) => {
           className="request-input"
           type="text"
         />
-        <button className="request-btn">Fetch</button>
+        <button className="request-btn">{isLoading}</button>
       </div>
     </form>
   );
