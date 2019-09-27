@@ -1,17 +1,11 @@
 const puppeteer = require('puppeteer-extra');
 /* const puppeteer = require('puppeteer'); */
 const $ = require('cheerio');
-const express = require('express');
 
 const stealth = require('puppeteer-extra-plugin-stealth')();
 puppeteer.use(stealth);
 // const UserAgentPlugin = require('puppeteer-extra-plugin-anonymize-ua');
 // puppeteer.use(UserAgentPlugin({ makeWindows: true }));
-
-const app = express();
-app.listen(9000, () => console.log('Nightcrawler app listening on port 9000'));
-const cors = require('cors');
-app.use(cors());
 
 const search = searchRequest => {
   const rootDomain = `https://yaroslavl.hh.ru/search/vacancy?`;
@@ -21,8 +15,6 @@ const search = searchRequest => {
 
   // let searchRequest = searchRequests.react;
 };
-
-console.clear();
 
 async function getPage(URL, page) {
   try {
@@ -144,12 +136,12 @@ async function crawl(searchRequest) {
       await getNextPageLoop(nextPageUrl).then(() =>
         console.log('end' /* , output */)
       );
-      await browser.close();
+      // await browser.close();
       return output;
     } else {
       console.log('last page');
       console.log('end' /* , output */);
-      await browser.close();
+      // await browser.close();
       return output;
     }
     // console.log(output);
@@ -159,50 +151,4 @@ async function crawl(searchRequest) {
   }
 }
 
-app.use(express.json());
-
-async function server() {
-  const data = await crawl('vue');
-  try {
-    console.log(data);
-    app.get('/', (req, res) => {
-      return res.status(200).send('GET root');
-    });
-    app.get('/api', (req, res) => {
-      res.status(200).send(data);
-    });
-  } catch (e) {
-    console.error('Error: ', e);
-  }
-}
-
-server();
-
-app.post('/api/crawling', (req, res) => {
-  const searchRequest = req.body.newCrawlingRequest;
-  crawl(searchRequest)
-    .then(data => {
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).send(data);
-    })
-    .then(data => console.log(data));
-
-  /*       console.log(req.body);
-  res.status(200).send(req.body); */
-
-  // execute crawling with newCrawlingRequest
-});
-
-/* crawl()
-  .then(data => {
-    console.log(data);
-    app.get('/', (req, res) => {
-      return res.status(200).send('GET root');
-    });
-    app.get('/api', (req, res) => {
-      res.status(200).send(data);
-    });
-  })
-  .catch(function(e) {
-    console.error('Error: ', e);
-  }); */
+module.exports = crawl;
