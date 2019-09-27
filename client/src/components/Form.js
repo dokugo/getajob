@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import NProgress from 'nprogress';
 
 const Form = ({ handleDataUpdate }) => {
   const [inputData, setInputData] = useState({ newCrawlingRequest: null });
-  const [isLoading, setIsLoading] = useState('Fetch');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = e => {
-    setInputData({ newCrawlingRequest: e.target.value });
-    //console.log(inputData);
+    setInputData(e.target.value);
+    // console.log(inputData);
   };
   /*   async function handleRequest() {
     console.log('request');
@@ -24,7 +25,25 @@ const Form = ({ handleDataUpdate }) => {
 
   const handleRequest = e => {
     e.preventDefault();
-    setIsLoading('Loading...');
+
+    NProgress.start();
+    setIsLoading(true);
+
+    fetch(`http://localhost:9000/api/search/${inputData}`)
+      .then(response => response.json())
+      .then(data => {
+        handleDataUpdate(data);
+        console.log('Data successfully updated');
+
+        NProgress.done();
+        setIsLoading(false);
+      });
+  };
+
+  /*   const handleRequest = e => {
+    e.preventDefault();
+    NProgress.start();
+    setIsLoading(true);
     fetch('http://localhost:9000/api/crawling', {
       method: 'POST',
       headers: {
@@ -36,9 +55,11 @@ const Form = ({ handleDataUpdate }) => {
       .then(data => {
         handleDataUpdate(data);
         console.log('Data successfully updated');
+        NProgress.done();
+
+        setIsLoading(false);
       });
-    // setIsLoading('Fetch');
-  };
+  }; */
 
   return (
     <form onSubmit={handleRequest}>
@@ -48,7 +69,9 @@ const Form = ({ handleDataUpdate }) => {
           className="request-input"
           type="text"
         />
-        <button className="request-btn">{isLoading}</button>
+        <button className="request-btn">
+          {isLoading ? 'Loading...' : 'Fetch'}
+        </button>
       </div>
     </form>
   );
