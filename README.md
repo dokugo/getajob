@@ -1,13 +1,11 @@
 ## Intended functionality
 
 - [ ] client
-
   - [ ] styling refactoring
   - [ ] adaptive
   - [ ] update color theme
   - [ ] dark theme
   - [ ] extended search parameters ui
-
 - [ ] server
   - [ ] cleanup code
   - [ ] find a way to get rid of cheerio
