@@ -136,12 +136,12 @@ async function crawl(searchRequest) {
       await getNextPageLoop(nextPageUrl).then(() =>
         console.log('end' /* , output */)
       );
-      // await browser.close();
+      await browser.close();
       return output;
     } else {
       console.log('last page');
       console.log('end' /* , output */);
-      // await browser.close();
+      await browser.close();
       return output;
     }
     // console.log(output);

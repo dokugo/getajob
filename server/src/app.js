@@ -10,7 +10,7 @@ console.clear();
 
 app.use(express.json());
 
-async function server() {
+/* async function server() {
   const data = await crawl('vue');
   try {
     console.log(data);
@@ -25,7 +25,7 @@ async function server() {
   }
 }
 
-server();
+server(); */
 
 app.get('/api/search/:id', async function(req, res) {
   try {
