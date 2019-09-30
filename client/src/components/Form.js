@@ -68,6 +68,7 @@ const Form = ({ handleDataUpdate }) => {
           onChange={handleInputChange}
           className="request-input"
           type="text"
+          name="request"
         />
         <button className="request-btn">
           {isLoading ? 'Loading...' : 'Fetch'}
