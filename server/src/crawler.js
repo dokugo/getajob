@@ -1,100 +1,96 @@
-const puppeteer = require('puppeteer-extra');
 /* const puppeteer = require('puppeteer'); */
-const $ = require('cheerio');
 
+const puppeteer = require('puppeteer-extra');
 const stealth = require('puppeteer-extra-plugin-stealth')();
-puppeteer.use(stealth);
-// const UserAgentPlugin = require('puppeteer-extra-plugin-anonymize-ua');
-// puppeteer.use(UserAgentPlugin({ makeWindows: true }));
+const hiddenUserAgent = require('puppeteer-extra-plugin-anonymize-ua');
 
-const search = searchRequest => {
+puppeteer.use(stealth);
+puppeteer.use(hiddenUserAgent({ makeWindows: true }));
+
+const getSearchUrl = searchKeywords => {
   const rootDomain = `https://yaroslavl.hh.ru/search/vacancy?`;
   const params = `order_by=publication_time&area=112&text=`;
-  const URL = `${rootDomain}${params}${searchRequest}`;
+  const URL = `${rootDomain}${params}${searchKeywords}`;
   return URL;
-
-  // let searchRequest = searchRequests.react;
 };
 
 async function getPage(URL, page) {
   try {
     await page.goto(URL, { waitUntil: 'networkidle2', timeout: 0 });
-    const html = await page.content();
 
-    const NEXT_PAGE = $('.HH-Pager-Controls-Next', html).length
-      ? $('.HH-Pager-Controls-Next', html)[0].attribs.href
-      : null;
-    const nextPageUrl = NEXT_PAGE
-      ? `https://yaroslavl.hh.ru${NEXT_PAGE}`
-      : null;
-    // console.log(nextPageUrl);
+    const parsePage = await page.evaluate(() => {
+      const nextPageUrl = document.querySelector('[data-qa=pager-next]')
+        ? document.querySelector('[data-qa=pager-next]').href
+        : null;
 
-    /*     const paginationBtnTxt = $(
-      '[data-qa=pager-block] .bloko-button_pressed',
-      html
-    ).length
-      ? $('[data-qa=pager-block] .bloko-button_pressed', html).text()
-      : '1'; */
-    // console.log(paginationBtnTxt, 'page');
+      const getVacancyData = {
+        title: i => {
+          return document.querySelectorAll(
+            '[data-qa=vacancy-serp__vacancy-title]'
+          )[i].textContent;
+        },
+        compensation: i => {
+          return document.querySelectorAll(
+            '[data-qa=vacancy-serp__vacancy-title]'
+          )[i]
+            ? document.querySelectorAll(
+                '[data-qa=vacancy-serp__vacancy-title]'
+              )[i].textContent
+            : 'Зарплата не указана';
+        },
+        employer: i => {
+          return document
+            .querySelectorAll('[data-qa=vacancy-serp__vacancy-employer]')
+            [i].textContent.trim();
+        },
+        date: i => {
+          return document.querySelectorAll(
+            '[data-qa=vacancy-serp__vacancy-date] span'
+          )[i].textContent;
+        },
+        link: i => {
+          return document.querySelectorAll(
+            'span.g-user-content > a.bloko-link'
+          )[i].href;
+        },
+        id: i => {
+          return document
+            .querySelectorAll('span.g-user-content > a.bloko-link')
+            [i].href.replace(/[^0-9]+/g, '');
+        }
+      };
 
-    const getTitle = i => {
-      return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].children[0]
-        .data;
-    };
-    const getCompensation = i => {
-      return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
-        .parent.next.children[0]
-        ? $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
-            .parent.next.children[0].children[0].data
-        : 'Зарплата не указана';
-    };
-    const getEmployer = i => {
-      return $('[data-qa=vacancy-serp__vacancy-employer]', html)[
-        i
-      ].children[0].data.trim();
-    };
-    const getDate = i => {
-      return $('[data-qa=vacancy-serp__vacancy-date] span', html)[i].children[0]
-        .data;
-    };
-    const getLink = i => {
-      return $('span.g-user-content > a.bloko-link', html)[i].attribs.href;
-    };
-    const getId = i => {
-      return $('span.g-user-content > a.bloko-link', html)[
-        i
-      ].attribs.href.replace(/[^0-9]+/g, '');
-    };
+      const vacanciesAmountOnPage = document.querySelectorAll(
+        'span.g-user-content > a.bloko-link'
+      ).length;
 
-    // get vacancies data and put it into array of objects
-    const vacanciesAmountOnPage = $('span.g-user-content > a.bloko-link', html)
-      .length;
-    const vacancies = [];
-    for (let i = 0; i < vacanciesAmountOnPage; i++) {
-      vacancies.push({
-        /*         page: paginationBtnTxt,
-        number: i + 1 + '', */
-        title: getTitle(i),
-        compensation: getCompensation(i),
-        employer: getEmployer(i),
-        date: getDate(i),
-        link: getLink(i),
-        id: getId(i)
-      });
-    }
+      const vacancies = [];
+      for (let i = 0; i < vacanciesAmountOnPage; i++) {
+        vacancies.push({
+          title: getVacancyData.title(i),
+          compensation: getVacancyData.compensation(i),
+          employer: getVacancyData.employer(i),
+          date: getVacancyData.date(i),
+          link: getVacancyData.link(i),
+          id: getVacancyData.id(i)
+        });
+      }
 
-    if (nextPageUrl) {
-      return { vacancies, nextPageUrl };
-    } else {
-      return { vacancies };
-    }
-  } catch (e) {
-    console.error('Error: ', e);
+      if (nextPageUrl) {
+        return { vacancies, nextPageUrl };
+      } else {
+        return { vacancies };
+      }
+    });
+
+    return parsePage;
+  } catch (error) {
+    console.error('Error: ', error);
   }
 }
 
-async function crawl(searchRequest) {
-  const URL = search(searchRequest);
+async function crawl(searchKeywords) {
+  const URL = getSearchUrl(searchKeywords);
   try {
     // console.clear();
     const browser = await puppeteer.launch({ headless: true });
@@ -133,21 +129,23 @@ async function crawl(searchRequest) {
         }
       }
 
-      await getNextPageLoop(nextPageUrl).then(() =>
-        console.log('end' /* , output */)
-      );
+      await getNextPageLoop(
+        nextPageUrl
+      ) /* .then(() =>
+        console.log('end' , output)
+      ) */;
       await browser.close();
       return output;
     } else {
-      console.log('last page');
-      console.log('end' /* , output */);
+      // console.log('last page');
+      // console.log('end' /* , output */);
       await browser.close();
       return output;
     }
     // console.log(output);
     // await page.screenshot({ path: 'stealth-ma-result.png', fullPage: true });
-  } catch (e) {
-    console.error('Error: ', e);
+  } catch (error) {
+    console.error('Error: ', error);
   }
 }
 

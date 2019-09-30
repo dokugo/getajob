@@ -1,0 +1,113 @@
+//cherio dom parsing
+
+//eslint-ignore
+const html = await page.content();
+const NEXT_PAGE = $('.HH-Pager-Controls-Next', html).length
+  ? $('.HH-Pager-Controls-Next', html)[0].attribs.href
+  : null;
+const nextPageUrl = NEXT_PAGE ? `https://yaroslavl.hh.ru${NEXT_PAGE}` : null;
+
+/*     const paginationBtnTxt = $(
+  '[data-qa=pager-block] .bloko-button_pressed',
+  html
+).length
+  ? $('[data-qa=pager-block] .bloko-button_pressed', html).text()
+  : '1'; */
+// console.log(paginationBtnTxt, 'page');
+
+const vacancy = {
+  title: i => {
+    return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].children[0].data;
+  },
+  compensation: i => {
+    return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
+      .parent.next.children[0]
+      ? $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent.parent
+          .next.children[0].children[0].data
+      : 'Зарплата не указана';
+  },
+  employer: i => {
+    return $('[data-qa=vacancy-serp__vacancy-employer]', html)[
+      i
+    ].children[0].data.trim();
+  },
+  date: i => {
+    return $('[data-qa=vacancy-serp__vacancy-date] span', html)[i].children[0]
+      .data;
+  },
+  link: i => {
+    return $('span.g-user-content > a.bloko-link', html)[i].attribs.href;
+  },
+  id: i => {
+    return $('span.g-user-content > a.bloko-link', html)[
+      i
+    ].attribs.href.replace(/[^0-9]+/g, '');
+  }
+};
+
+/*     const getTitle = i => {
+  return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].children[0]
+    .data;
+};
+const getCompensation = i => {
+  return $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
+    .parent.next.children[0]
+    ? $('[data-qa=vacancy-serp__vacancy-title]', html)[i].parent.parent
+        .parent.next.children[0].children[0].data
+    : 'Зарплата не указана';
+};
+const getEmployer = i => {
+  return $('[data-qa=vacancy-serp__vacancy-employer]', html)[
+    i
+  ].children[0].data.trim();
+};
+const getDate = i => {
+  return $('[data-qa=vacancy-serp__vacancy-date] span', html)[i].children[0]
+    .data;
+};
+const getLink = i => {
+  return $('span.g-user-content > a.bloko-link', html)[i].attribs.href;
+};
+const getId = i => {
+  return $('span.g-user-content > a.bloko-link', html)[
+    i
+  ].attribs.href.replace(/[^0-9]+/g, '');
+}; */
+
+// get vacancies data and put it into array of objects
+const vacanciesAmountOnPage = $('span.g-user-content > a.bloko-link', html)
+  .length;
+const vacancies = [];
+for (let i = 0; i < vacanciesAmountOnPage; i++) {
+  vacancies.push({
+    /*         page: paginationBtnTxt,
+    number: i + 1 + '', */
+    title: vacancy.title(i),
+    compensation: vacancy.compensation(i),
+    employer: vacancy.employer(i),
+    date: vacancy.date(i),
+    link: vacancy.link(i),
+    id: vacancy.id(i)
+  });
+}
+
+if (nextPageUrl) {
+  return { vacancies, nextPageUrl };
+} else {
+  return { vacancies };
+}
+
+//app.js
+/* crawl()
+  .then(data => {
+    console.log(data);
+    app.get('/', (req, res) => {
+      return res.status(200).send('GET root');
+    });
+    app.get('/api', (req, res) => {
+      res.status(200).send(data);
+    });
+  })
+  .catch(function(e) {
+    console.error('Error: ', e);
+  }); */
