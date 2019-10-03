@@ -32,10 +32,11 @@ async function getPage(URL, page) {
         compensation: i => {
           return document.querySelectorAll(
             '[data-qa=vacancy-serp__vacancy-title]'
-          )[i]
+          )[i].parentNode.parentNode.parentNode.nextSibling.firstChild
             ? document.querySelectorAll(
                 '[data-qa=vacancy-serp__vacancy-title]'
-              )[i].textContent
+              )[i].parentNode.parentNode.parentNode.nextSibling.firstChild
+                .textContent
             : 'Зарплата не указана';
         },
         employer: i => {

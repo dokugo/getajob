@@ -9,7 +9,7 @@ app.listen(9000, () => console.log('Nightcrawler app listening on port 9000'));
 
 console.clear();
 
-app.get('/api/search/:id', async function(req, res) {
+app.get('/api/search/:id', async (req, res) => {
   try {
     const searchKeywords = req.params.id;
     const data = await crawl(searchKeywords);
@@ -21,18 +21,19 @@ app.get('/api/search/:id', async function(req, res) {
   }
 });
 
-async function run() {
-  const data = await crawl('react');
+// run crawling on init for testing purposes
+async function test() {
+  const data = await crawl('vue');
   try {
     console.log(data);
-    app.get('/', async function(req, res) {
+    app.get('/', async (req, res) => {
       return res.status(200).send('GET root');
     });
-    app.get('/api', async function(req, res) {
+    app.get('/api', async (req, res) => {
       res.status(200).send(data);
     });
   } catch (err) {
     console.error('Error: ', err);
   }
 }
-run();
+test();
