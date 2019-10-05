@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import NProgress from 'nprogress';
 
 const Form = ({ handleDataUpdate }) => {
-  const [inputData, setInputData] = useState({ newCrawlingRequest: null });
+  const [inputData, setInputData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInvalidRequest, setIsInvalidRequest] = useState(false);
 
   const handleInputChange = e => {
+    console.log('state: ', inputData);
+    if (e.target.value.length < 1 || e.target.value.trim().length < 1) {
+      console.log('Form validation error');
+      setInputData(null);
+      return;
+    }
     setInputData(e.target.value);
     // console.log(inputData);
   };
@@ -24,20 +31,29 @@ const Form = ({ handleDataUpdate }) => {
   } */
 
   const handleRequest = e => {
+    console.log(inputData);
     e.preventDefault();
 
-    NProgress.start();
-    setIsLoading(true);
+    if (inputData === null) {
+      console.log('Fetch cancelled');
+      setIsInvalidRequest(true);
+      return;
+    } else {
+      setIsInvalidRequest(false);
+      NProgress.start();
+      setIsLoading(true);
 
-    fetch(`http://localhost:9000/api/search/${inputData}`)
-      .then(response => response.json())
-      .then(data => {
-        handleDataUpdate(data);
-        console.log('Data successfully updated');
+      fetch(`http://localhost:9000/api/search/${inputData}`)
+        .then(response => response.json())
+        .then(data => {
+          handleDataUpdate(data);
+          console.log('Data successfully updated');
 
-        NProgress.done();
-        setIsLoading(false);
-      });
+          NProgress.done();
+          setIsLoading(false);
+        })
+        .catch(e => console.log('Error: ', e));
+    }
   };
 
   /*   const handleRequest = e => {
@@ -66,7 +82,7 @@ const Form = ({ handleDataUpdate }) => {
       <div className="input-field">
         <input
           onChange={handleInputChange}
-          className="request-input"
+          className={`request-input ${isInvalidRequest ? 'input-error' : ''}`}
           type="text"
           name="request"
         />

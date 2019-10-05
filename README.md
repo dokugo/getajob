@@ -1,14 +1,15 @@
 ## Intended functionality
 
 - [ ] client
+  - [x] form validation
   - [ ] styling refactoring
   - [ ] adaptive
   - [ ] update color theme
   - [ ] dark theme
   - [ ] extended search parameters ui
 - [ ] server
-  - [ ] cleanup code
-  - [ ] find a way to get rid of cheerio
+  - [x] cleanup code
+  - [x] find a way to get rid of cheerio
   - [ ] puppeteer requests throttling
   - [ ] incoming get requests throttling
   - [ ] extend search parameters
@@ -17,6 +18,7 @@
 
 #### Todo:
 
+- !!! check form submission event (/? url)
 - save search parameters to bookmarks
 
 #### Completed:
