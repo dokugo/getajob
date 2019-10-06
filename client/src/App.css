@@ -49,6 +49,10 @@ body {
   margin-bottom: 10px;
 }
 
+.input-box {
+  position: relative;
+}
+
 .request-input {
   font-size: 18px;
   font-weight: 400;
@@ -57,24 +61,65 @@ body {
   padding: 0px 12px;
   box-sizing: border-box;
   background-color: #f5fcf5;
-  border: 1px solid seagreen;
+  /* border: 1px solid seagreen; */
+  border: 1px solid #28a745;
   border-radius: 3px;
   color: #000;
+  /* color: #495057; */
   /* color: #464646; */
+  padding-right: 36px;
+
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 input:focus,
 button:focus {
-  box-shadow: 1px 1px 1px seagreen inset, -1px -1px 1px seagreen inset;
+  /* box-shadow: 1px 1px 1px seagreen inset, -1px -1px 1px seagreen inset; */
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
   outline: 0 none;
 }
 
+/* input:-internal-autofill-selected {
+  background-color: #f5fcf5 !important;
+  color: #000;
+} */
+
+.input-icon {
+  /*   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='icon' viewBox='0 0 1024 1024'><path d='M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z'/><path d='M464 688a48 48 0 1 0 96 0 48 48 0 1 0-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z'/></svg>")
+    no-repeat; */
+
+  /* background: url('./assets/error.svg') no-repeat; */
+  /* background-position: right; */
+  /* background-size: 25px 25px; */
+
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  margin-top: -12.5px;
+  width: 25px;
+  height: 25px;
+}
+
+.error-icon {
+  fill: #dc3545;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.error-icon--show {
+  opacity: 1;
+}
+
 .input-error {
-  border: 1px solid crimson;
+  border-color: #dc3545;
+  /* border: 1px solid crimson; */
 }
 
 .input-error:focus {
-  box-shadow: 1px 1px 1px crimson inset, -1px -1px 1px crimson inset;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  /* box-shadow: 1px 1px 1px crimson inset, -1px -1px 1px crimson inset; */
   outline: 0 none;
 }
 
