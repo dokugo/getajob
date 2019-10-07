@@ -44,9 +44,12 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        {/* <div className={`test ${data ? 'test-animate' : ''}`}></div> */}
         {/* <Navbar /> */}
-        <Form handleDataUpdate={handleDataUpdate} />
-        <main className="container">
+        <nav className={`navbar ${data ? 'navbar--top' : ''}`}>
+          <Form handleDataUpdate={handleDataUpdate} />
+        </nav>
+        <main className={`container ${data ? 'container--top' : ''}`}>
           {/* <Switch> */}
           {data ? (
             <Route
@@ -54,9 +57,7 @@ function App() {
               path="/"
               render={props => <Dashboard {...props} data={data} />}
             />
-          ) : (
-            <div className="loader">No data</div>
-          )}
+          ) : null}
 
           {/*               <Route
                 path="/vacancy/:id"
