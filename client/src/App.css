@@ -172,13 +172,29 @@ button:focus {
 }
 
 .error-icon {
-  fill: #dc3545;
+  /* fill: #dc3545; */
   opacity: 0;
   transition: opacity 0.15s ease-in-out;
 }
 
 .error-icon--show {
   opacity: 1;
+}
+
+.input-warning {
+  border-color: #fc9900;
+  /* border-color: #faad14; */
+  /* border: 1px solid crimson; */
+}
+
+.input-warning:focus {
+  border-color: #fc9900;
+  /* border-color: #faad14; */
+  box-shadow: 0 0 0 0.2rem rgba(255, 123, 0, 0.25);
+  /* box-shadow: 0 0 0 0.2rem rgba(255, 166, 0, 0.25); */
+  /* box-shadow: 0 0 0 0.2rem rgba(187, 130, 25, 0.25); */
+  /* box-shadow: 1px 1px 1px crimson inset, -1px -1px 1px crimson inset; */
+  outline: 0 none;
 }
 
 .input-error {
