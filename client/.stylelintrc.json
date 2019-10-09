@@ -8,6 +8,14 @@
   ],
   "rules": {
     "prettier/prettier": true,
-    "rule-empty-line-before": "always"
+    "rule-empty-line-before": [
+      "always",
+      {
+        "except": [
+          "inside-block",
+          "first-nested"
+        ]
+      }
+    ]
   }
 }
