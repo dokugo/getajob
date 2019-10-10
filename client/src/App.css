@@ -22,6 +22,13 @@ body {
   background: #f5f7f9;
 } */
 
+.number {
+  position: absolute;
+  font-size: 36px;
+  top: 10px;
+  right: 10px;
+}
+
 .loader {
   font-size: 60px;
   margin: 0 auto;
@@ -67,7 +74,7 @@ body {
   align-items: center;
   /* padding-bottom: 20px; */
   box-sizing: border-box;
-  height: 80px;
+  height: 100px;
   /* border: 1px solid black; */
 
   /* transition: 0.25s ease-in-out; */
@@ -255,6 +262,25 @@ button:focus {
   outline: 0 none;
 }
 
+.search {
+  position: relative;
+}
+
+.search-tooltip {
+  position: absolute;
+  font-size: 14px;
+  padding: 5px 5px;
+}
+
+.search-tooltip--warning {
+  color: #b37700;
+  /* color: #faad14; */
+}
+
+.search-tooltip--error {
+  color: #dc3545;
+}
+
 .request-btn {
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -293,6 +319,7 @@ button:focus {
   padding: 12px 18px;
   border-radius: 5px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
   background-color: #dff1e6;
   text-decoration: none;
   color: #000;
@@ -301,7 +328,9 @@ button:focus {
 }
 
 .link-item:focus {
-  box-shadow: 2px 2px 1px seagreen inset, -2px -2px 1px seagreen inset;
+  /* box-shadow: 2px 2px 1px seagreen inset, -2px -2px 1px seagreen inset; */
+  /* border-color: #28a745; */
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
   outline: 0 none;
 }
 
@@ -328,6 +357,11 @@ button:focus {
   font-size: 21px;
   font-weight: 700;
   margin-bottom: 15px;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 500px;
 }
 
 .link-item:hover .link-item__data-title {

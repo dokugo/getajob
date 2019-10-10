@@ -52,11 +52,15 @@ function App() {
         <main className={`container ${data ? 'container--top' : ''}`}>
           {/* <Switch> */}
           {data ? (
-            <Route
-              exact
-              path="/"
-              render={props => <Dashboard {...props} data={data} />}
-            />
+            data.length ? (
+              <Route
+                exact
+                path="/"
+                render={props => <Dashboard {...props} data={data} />}
+              />
+            ) : (
+              <div className="loader">Found nothing</div>
+            )
           ) : null}
 
           {/*               <Route
@@ -65,6 +69,7 @@ function App() {
               />
             </Switch> */}
         </main>
+        {data ? <div className="number">{data.length}</div> : null}
       </div>
     </BrowserRouter>
   );

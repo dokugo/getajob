@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import IconError from './IconError';
-import IconWarning from './IconWarning';
-import IconLoading from './IconLoading';
-// import IconSearch from './IconSearch';
+import IconError from './icons/IconError';
+import IconWarning from './icons/IconWarning';
+import IconLoading from './icons/IconLoading';
+// import IconSearch from './icons/IconSearch';
 // import NProgress from 'nprogress';
 
 const Form = ({ handleDataUpdate }) => {
@@ -77,6 +77,13 @@ const Form = ({ handleDataUpdate }) => {
       <IconWarning type={'filled'} />
     ) : null; */
 
+  const tooltip =
+    inputState === 'warning'
+      ? `Search request can't be empty.`
+      : inputState === 'error'
+      ? `Can't send empty request.`
+      : null;
+
   return (
     <form onSubmit={handleRequest}>
       <div className="input-field">
@@ -84,25 +91,32 @@ const Form = ({ handleDataUpdate }) => {
           {/* <span className={`input-icon--search`}>
             <IconSearch />
           </span> */}
-          <input
-            onChange={handleInputChange}
-            className={`request-input ${inputModifier}`}
-            type="text"
-            name="request"
-            placeholder="Search"
-            autoComplete="off"
-          />
-          <span className={`input-icon`}>
-            <IconError
-              type={'filled'}
-              animate={inputState === 'error' ? 'error-icon--show' : ''}
+          <div className="search">
+            <input
+              onChange={handleInputChange}
+              className={`request-input ${inputModifier}`}
+              type="text"
+              name="request"
+              placeholder="Search"
+              autoComplete="off"
             />
-            <IconWarning
-              type={'filled'}
-              animate={inputState === 'warning' ? 'error-icon--show' : ''}
-            />
-            <IconLoading animate={isLoading ? 'error-icon--show' : ''} />
-          </span>
+            <span className={`input-icon`}>
+              <IconError
+                type={'filled'}
+                animate={inputState === 'error' ? 'error-icon--show' : ''}
+              />
+              <IconWarning
+                type={'filled'}
+                animate={inputState === 'warning' ? 'error-icon--show' : ''}
+              />
+              <IconLoading animate={isLoading ? 'error-icon--show' : ''} />
+            </span>
+          </div>
+          {inputState ? (
+            <div className={`search-tooltip search-tooltip--${inputState}`}>
+              {tooltip}
+            </div>
+          ) : null}
         </div>
         <button className="request-btn">Find</button>
       </div>

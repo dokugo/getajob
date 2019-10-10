@@ -19,7 +19,9 @@
 #### Todo:
 
 - !!! check form submission event (/? url)
+- cleanup SVGs
 - save search parameters to bookmarks
+- get pure links
 
 #### Completed:
 
