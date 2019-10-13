@@ -14,31 +14,14 @@ const Form = ({ handleDataUpdate }) => {
     console.log('state: ', inputData);
     if (e.target.value.length < 1 || e.target.value.trim().length < 1) {
       console.log('Form validation error');
-      // setIsInvalidRequest(false);
-      // setIsWarnedRequest(true);
       setInputState('warning');
       setInputData(null);
       return;
     }
-    // setIsWarnedRequest(false);
-    // setIsInvalidRequest(false);
     setInputState(null);
     setInputData(e.target.value);
     // console.log(inputData);
   };
-  /*   async function handleRequest() {
-    console.log('request');
-    console.log(inputData);
-    const response = await fetch('http://localhost:9000/api/crawling', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ inputData })
-    });
-    console.log(response);
-  } */
 
   const handleRequest = e => {
     console.log(inputData);
@@ -46,11 +29,9 @@ const Form = ({ handleDataUpdate }) => {
 
     if (inputData === null) {
       console.log('Fetch cancelled');
-      // setIsInvalidRequest(true);
       setInputState('error');
       return;
     } else {
-      // setIsInvalidRequest(false);
       setInputState(null);
       // NProgress.start();
       setIsLoading(true);
@@ -60,7 +41,6 @@ const Form = ({ handleDataUpdate }) => {
         .then(data => {
           handleDataUpdate(data);
           console.log('Data successfully updated');
-
           // NProgress.done();
           setIsLoading(false);
         })
@@ -88,9 +68,6 @@ const Form = ({ handleDataUpdate }) => {
     <form onSubmit={handleRequest}>
       <div className="input-field">
         <div className="input-box">
-          {/* <span className={`input-icon--search`}>
-            <IconSearch />
-          </span> */}
           <div className="search">
             <input
               onChange={handleInputChange}

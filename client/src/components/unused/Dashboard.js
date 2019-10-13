@@ -1,5 +1,5 @@
 import React from 'react';
-import VacanciesList from './VacanciesList';
+import VacanciesList from '../VacanciesList';
 
 const Dashboard = props => {
   return (

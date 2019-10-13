@@ -1,11 +1,6 @@
 import React from 'react';
 
 const VacanciesList = props => {
-  /*   useEffect(() => {
-    console.log(props.data);
-  }, [props.data]); */
-
-  // console.log(props.data);
   const { data } = props;
   return (
     <section className="box">
@@ -49,11 +44,3 @@ const VacanciesList = props => {
 };
 
 export default VacanciesList;
-/* 
-<Link
-  to={`/vacancy/${item.id}`}
-  className="link-item"
-  key={item.id}
->
-</Link>
-*/
