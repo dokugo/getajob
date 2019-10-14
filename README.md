@@ -1,25 +1,25 @@
-## Intended functionality
+## ~~Intended functionality~~ Todo
 
+- [ ] server
+  - [x] refactor crawling core from promises to async/await
+  - [x] get rid of cheerio
+  - [ ] puppeteer outgoing requests throttling
+  - [ ] incoming api get requests throttling
+  - [ ] extend search parameters
+  - [ ] crawl only in one chromium instance & in the same tab
 - [ ] client
   - [x] form validation
-  - [ ] styling refactoring
+  - [x] infinite scrolling
+  - [ ] styling refactoring (css-in-js)
   - [ ] adaptive
   - [ ] update color theme
-  - [ ] dark theme
-  - [ ] extended search parameters ui
-- [ ] server
-  - [x] cleanup code
-  - [x] find a way to get rid of cheerio
-  - [ ] puppeteer requests throttling
-  - [ ] incoming get requests throttling
-  - [ ] extend search parameters
+  - [ ] create dark theme
+  - [ ] extend search parameters ui
 
-## Notes:
+## Todo side notes:
 
-#### Todo:
+#### Reminders:
 
-- !!! check form submission event (/? url)
-- cleanup SVGs
 - save search parameters to bookmarks
 - get pure links
 
@@ -38,3 +38,5 @@
 - fetch new data by keyword
 - data rendering
 - color scheme
+- check form submission event (/? url param)
+- cleanup SVGs
