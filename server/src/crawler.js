@@ -117,16 +117,17 @@ async function crawl(searchKeywords) {
 
     // get next page if it is exists
     if (result.nextPageUrl) {
-      const nextPageUrl = result.nextPageUrl;
-
+      // destructuring can be used
+      const { nextPageUrl } = result;
+      let updatedOutput = [...output];
       // eslint-disable-next-line no-inner-declarations
       async function getNextPageLoop(nextPageUrl) {
         const result = await getPage(nextPageUrl, page);
         // concatenate next page data to previous pages data
-        output.push(...result.vacancies);
+        updatedOutput = [...updatedOutput, ...result.vacancies];
         // console.log(result)
         if (result.nextPageUrl) {
-          getNextPageLoop(result.nextPageUrl);
+          await getNextPageLoop(result.nextPageUrl);
         }
       }
 
@@ -136,7 +137,7 @@ async function crawl(searchKeywords) {
         console.log('end' , output)
       ) */;
       await browser.close();
-      return output;
+      return updatedOutput;
     } else {
       // console.log('last page');
       // console.log('end' /* , output */);

@@ -22,7 +22,7 @@ app.get('/api/search/:id', async (req, res) => {
 });
 
 // run crawling on init for testing purposes
-async function test() {
+/* async function test() {
   const data = await crawl('vue');
   try {
     console.log(data);
@@ -36,4 +36,4 @@ async function test() {
     console.error('Error: ', err);
   }
 }
-test();
+test(); */
