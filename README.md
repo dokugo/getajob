@@ -16,10 +16,14 @@
   - [ ] create dark theme
   - [ ] extend search parameters ui
 
-## Todo side notes:
+## Todo side notes
 
 #### Reminders:
 
+- fade-in vacancies animation refactoring
+- fade input placeholder on focus
+- sort out cors issue
+- true lazy loading instead of emulated infinite scrolling
 - save search parameters to bookmarks
 - get pure links
 
@@ -40,3 +44,4 @@
 - color scheme
 - check form submission event (/? url param)
 - cleanup SVGs
+- infinite scrolling loading transition animation

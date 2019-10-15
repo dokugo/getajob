@@ -5,9 +5,13 @@ import './App.css';
 
 const App = () => {
   const [data, setData] = useState(null);
+  const [isAnimated, setIsAnimated] = useState(null);
 
   const handleDataUpdate = newData => {
     setData(newData);
+  };
+  const getLoadingState = loadingState => {
+    setIsAnimated(loadingState);
   };
 
   if (data) {
@@ -17,12 +21,15 @@ const App = () => {
   return (
     <div className="App">
       <nav className={`navbar ${data ? 'navbar--top' : ''}`}>
-        <Form handleDataUpdate={handleDataUpdate} />
+        <Form
+          handleDataUpdate={handleDataUpdate}
+          getLoadingState={getLoadingState}
+        />
       </nav>
       <main className={`container ${data ? 'container--top' : ''}`}>
         {data ? (
           data.length ? (
-            <VacanciesList data={data} />
+            <VacanciesList data={data} isAnimated={isAnimated} />
           ) : (
             <div className="loader">Found nothing</div>
           )

@@ -8,23 +8,24 @@ import InfiniteScroll from 'react-infinite-scroll-component';
   padding: 8
 }; */
 
-const VacanciesList = props => {
-  const { data } = props;
+const VacanciesList = ({ data, isAnimated }) => {
   const [dataStorage, setDataStorage] = useState(null);
 
+  const DATA_CUT = 10;
+
   useEffect(() => {
-    if (data.length <= 8) {
+    // setNewData(true);
+    if (data.length <= DATA_CUT) {
       setDataStorage({
         items: data,
         hasMore: false
       });
     } else {
-      const dataChunk = data.slice(0, 8);
+      const dataChunk = data.slice(0, DATA_CUT);
       setDataStorage({
         items: dataChunk,
         hasMore: true
       });
-      console.log('newData');
     }
   }, [data]);
 
@@ -38,13 +39,13 @@ const VacanciesList = props => {
         dataStorage.items.length,
         dataStorage.items.length + 5
       );
-      console.log(dataStorage.items.length, dataStorage.items.length + 5);
+      // console.log(dataStorage.items.length, dataStorage.items.length + 5);
       const newData = [...dataStorage.items, ...newDataChunk];
       setDataStorage({
         items: newData,
         hasMore: true
       });
-    }, 100);
+    }, 500);
   };
 
   return (
@@ -54,10 +55,10 @@ const VacanciesList = props => {
           dataLength={dataStorage.items.length}
           next={fetchMoreData}
           hasMore={dataStorage.hasMore}
-          loader={<h4>Loading...</h4>}
+          style={{ overflow: 'visible' }}
           endMessage={
             <p style={{ textAlign: 'center' }}>
-              <b>The end</b>
+              <b> · · · </b>
             </p>
           }
         >
@@ -65,7 +66,7 @@ const VacanciesList = props => {
             <a
               href={item.link}
               key={item.id}
-              className="link-item"
+              className={`link-item ${isAnimated ? 'link-item-animate' : ''}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -75,21 +76,26 @@ const VacanciesList = props => {
                     {item.title}
                   </div>
                   <div className="link-item__data link-item__data-date">
-                    {index + 1}
+                    {item.date}
                   </div>
                 </div>
                 <div className="link-item__data link-item__data-employer">
                   {item.employer}
                 </div>
-                <div
-                  className={
-                    'link-item__data link-item__data-compensation' +
-                    (item.compensation === 'Зарплата не указана'
-                      ? ' no-data'
-                      : '')
-                  }
-                >
-                  {item.compensation}
+                <div className="link-item__row">
+                  <div
+                    className={
+                      'link-item__data link-item__data-compensation' +
+                      (item.compensation === 'Зарплата не указана'
+                        ? ' no-data'
+                        : '')
+                    }
+                  >
+                    {item.compensation}
+                  </div>
+                  <div className="link-item__data link-item__data-number">
+                    {`№${index + 1}`}
+                  </div>
                 </div>
               </div>
             </a>

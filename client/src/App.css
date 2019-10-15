@@ -327,6 +327,21 @@ button:focus {
   box-sizing: border-box;
 }
 
+.link-item-animate {
+  animation: infiniteScrollingFadeIn 1s;
+}
+
+@keyframes infiniteScrollingFadeIn {
+  0% {
+    /* transform: translateY(100%); */
+    opacity: 0;
+  }
+  100% {
+    /* transform: translateY(0); */
+    opacity: 1;
+  }
+}
+
 .link-item:focus {
   /* box-shadow: 2px 2px 1px seagreen inset, -2px -2px 1px seagreen inset; */
   /* border-color: #28a745; */
@@ -349,6 +364,12 @@ button:focus {
 
 .link-item__data-date {
   color: grey;
+  font-size: 14px;
+}
+
+.link-item__data-number {
+  color: #8fbc8f;
+  /* color: darkseagreen; */
   font-size: 14px;
 }
 

@@ -5,13 +5,13 @@ import IconLoading from './icons/IconLoading';
 // import IconSearch from './icons/IconSearch';
 // import NProgress from 'nprogress';
 
-const Form = ({ handleDataUpdate }) => {
+const Form = ({ handleDataUpdate, getLoadingState }) => {
   const [inputData, setInputData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [inputState, setInputState] = useState(null);
 
   const handleInputChange = e => {
-    console.log('state: ', inputData);
+    // console.log('state: ', inputData);
     if (e.target.value.length < 1 || e.target.value.trim().length < 1) {
       console.log('Form validation error');
       setInputState('warning');
@@ -33,15 +33,14 @@ const Form = ({ handleDataUpdate }) => {
       return;
     } else {
       setInputState(null);
-      // NProgress.start();
       setIsLoading(true);
-
+      getLoadingState(false);
       fetch(`http://localhost:9000/api/search/${inputData}`)
         .then(response => response.json())
         .then(data => {
+          getLoadingState(true);
           handleDataUpdate(data);
           console.log('Data successfully updated');
-          // NProgress.done();
           setIsLoading(false);
         })
         .catch(e => console.log('Error: ', e));
@@ -74,8 +73,8 @@ const Form = ({ handleDataUpdate }) => {
               className={`request-input ${inputModifier}`}
               type="text"
               name="request"
-              placeholder="Search"
-              autoComplete="off"
+              placeholder="Search..."
+              autoComplete="on"
             />
             <span className={`input-icon`}>
               <IconError
