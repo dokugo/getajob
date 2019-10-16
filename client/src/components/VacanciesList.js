@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-/* const style = {
-  height: 30,
-  border: '1px solid green',
-  margin: 6,
-  padding: 8
-}; */
+import styled from 'styled-components';
 
 const VacanciesList = ({ data, isAnimated }) => {
   const [dataStorage, setDataStorage] = useState(null);
@@ -49,7 +44,7 @@ const VacanciesList = ({ data, isAnimated }) => {
   };
 
   return (
-    <section className="box">
+    <Box>
       {dataStorage && dataStorage.items ? (
         <InfiniteScroll
           dataLength={dataStorage.items.length}
@@ -102,8 +97,14 @@ const VacanciesList = ({ data, isAnimated }) => {
           ))}
         </InfiniteScroll>
       ) : null}
-    </section>
+    </Box>
   );
 };
 
 export default VacanciesList;
+
+const Box = styled.section`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+`;

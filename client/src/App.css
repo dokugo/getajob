@@ -8,7 +8,7 @@ body {
   min-height: 100vh;
 }
 
-.App {
+.app {
   /* padding: 100px 0; */
   /* height: 100vh; */
   /* display: flex; */
@@ -119,10 +119,10 @@ body {
 }
 
 .input-field {
-  display: flex;
+  /*   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  width: 640px;
+  width: 640px; */
   /* margin-bottom: 10px; */
 }
 
@@ -307,11 +307,11 @@ button:focus {
   color: #f5fcf5;
 }
 
-.box {
+/* .box {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-}
+} */
 
 .link-item {
   display: flex;

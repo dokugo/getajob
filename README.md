@@ -20,6 +20,8 @@
 
 #### Reminders:
 
+- try load more button
+- balance infinite scrolling height trigger
 - fade-in vacancies animation refactoring
 - fade input placeholder on focus
 - sort out cors issue

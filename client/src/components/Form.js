@@ -5,6 +5,8 @@ import IconLoading from './icons/IconLoading';
 // import IconSearch from './icons/IconSearch';
 // import NProgress from 'nprogress';
 
+import styled from 'styled-components';
+
 const Form = ({ handleDataUpdate, getLoadingState }) => {
   const [inputData, setInputData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +67,7 @@ const Form = ({ handleDataUpdate, getLoadingState }) => {
 
   return (
     <form onSubmit={handleRequest}>
-      <div className="input-field">
+      <InputField>
         <div className="input-box">
           <div className="search">
             <input
@@ -95,9 +97,17 @@ const Form = ({ handleDataUpdate, getLoadingState }) => {
           ) : null}
         </div>
         <button className="request-btn">Find</button>
-      </div>
+      </InputField>
     </form>
   );
 };
 
 export default Form;
+
+const InputField = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 640px;
+  /* margin-bottom: 10px; */
+`;

@@ -19,7 +19,7 @@ const App = () => {
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <nav className={`navbar ${data ? 'navbar--top' : ''}`}>
         <Form
           handleDataUpdate={handleDataUpdate}
