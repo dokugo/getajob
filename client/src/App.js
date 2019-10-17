@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import VacanciesList from './components/VacanciesList';
+import VacanciesList from './components/ListContainer';
 import Form from './components/Form';
 import './App.css';
 

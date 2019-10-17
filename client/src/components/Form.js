@@ -7,6 +7,14 @@ import IconLoading from './icons/IconLoading';
 
 import styled from 'styled-components';
 
+const InputField = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 640px;
+  /* margin-bottom: 10px; */
+`;
+
 const Form = ({ handleDataUpdate, getLoadingState }) => {
   const [inputData, setInputData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -103,11 +111,3 @@ const Form = ({ handleDataUpdate, getLoadingState }) => {
 };
 
 export default Form;
-
-const InputField = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 640px;
-  /* margin-bottom: 10px; */
-`;
