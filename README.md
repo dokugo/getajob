@@ -20,6 +20,7 @@
 
 #### Reminders:
 
+- found nothing animation
 - try load more button
 - balance infinite scrolling height trigger
 - fade-in vacancies animation refactoring
