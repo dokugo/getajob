@@ -1,18 +1,115 @@
 import React, { useState } from 'react';
-import IconError from './icons/IconError';
-import IconWarning from './icons/IconWarning';
-import IconLoading from './icons/IconLoading';
-// import IconSearch from './icons/IconSearch';
-// import NProgress from 'nprogress';
-
+// import IconError from './icons/IconError';
+// import IconWarning from './icons/IconWarning';
+// import IconLoading from './icons/IconLoading';
 import styled from 'styled-components';
+import { IconWarning, IconError, IconLoading } from './icons/IconWarning';
 
-const InputField = styled.div`
+const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
   width: 640px;
-  /* margin-bottom: 10px; */
+`;
+
+const InputBox = styled.div`
+  position: relative;
+`;
+
+const InputItem = styled.div`
+  position: relative;
+`;
+
+const Input = styled.input`
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  width: 315px;
+  height: 40px;
+  padding: 0px 12px;
+  box-sizing: border-box;
+  background-color: #f5fcf5;
+  border-radius: 3px;
+  color: #464646;
+  padding-right: 36px;
+  padding-bottom: 2px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${props => {
+    if (props.inputState === 'warning') {
+      return '#faad14';
+    } else if (props.inputState === 'error') {
+      return '#dc3545';
+    } else return '#28a745';
+  }};
+  &:focus {
+    outline: 0 none;
+    border-color: ${props => {
+      if (props.inputState === 'warning') {
+        return 'rgba(250, 166, 26, 0.749)';
+      } else if (props.inputState === 'error') {
+        return '#dc3545';
+      } else return '#28a745';
+    }};
+    box-shadow: ${props => {
+      if (props.inputState === 'warning') {
+        return '0 0 0 0.2rem rgba(250, 166, 26, 0.3)';
+      } else if (props.inputState === 'error') {
+        return '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
+      } else return '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
+    }};
+  }
+`;
+
+const IconContainer = styled.span`
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  margin-top: -12.5px;
+  width: 25px;
+  height: 25px;
+`;
+
+const Tooltip = styled.span`
+  position: absolute;
+  font-size: 14px;
+  padding: 5px 5px;
+  color: ${props =>
+    props.inputState === 'warning'
+      ? '#b37700'
+      : props.inputState === 'error'
+      ? '#dc3545'
+      : null};
+`;
+
+const Button = styled.button`
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  border: 1px solid #28a745;
+  background-color: #f5fcf5;
+  color: #28a745;
+  height: 40px;
+  padding: 0;
+  padding-bottom: 2px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  text-align: center;
+  box-sizing: border-box;
+  width: 315px;
+  cursor: pointer;
+  &:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    outline: 0 none;
+  }
+  &:hover {
+    background-color: #28a745;
+    color: #f5fcf5;
+  }
 `;
 
 const Form = ({ handleDataUpdate, getLoadingState }) => {
@@ -57,55 +154,43 @@ const Form = ({ handleDataUpdate, getLoadingState }) => {
     }
   };
 
-  const inputModifier = `input-${inputState}`;
-
-  /*   const icon =
-    inputState === 'error' ? (
-      <IconError type={'filled'} />
-    ) : inputState === 'warning' ? (
-      <IconWarning type={'filled'} />
-    ) : null; */
-
-  const tooltip =
-    inputState === 'warning'
-      ? `Search request can't be empty.`
-      : inputState === 'error'
-      ? `Can't send empty request.`
-      : null;
-
   return (
     <form onSubmit={handleRequest}>
-      <InputField>
-        <div className="input-box">
-          <div className="search">
-            <input
+      <InputContainer>
+        <InputBox>
+          <InputItem>
+            <Input
               onChange={handleInputChange}
-              className={`request-input ${inputModifier}`}
+              inputState={inputState}
               type="text"
-              name="request"
+              name="search-request"
               placeholder="Search..."
               autoComplete="on"
             />
-            <span className={`input-icon`}>
+            <IconContainer>
               <IconError
                 type={'filled'}
-                animate={inputState === 'error' ? 'error-icon--show' : ''}
+                show={inputState === 'error' ? true : false}
               />
               <IconWarning
                 type={'filled'}
-                animate={inputState === 'warning' ? 'error-icon--show' : ''}
+                show={inputState === 'warning' ? true : false}
               />
-              <IconLoading animate={isLoading ? 'error-icon--show' : ''} />
-            </span>
-          </div>
+              <IconLoading show={isLoading ? true : false} />
+            </IconContainer>
+          </InputItem>
           {inputState ? (
-            <div className={`search-tooltip search-tooltip--${inputState}`}>
-              {tooltip}
-            </div>
+            <Tooltip inputState={inputState}>
+              {inputState === 'warning'
+                ? `Search request can't be empty.`
+                : inputState === 'error'
+                ? `Can't send empty request.`
+                : null}
+            </Tooltip>
           ) : null}
-        </div>
-        <button className="request-btn">Find</button>
-      </InputField>
+        </InputBox>
+        <Button>Find</Button>
+      </InputContainer>
     </form>
   );
 };

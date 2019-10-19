@@ -32,12 +32,10 @@ const Link = styled.a`
   color: #000;
   width: 640px;
   box-sizing: border-box;
-
   &:focus {
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
     outline: 0 none;
   }
-
   &:hover ${Title} {
     text-decoration: underline;
     color: seagreen;

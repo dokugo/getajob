@@ -3,7 +3,7 @@ import ListItem from './ListItem';
 
 import styled, { keyframes } from 'styled-components';
 
-const fadeIn = keyframes`{
+const fadeIn = keyframes`
   0% {
     /* transform: translateY(100%); */
     opacity: 0;
@@ -12,7 +12,7 @@ const fadeIn = keyframes`{
     /* transform: translateY(0); */
     opacity: 1;
   }
-}`;
+`;
 
 const ItemBox = styled.article`
   animation-duration: 1s;

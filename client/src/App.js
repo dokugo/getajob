@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import VacanciesList from './components/ListContainer';
 import Form from './components/Form';
-import './App.css';
+// import './App.css';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`

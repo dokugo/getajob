@@ -10,7 +10,7 @@
 - [ ] client
   - [x] form validation
   - [x] infinite scrolling
-  - [ ] styling refactoring (css-in-js)
+  - [x] styling refactoring (css-in-js)
   - [ ] adaptive
   - [ ] update color theme
   - [ ] create dark theme
@@ -23,7 +23,6 @@
 - found nothing animation
 - try load more button
 - balance infinite scrolling height trigger
-- fade-in vacancies animation refactoring
 - fade input placeholder on focus
 - sort out cors issue
 - true lazy loading instead of emulated infinite scrolling
@@ -48,3 +47,4 @@
 - check form submission event (/? url param)
 - cleanup SVGs
 - infinite scrolling loading transition animation
+- fade-in vacancies animation refactoring
