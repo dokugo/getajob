@@ -20,6 +20,9 @@
 
 #### Reminders:
 
+- find better solution for form loading animation
+- ternary refactoring
+- setState toggle refactoring
 - found nothing animation
 - try load more button
 - balance infinite scrolling height trigger

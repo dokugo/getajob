@@ -14,7 +14,7 @@ const getSearchUrl = searchKeywords => {
   return URL;
 };
 
-async function getPage(URL, page) {
+const getPage = async (URL, page) => {
   try {
     await page.goto(URL, { waitUntil: 'networkidle2', timeout: 0 });
 
@@ -88,9 +88,9 @@ async function getPage(URL, page) {
   } catch (error) {
     console.error('Error: ', error);
   }
-}
+};
 
-async function crawl(searchKeywords) {
+const crawl = async searchKeywords => {
   const URL = getSearchUrl(searchKeywords);
   try {
     // console.clear();
@@ -149,6 +149,6 @@ async function crawl(searchKeywords) {
   } catch (error) {
     console.error('Error: ', error);
   }
-}
+};
 
 module.exports = crawl;

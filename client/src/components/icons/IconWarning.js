@@ -1,9 +1,8 @@
 import React from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const loadingAnimation = keyframes`
   100% {
-    /* -webkit-transform: rotate(360deg); */
     transform: rotate(360deg);
   }
 `;
@@ -14,12 +13,8 @@ const Icon = styled.svg`
   left: 0;
   transition: opacity 0.25s ease-in-out;
   opacity: ${props => (props.show ? 1 : 0)};
-  animation: ${props =>
-    props.animated
-      ? css`
-          ${loadingAnimation} 1s infinite linear
-        `
-      : 'none'};
+  animation: ${props => (props.animated ? loadingAnimation : 'none')} 1s linear
+    infinite;
 `;
 
 const IconWarning = ({ type, show }) => {

@@ -8,6 +8,7 @@ const Box = styled.div`
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 5px;
 `;
 
 const Title = styled.span`
@@ -45,15 +46,11 @@ const Link = styled.a`
 const Date = styled.span`
   color: grey;
   font-size: 14px;
-
-  margin-bottom: 2.5px;
 `;
 
 const Compensation = styled.span`
   font-weight: ${props => (props.hasData ? 500 : 400)};
   color: #6aac00;
-
-  margin-bottom: 2.5px;
 `;
 
 const Number = styled.span`
@@ -72,9 +69,9 @@ const ListItem = ({ item, index }) => {
           <Title>{item.title}</Title>
           <Date>{item.date}</Date>
         </Row>
-        <div className="link-item__data link-item__data-employer">
-          {item.employer}
-        </div>
+        <Row>
+          <div>{item.employer}</div>
+        </Row>
         <Row>
           <Compensation
             hasData={item.compensation === 'Зарплата не указана' ? false : true}

@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-// import IconError from './icons/IconError';
-// import IconWarning from './icons/IconWarning';
-// import IconLoading from './icons/IconLoading';
 import styled from 'styled-components';
 import { IconWarning, IconError, IconLoading } from './icons/IconWarning';
 
@@ -189,7 +186,9 @@ const Form = ({ handleDataUpdate, getLoadingState }) => {
             </Tooltip>
           ) : null}
         </InputBox>
-        <Button>Find</Button>
+        <div>
+          <Button>Find</Button>
+        </div>
       </InputContainer>
     </form>
   );
