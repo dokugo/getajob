@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import ListItemBox from './ListItemBox';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const Box = styled.section`
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+  width: 100%;
 `;
 
 const ListContainer = ({ data, isAnimated }) => {

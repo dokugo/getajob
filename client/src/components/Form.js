@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { IconWarning, IconError, IconLoading } from './icons/IconWarning';
+import styled from 'styled-components/macro';
+import { IconWarning, IconError, IconLoading } from './icons/Icons';
+
+const FormItem = styled.form`
+  width: 100%;
+`;
 
 const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
   width: 640px;
+  @media (max-width: 670px) {
+    width: 100%;
+  }
 `;
 
 const InputBox = styled.div`
   position: relative;
+
+  width: 100%;
 `;
 
 const InputItem = styled.div`
@@ -22,7 +31,8 @@ const Input = styled.input`
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 18px;
   font-weight: 600;
-  width: 315px;
+  /* width: 300px; */
+  width: 100%;
   height: 40px;
   padding: 0px 12px;
   box-sizing: border-box;
@@ -81,6 +91,10 @@ const Tooltip = styled.span`
       : null};
 `;
 
+const ButtonBox = styled.div`
+  margin-left: 10px;
+`;
+
 const Button = styled.button`
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -89,14 +103,12 @@ const Button = styled.button`
   background-color: #f5fcf5;
   color: #28a745;
   height: 40px;
-  padding: 0;
-  padding-bottom: 2px;
   border-radius: 3px;
   transition: all 0.2s ease;
   font-weight: 600;
   text-align: center;
   box-sizing: border-box;
-  width: 315px;
+  /* width: 300px; */
   cursor: pointer;
   &:focus {
     border-color: #28a745;
@@ -107,6 +119,8 @@ const Button = styled.button`
     background-color: #28a745;
     color: #f5fcf5;
   }
+
+  padding: 0 20px 2px;
 `;
 
 const Form = ({ handleDataUpdate, getLoadingState }) => {
@@ -152,7 +166,7 @@ const Form = ({ handleDataUpdate, getLoadingState }) => {
   };
 
   return (
-    <form onSubmit={handleRequest}>
+    <FormItem onSubmit={handleRequest}>
       <InputContainer>
         <InputBox>
           <InputItem>
@@ -186,11 +200,11 @@ const Form = ({ handleDataUpdate, getLoadingState }) => {
             </Tooltip>
           ) : null}
         </InputBox>
-        <div>
+        <ButtonBox>
           <Button>Find</Button>
-        </div>
+        </ButtonBox>
       </InputContainer>
-    </form>
+    </FormItem>
   );
 };
 

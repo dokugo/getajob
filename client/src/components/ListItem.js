@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const Box = styled.div`
   width: inherit;
@@ -19,7 +19,10 @@ const Title = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: 500px;
+  /* width: 500px; */
+  width: 100%;
+  max-width: 500px;
+  flex-grow: 1;
 `;
 
 const Link = styled.a`
@@ -41,11 +44,15 @@ const Link = styled.a`
     text-decoration: underline;
     color: seagreen;
   }
+  @media (max-width: 670px) {
+    width: 100%;
+  }
 `;
 
 const Date = styled.span`
   color: grey;
   font-size: 14px;
+  margin-left: 10px;
 `;
 
 const Compensation = styled.span`

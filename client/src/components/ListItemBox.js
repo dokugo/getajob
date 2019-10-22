@@ -1,7 +1,7 @@
 import React from 'react';
 import ListItem from './ListItem';
 
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components/macro';
 
 const fadeIn = keyframes`
   0% {
@@ -15,6 +15,8 @@ const fadeIn = keyframes`
 `;
 
 const ItemBox = styled.article`
+  display: flex;
+  justify-content: center;
   animation: ${props => (props.isAnimated ? fadeIn : 'unset')} 1s;
 `;
 

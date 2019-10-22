@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import VacanciesList from './components/ListContainer';
 import Form from './components/Form';
+import { hot } from 'react-hot-loader';
 // import './App.css';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components/macro';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,8 +16,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const AppRoot = styled.div`
+const AppBox = styled.div`
   height: 100vh;
+  padding: 0 10px;
 `;
 
 const Navbar = styled.nav`
@@ -79,7 +81,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <AppRoot>
+      <AppBox>
         <Navbar isAnimated={data ? true : false}>
           <Form
             handleDataUpdate={handleDataUpdate}
@@ -98,9 +100,9 @@ const App = () => {
           ) : null}
         </Container>
         {data ? <Number>{data.length}</Number> : null}
-      </AppRoot>
+      </AppBox>
     </>
   );
 };
 
-export default App;
+export default hot(module)(App);
