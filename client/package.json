@@ -12,8 +12,8 @@
     "styled-components": "^4.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -33,10 +33,15 @@
     ]
   },
   "devDependencies": {
+    "@hot-loader/react-dom": "^16.10.2",
+    "babel-plugin-macros": "^2.6.1",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.18.2",
+    "react-app-rewire-hot-loader": "^2.0.1",
+    "react-app-rewired": "^2.1.4",
+    "react-hot-loader": "^4.12.15",
     "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
     "stylelint-config-recommended": "^2.2.0",
