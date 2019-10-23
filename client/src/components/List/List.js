@@ -10,7 +10,7 @@ const Box = styled.section`
   width: 100%;
 `;
 
-const ListContainer = ({ data, isAnimated }) => {
+const List = ({ data, isAnimated }) => {
   const [dataStorage, setDataStorage] = useState(null);
 
   const DATA_CUT = 10;
@@ -71,4 +71,4 @@ const ListContainer = ({ data, isAnimated }) => {
   );
 };
 
-export default ListContainer;
+export default List;

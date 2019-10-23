@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import VacanciesList from './components/ListContainer';
-import Form from './components/Form';
+import List from './List/List';
+import Form from './Form/Form';
 import { hot } from 'react-hot-loader';
 // import './App.css';
 import styled, { createGlobalStyle } from 'styled-components/macro';
@@ -23,9 +23,9 @@ const AppBox = styled.div`
 
 const Navbar = styled.nav`
   position: relative;
-  top: ${props => (props.isAnimated === false ? '50%' : '0%')};
-  transform: ${props =>
-    props.isAnimated === false ? 'translateY(-50%)' : 'none'};
+  top: ${({ isAnimated }) => (isAnimated === false ? '50%' : '0%')};
+  transform: ${({ isAnimated }) =>
+    isAnimated === false ? 'translateY(-50%)' : 'none'};
   margin: auto;
   display: flex;
   width: 100%;
@@ -43,7 +43,7 @@ const Container = styled.main`
   margin: 0 auto;
   position: relative;
   top: 0%;
-  opacity: ${props => (props.isOpaque ? 1 : 0)};
+  opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease 0.5s;
 `;
 
@@ -52,16 +52,16 @@ const Loader = styled.span`
   margin: 0 auto;
   text-align: center;
   margin-top: 100px;
-  opacity: ${props => (props.isOpaque ? 1 : 0)};
+  opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease;
 `;
 
-const Number = styled.div`
+/* const Number = styled.div`
   position: absolute;
-  font-size: 36px;
-  top: 10px;
+  font-size: 40px;
+  line-height: 40px;
   right: 10px;
-`;
+`; */
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -87,11 +87,12 @@ const App = () => {
             handleDataUpdate={handleDataUpdate}
             getLoadingState={getLoadingState}
           />
+          {/* {data ? <Number>{data.length}</Number> : null} */}
         </Navbar>
         <Container isOpaque={data ? true : false}>
           {data ? (
             data.length ? (
-              <VacanciesList data={data} isAnimated={isAnimated} />
+              <List data={data} isAnimated={isAnimated} />
             ) : (
               <Loader isOpaque={!data.length ? true : false}>
                 Found nothing
@@ -99,7 +100,6 @@ const App = () => {
             )
           ) : null}
         </Container>
-        {data ? <Number>{data.length}</Number> : null}
       </AppBox>
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-import { IconWarning, IconError, IconLoading } from './icons/Icons';
+import { IconWarning, IconError, IconLoading } from './FormIcons';
 
 const FormItem = styled.form`
   width: 100%;
@@ -44,26 +44,26 @@ const Input = styled.input`
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-width: 1px;
   border-style: solid;
-  border-color: ${props => {
-    if (props.inputState === 'warning') {
+  border-color: ${({ inputState }) => {
+    if (inputState === 'warning') {
       return '#faad14';
-    } else if (props.inputState === 'error') {
+    } else if (inputState === 'error') {
       return '#dc3545';
     } else return '#28a745';
   }};
   &:focus {
     outline: 0 none;
-    border-color: ${props => {
-      if (props.inputState === 'warning') {
+    border-color: ${({ inputState }) => {
+      if (inputState === 'warning') {
         return 'rgba(250, 166, 26, 0.749)';
-      } else if (props.inputState === 'error') {
+      } else if (inputState === 'error') {
         return '#dc3545';
       } else return '#28a745';
     }};
-    box-shadow: ${props => {
-      if (props.inputState === 'warning') {
+    box-shadow: ${({ inputState }) => {
+      if (inputState === 'warning') {
         return '0 0 0 0.2rem rgba(250, 166, 26, 0.3)';
-      } else if (props.inputState === 'error') {
+      } else if (inputState === 'error') {
         return '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
       } else return '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
     }};
@@ -83,10 +83,10 @@ const Tooltip = styled.span`
   position: absolute;
   font-size: 14px;
   padding: 5px 5px;
-  color: ${props =>
-    props.inputState === 'warning'
+  color: ${({ inputState }) =>
+    inputState === 'warning'
       ? '#b37700'
-      : props.inputState === 'error'
+      : inputState === 'error'
       ? '#dc3545'
       : null};
 `;
@@ -120,7 +120,7 @@ const Button = styled.button`
     color: #f5fcf5;
   }
 
-  padding: 0 20px 2px;
+  padding: 0 25px 2px;
 `;
 
 const Form = ({ handleDataUpdate, getLoadingState }) => {

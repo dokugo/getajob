@@ -17,7 +17,7 @@ const fadeIn = keyframes`
 const ItemBox = styled.article`
   display: flex;
   justify-content: center;
-  animation: ${props => (props.isAnimated ? fadeIn : 'unset')} 1s;
+  animation: ${({ isAnimated }) => (isAnimated ? fadeIn : 'unset')} 1s;
 `;
 
 const ListItemBox = ({ dataStorage, isAnimated }) => {

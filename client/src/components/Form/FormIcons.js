@@ -12,9 +12,9 @@ const Icon = styled.svg`
   top: 0;
   left: 0;
   transition: opacity 0.25s ease-in-out;
-  opacity: ${props => (props.show ? 1 : 0)};
-  animation: ${props => (props.animated ? loadingAnimation : 'none')} 1s linear
-    infinite;
+  opacity: ${({ show }) => (show ? 1 : 0)};
+  animation: ${({ animated }) => (animated ? loadingAnimation : 'none')} 1s
+    linear infinite;
 `;
 
 const IconWarning = ({ type, show }) => {

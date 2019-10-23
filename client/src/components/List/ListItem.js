@@ -56,7 +56,7 @@ const Date = styled.span`
 `;
 
 const Compensation = styled.span`
-  font-weight: ${props => (props.hasData ? 500 : 400)};
+  font-weight: ${({ hasData }) => (hasData ? 500 : 400)};
   color: #6aac00;
 `;
 
