@@ -2,11 +2,19 @@ import React, { useState } from 'react';
 import List from './List/List';
 import Form from './Form/Form';
 import { hot } from 'react-hot-loader';
-// import './App.css';
 import styled, { createGlobalStyle } from 'styled-components/macro';
+import AnimationContextProvider from '../contexts/AnimationContext';
 
 const GlobalStyle = createGlobalStyle`
   body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   /* background: #fff; */
   /* background: #f5fcf5; */
   background: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%) fixed;
@@ -57,7 +65,7 @@ const Loader = styled.span`
 `;
 
 /* const Number = styled.div`
-  position: absolute;
+  position: absolute; 
   font-size: 40px;
   line-height: 40px;
   right: 10px;
@@ -65,14 +73,14 @@ const Loader = styled.span`
 
 const App = () => {
   const [data, setData] = useState(null);
-  const [isAnimated, setIsAnimated] = useState(null);
+  // const [isAnimated, setIsAnimated] = useState(null);
 
   const handleDataUpdate = newData => {
     setData(newData);
   };
-  const getLoadingState = loadingState => {
+  /*   const getLoadingState = loadingState => {
     setIsAnimated(loadingState);
-  };
+  }; */
 
   if (data) {
     console.log(data);
@@ -82,24 +90,23 @@ const App = () => {
     <>
       <GlobalStyle />
       <AppBox>
-        <Navbar isAnimated={data ? true : false}>
-          <Form
-            handleDataUpdate={handleDataUpdate}
-            getLoadingState={getLoadingState}
-          />
-          {/* {data ? <Number>{data.length}</Number> : null} */}
-        </Navbar>
-        <Container isOpaque={data ? true : false}>
-          {data ? (
-            data.length ? (
-              <List data={data} isAnimated={isAnimated} />
-            ) : (
-              <Loader isOpaque={!data.length ? true : false}>
-                Found nothing
-              </Loader>
-            )
-          ) : null}
-        </Container>
+        <AnimationContextProvider>
+          <Navbar isAnimated={data ? true : false}>
+            <Form handleDataUpdate={handleDataUpdate} />
+            {/* {data ? <Number>{data.length}</Number> : null} */}
+          </Navbar>
+          <Container isOpaque={data ? true : false}>
+            {data ? (
+              data.length ? (
+                <List data={data} />
+              ) : (
+                <Loader isOpaque={!data.length ? true : false}>
+                  Found nothing
+                </Loader>
+              )
+            ) : null}
+          </Container>
+        </AnimationContextProvider>
       </AppBox>
     </>
   );

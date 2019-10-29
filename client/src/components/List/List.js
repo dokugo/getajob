@@ -10,7 +10,7 @@ const Box = styled.section`
   width: 100%;
 `;
 
-const List = ({ data, isAnimated }) => {
+const List = ({ data }) => {
   const [dataStorage, setDataStorage] = useState(null);
 
   const DATA_CUT = 10;
@@ -64,7 +64,7 @@ const List = ({ data, isAnimated }) => {
             </p>
           }
         >
-          <ListItemBox dataStorage={dataStorage} isAnimated={isAnimated} />
+          <ListItemBox dataStorage={dataStorage} />
         </InfiniteScroll>
       ) : null}
     </Box>

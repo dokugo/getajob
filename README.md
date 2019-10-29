@@ -20,6 +20,7 @@
 
 #### Reminders:
 
+- request cancellation
 - find better solution for form loading animation
 - ternary refactoring
 - setState toggle refactoring
