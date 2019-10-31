@@ -9,9 +9,10 @@
   - [ ] crawl only in one chromium instance & in the same tab
 - [ ] client
   - [x] form validation
-  - [x] infinite scrolling
-  - [x] styling refactoring (css-in-js)
-  - [ ] adaptive
+  - [x] api call (pseudo) throttling
+  - [x] infinite scrolling (without lazy loading)
+  - [x] styling refactoring (css-in-js styled-components)
+  - [x] adaptive layout
   - [ ] update color theme
   - [ ] create dark theme
   - [ ] extend search parameters ui
@@ -21,18 +22,17 @@
 #### Reminders:
 
 - found nothing / end msg refactoring + fade in / out animation
-- request cancellation
-- find better solution for form loading animation
+- find better solution for form loading animation (setTimeout)
 - ternary refactoring
 - setState toggle refactoring
-- found nothing animation
-- try load more button
-- balance infinite scrolling height trigger
 - fade input placeholder on focus
 - sort out cors issue
+
 - true lazy loading instead of emulated infinite scrolling
-- save search parameters to bookmarks
-- get pure links
+- try load more button
+- try pagination
+
+- get pure links (cleanup link url params)
 
 #### Completed:
 
@@ -53,3 +53,5 @@
 - cleanup SVGs
 - infinite scrolling loading transition animation
 - fade-in vacancies animation refactoring
+- balance infinite scrolling height trigger
+- (pseudo) request cancellation

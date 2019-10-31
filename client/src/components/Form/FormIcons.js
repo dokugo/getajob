@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components/macro';
+import styled, { keyframes, css } from 'styled-components/macro';
 
 const loadingAnimation = keyframes`
   100% {
@@ -13,8 +13,14 @@ const Icon = styled.svg`
   left: 0;
   transition: opacity 0.25s ease-in-out;
   opacity: ${({ show }) => (show ? 1 : 0)};
-  animation: ${({ animated }) => (animated ? loadingAnimation : 'none')} 1s
-    linear infinite;
+  /* animation: ${({ isAnimated }) =>
+    isAnimated ? loadingAnimation : 'none'} 1s
+    linear infinite; */;
+  ${({ isAnimated }) =>
+    isAnimated &&
+    css`
+      animation: ${loadingAnimation} 1s linear infinite;
+    `};
 `;
 
 const IconWarning = ({ type, show }) => {
@@ -99,7 +105,7 @@ const IconLoading = ({ show }) => {
   return (
     <Icon
       show={show}
-      animated
+      isAnimated
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1024 1024"
     >

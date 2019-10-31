@@ -50,6 +50,10 @@ const Form = () => {
   const handleRequest = e => {
     e.preventDefault();
 
+    if (isLoading) {
+      return;
+    }
+
     if (inputData === null) {
       setValidationState('error');
       return;
