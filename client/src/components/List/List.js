@@ -29,9 +29,11 @@ const List = () => {
           hasMore={dataCache.hasMore}
           style={{ overflow: 'visible' }}
           endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b> · · · </b>
-            </p>
+            dataCache.items.length ? (
+              <p style={{ textAlign: 'center' }}>
+                <b> · · · </b>
+              </p>
+            ) : null
           }
         >
           <ListItemBox dataCache={dataCache} />

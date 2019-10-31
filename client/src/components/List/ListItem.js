@@ -27,7 +27,6 @@ const Title = styled.span`
 
 const Link = styled.a`
   display: flex;
-  margin-bottom: 10px;
   padding: 12px 18px;
   border-radius: 8px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);

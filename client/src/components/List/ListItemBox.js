@@ -19,12 +19,26 @@ const fadeIn = keyframes`
 const ItemBox = styled.article`
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
+/*   &:last-of-type {
+    margin-bottom: unset;
+  } */;
   ${({ isAnimated }) =>
     isAnimated &&
     css`
       animation: ${fadeIn} 1s;
     `};
   /* animation: ${({ isAnimated }) => (isAnimated ? fadeIn : 'unset')} 1s; */
+`;
+
+const NoData = styled.span`
+  display: block;
+  font-size: 36px;
+  line-height: 1;
+  text-align: center;
+  margin: 20px 0 20px;
+  /* transition: opacity 0.5s ease; */
+  /* opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)}; */
 `;
 
 const ListItemBox = ({ dataCache }) => {
@@ -36,11 +50,17 @@ const ListItemBox = ({ dataCache }) => {
 
   return (
     <React.Fragment>
-      {dataCache.items.map((item, index) => (
-        <ItemBox isAnimated={listAnimation} key={item.id}>
-          <ListItem item={item} index={index} />
+      {dataCache.items.length ? (
+        dataCache.items.map((item, index) => (
+          <ItemBox isAnimated={listAnimation} key={item.id}>
+            <ListItem item={item} index={index} />
+          </ItemBox>
+        ))
+      ) : (
+        <ItemBox isAnimated={listAnimation}>
+          <NoData>Found nothing</NoData>
         </ItemBox>
-      ))}
+      )}
     </React.Fragment>
   );
 };

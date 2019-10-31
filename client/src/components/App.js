@@ -14,6 +14,8 @@ import { useContextSelector } from 'use-context-selector';
 `; */
 
 const App = () => {
+  // console.log('App re-render');
+
   // const { dataStorage } = useContext(DataContext);
   const dataStorage = useContextSelector(
     DataContext,
@@ -42,15 +44,7 @@ const App = () => {
           <Form />
         </Navbar>
         <Container isOpaque={dataStorage ? true : false}>
-          {dataStorage && dataStorage.length ? (
-            <List dataStorage={dataStorage} />
-          ) : (
-            <Loader
-              isOpaque={dataStorage && !dataStorage.length ? true : false}
-            >
-              Found nothing
-            </Loader>
-          )}
+          <List />
         </Container>
       </AppBox>
     </>
@@ -106,13 +100,4 @@ const Container = styled.main`
   top: 0%;
   opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease 0.5s;
-`;
-
-const Loader = styled.span`
-  font-size: 60px;
-  margin: 0 auto;
-  text-align: center;
-  margin-top: 100px;
-  opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
-  transition: opacity 0.5s ease;
 `;

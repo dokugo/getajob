@@ -19,7 +19,8 @@ import { useContextSelector } from 'use-context-selector';
  */
 
 const Form = () => {
-  console.log('object');
+  // console.log('Form re-render');
+
   // const { toggleAnimation } = useContext(AnimationContext);
   const toggleAnimation = useContextSelector(
     AnimationContext,
@@ -55,6 +56,8 @@ const Form = () => {
     } else {
       toggleAnimation(false);
       setIsLoading(true);
+
+      console.log(inputData);
 
       fetch(`http://localhost:9000/api/search/${inputData}`)
         .then(response => response.json())

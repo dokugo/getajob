@@ -20,6 +20,7 @@
 
 #### Reminders:
 
+- found nothing / end msg refactoring + fade in / out animation
 - request cancellation
 - find better solution for form loading animation
 - ternary refactoring
