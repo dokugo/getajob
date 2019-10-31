@@ -1,4 +1,5 @@
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
+import { createContext } from 'use-context-selector';
 
 export const AnimationContext = createContext();
 

@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import List from './List/List';
 import Form from './Form/Form';
 import { hot } from 'react-hot-loader';
 import styled, { createGlobalStyle } from 'styled-components/macro';
 import { DataContext } from '../contexts/dataContext';
+import { useContextSelector } from 'use-context-selector';
 
 /* const Number = styled.div`
   position: absolute; 
@@ -13,7 +14,11 @@ import { DataContext } from '../contexts/dataContext';
 `; */
 
 const App = () => {
-  const { dataStorage } = useContext(DataContext);
+  // const { dataStorage } = useContext(DataContext);
+  const dataStorage = useContextSelector(
+    DataContext,
+    state => state.dataStorage
+  );
 
   /*   const [data, setData] = useState(null);
   const handleDataUpdate = newData => {
@@ -35,24 +40,22 @@ const App = () => {
       <AppBox>
         <Navbar isAnimated={dataStorage ? true : false}>
           <Form />
-          {/* {dataStorage ? <Number>{dataStorage.length}</Number> : null} */}
         </Navbar>
         <Container isOpaque={dataStorage ? true : false}>
-          {dataStorage ? (
-            dataStorage.length ? (
-              <List dataStorage={dataStorage} />
-            ) : (
-              <Loader isOpaque={!dataStorage.length ? true : false}>
-                Found nothing
-              </Loader>
-            )
-          ) : null}
+          {dataStorage && dataStorage.length ? (
+            <List dataStorage={dataStorage} />
+          ) : (
+            <Loader
+              isOpaque={dataStorage && !dataStorage.length ? true : false}
+            >
+              Found nothing
+            </Loader>
+          )}
         </Container>
       </AppBox>
     </>
   );
 };
-
 export default hot(module)(App);
 
 const GlobalStyle = createGlobalStyle`
@@ -90,7 +93,7 @@ const Navbar = styled.nav`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  height: 80px;
+  height: 110px;
   transition: all 0.5s ease 0s;
 `;
 

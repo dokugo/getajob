@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { IconWarning, IconError, IconLoading } from './FormIcons';
 import styled from 'styled-components/macro';
 import { AnimationContext } from '../../contexts/animationContext';
 import { DataContext } from '../../contexts/dataContext';
+import { useContextSelector } from 'use-context-selector';
 
 /* import {
   FormItem,
@@ -18,44 +19,49 @@ import { DataContext } from '../../contexts/dataContext';
  */
 
 const Form = () => {
-  const { toggleAnimation } = useContext(AnimationContext);
-  const { updateDataStorage } = useContext(DataContext);
+  console.log('object');
+  // const { toggleAnimation } = useContext(AnimationContext);
+  const toggleAnimation = useContextSelector(
+    AnimationContext,
+    state => state.toggleAnimation
+  );
+
+  // const { setDataStorage } = useContext(DataContext);
+  const setDataStorage = useContextSelector(
+    DataContext,
+    state => state.setDataStorage
+  );
 
   const [inputData, setInputData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [inputState, setInputState] = useState(null);
+  const [validationState, setValidationState] = useState(null);
 
   const handleInputChange = e => {
     if (e.target.value.length < 1 || e.target.value.trim().length < 1) {
-      console.log('Form validation error');
-      setInputState('warning');
       setInputData(null);
+      setValidationState('warning');
       return;
     }
-    setInputState(null);
+    setValidationState(null);
     setInputData(e.target.value);
   };
 
   const handleRequest = e => {
-    console.log(inputData);
     e.preventDefault();
 
     if (inputData === null) {
-      updateDataStorage([]);
-      console.log('Fetch cancelled');
-      setInputState('error');
+      setValidationState('error');
       return;
     } else {
-      setInputState(null);
+      toggleAnimation(false);
       setIsLoading(true);
 
-      toggleAnimation(false);
       fetch(`http://localhost:9000/api/search/${inputData}`)
         .then(response => response.json())
         .then(data => {
-          updateDataStorage(data);
+          setDataStorage(data);
+
           toggleAnimation(true);
-          console.log('Data successfully updated');
           setIsLoading(false);
         })
         .catch(e => console.log('Error: ', e));
@@ -69,7 +75,7 @@ const Form = () => {
           <InputItem>
             <Input
               onChange={handleInputChange}
-              inputState={inputState}
+              validationState={validationState}
               type="text"
               name="search-request"
               placeholder="Search..."
@@ -78,20 +84,20 @@ const Form = () => {
             <IconContainer>
               <IconError
                 type={'filled'}
-                show={inputState === 'error' ? true : false}
+                show={validationState === 'error' ? true : false}
               />
               <IconWarning
                 type={'filled'}
-                show={inputState === 'warning' ? true : false}
+                show={validationState === 'warning' ? true : false}
               />
               <IconLoading show={isLoading ? true : false} />
             </IconContainer>
           </InputItem>
-          {inputState ? (
-            <Tooltip inputState={inputState}>
-              {inputState === 'warning'
+          {validationState ? (
+            <Tooltip validationState={validationState}>
+              {validationState === 'warning'
                 ? `Search request can't be empty.`
-                : inputState === 'error'
+                : validationState === 'error'
                 ? `Can't send empty request.`
                 : null}
             </Tooltip>
@@ -149,26 +155,26 @@ const Input = styled.input`
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-width: 1px;
   border-style: solid;
-  border-color: ${({ inputState }) => {
-    if (inputState === 'warning') {
+  border-color: ${({ validationState }) => {
+    if (validationState === 'warning') {
       return '#faad14';
-    } else if (inputState === 'error') {
+    } else if (validationState === 'error') {
       return '#dc3545';
     } else return '#28a745';
   }};
   &:focus {
     outline: 0 none;
-    border-color: ${({ inputState }) => {
-      if (inputState === 'warning') {
+    border-color: ${({ validationState }) => {
+      if (validationState === 'warning') {
         return 'rgba(250, 166, 26, 0.749)';
-      } else if (inputState === 'error') {
+      } else if (validationState === 'error') {
         return '#dc3545';
       } else return '#28a745';
     }};
-    box-shadow: ${({ inputState }) => {
-      if (inputState === 'warning') {
+    box-shadow: ${({ validationState }) => {
+      if (validationState === 'warning') {
         return '0 0 0 0.2rem rgba(250, 166, 26, 0.3)';
-      } else if (inputState === 'error') {
+      } else if (validationState === 'error') {
         return '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
       } else return '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
     }};
@@ -182,16 +188,17 @@ const IconContainer = styled.span`
   margin-top: -12.5px;
   width: 25px;
   height: 25px;
+  cursor: text;
 `;
 
 const Tooltip = styled.span`
   position: absolute;
   font-size: 14px;
   padding: 5px 5px;
-  color: ${({ inputState }) =>
-    inputState === 'warning'
+  color: ${({ validationState }) =>
+    validationState === 'warning'
       ? '#b37700'
-      : inputState === 'error'
+      : validationState === 'error'
       ? '#dc3545'
       : null};
 `;

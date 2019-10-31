@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ListItemBox from './ListItemBox';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import styled from 'styled-components/macro';
 import { DataContext } from '../../contexts/dataContext';
+import { useContextSelector } from 'use-context-selector';
 
 const Box = styled.section`
   display: flex;
@@ -12,8 +13,12 @@ const Box = styled.section`
 `;
 
 const List = () => {
-  const { dataCache, fetchMoreData } = useContext(DataContext);
-  // getItemsAmount();
+  // const { dataCache, fetchMoreData } = useContext(DataContext);
+  const dataCache = useContextSelector(DataContext, state => state.dataCache);
+  const fetchMoreData = useContextSelector(
+    DataContext,
+    state => state.fetchMoreData
+  );
 
   return (
     <Box>

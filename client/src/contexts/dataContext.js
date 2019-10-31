@@ -1,17 +1,11 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createContext } from 'use-context-selector';
 
 export const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
   const [dataStorage, setDataStorage] = useState(null);
   const [dataCache, setDataCache] = useState([]);
-
-  const updateDataStorage = data => {
-    setDataStorage(data);
-  };
-  /*   const updateDataCache = data => {
-    setDataCache(data);
-  }; */
 
   const getItemsAmount = () => {
     const getItemsPerScreen = () => {
@@ -76,7 +70,7 @@ const DataContextProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         dataStorage,
-        updateDataStorage,
+        setDataStorage,
         dataCache,
         fetchMoreData
       }}
