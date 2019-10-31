@@ -1,9 +1,59 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import List from './List/List';
 import Form from './Form/Form';
 import { hot } from 'react-hot-loader';
 import styled, { createGlobalStyle } from 'styled-components/macro';
-import AnimationContextProvider from '../contexts/AnimationContext';
+import { DataContext } from '../contexts/dataContext';
+
+/* const Number = styled.div`
+  position: absolute; 
+  font-size: 40px;
+  line-height: 40px;
+  right: 10px;
+`; */
+
+const App = () => {
+  const { dataStorage } = useContext(DataContext);
+
+  /*   const [data, setData] = useState(null);
+  const handleDataUpdate = newData => {
+    setData(newData);
+  }; */
+
+  // const [isAnimated, setIsAnimated] = useState(null);
+  /*   const getLoadingState = loadingState => {
+    setIsAnimated(loadingState);
+  }; */
+
+  if (dataStorage) {
+    console.log(dataStorage);
+  }
+
+  return (
+    <>
+      <GlobalStyle />
+      <AppBox>
+        <Navbar isAnimated={dataStorage ? true : false}>
+          <Form />
+          {/* {dataStorage ? <Number>{dataStorage.length}</Number> : null} */}
+        </Navbar>
+        <Container isOpaque={dataStorage ? true : false}>
+          {dataStorage ? (
+            dataStorage.length ? (
+              <List dataStorage={dataStorage} />
+            ) : (
+              <Loader isOpaque={!dataStorage.length ? true : false}>
+                Found nothing
+              </Loader>
+            )
+          ) : null}
+        </Container>
+      </AppBox>
+    </>
+  );
+};
+
+export default hot(module)(App);
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -40,7 +90,7 @@ const Navbar = styled.nav`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  height: 100px;
+  height: 80px;
   transition: all 0.5s ease 0s;
 `;
 
@@ -63,53 +113,3 @@ const Loader = styled.span`
   opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease;
 `;
-
-/* const Number = styled.div`
-  position: absolute; 
-  font-size: 40px;
-  line-height: 40px;
-  right: 10px;
-`; */
-
-const App = () => {
-  const [data, setData] = useState(null);
-  // const [isAnimated, setIsAnimated] = useState(null);
-
-  const handleDataUpdate = newData => {
-    setData(newData);
-  };
-  /*   const getLoadingState = loadingState => {
-    setIsAnimated(loadingState);
-  }; */
-
-  if (data) {
-    console.log(data);
-  }
-
-  return (
-    <>
-      <GlobalStyle />
-      <AppBox>
-        <AnimationContextProvider>
-          <Navbar isAnimated={data ? true : false}>
-            <Form handleDataUpdate={handleDataUpdate} />
-            {/* {data ? <Number>{data.length}</Number> : null} */}
-          </Navbar>
-          <Container isOpaque={data ? true : false}>
-            {data ? (
-              data.length ? (
-                <List data={data} />
-              ) : (
-                <Loader isOpaque={!data.length ? true : false}>
-                  Found nothing
-                </Loader>
-              )
-            ) : null}
-          </Container>
-        </AnimationContextProvider>
-      </AppBox>
-    </>
-  );
-};
-
-export default hot(module)(App);

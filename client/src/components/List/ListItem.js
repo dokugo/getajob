@@ -14,7 +14,7 @@ const Row = styled.div`
 const Title = styled.span`
   color: #464646;
   font-size: 21px;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 15px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -29,7 +29,7 @@ const Link = styled.a`
   display: flex;
   margin-bottom: 10px;
   padding: 12px 18px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   background-color: #dff1e6;
   text-decoration: none;
@@ -49,7 +49,7 @@ const Link = styled.a`
   }
 `;
 
-const Date = styled.span`
+const DateEl = styled.span`
   color: grey;
   font-size: 14px;
   margin-left: 10px;
@@ -57,10 +57,10 @@ const Date = styled.span`
 
 const Compensation = styled.span`
   font-weight: ${({ hasData }) => (hasData ? 500 : 400)};
-  color: #6aac00;
+  color: ${({ hasData }) => (hasData ? '#6aac00' : 'grey')};
 `;
 
-const Number = styled.span`
+const NumberEl = styled.span`
   color: #8fbc8f;
   /* color: darkseagreen; */
   font-size: 14px;
@@ -74,7 +74,7 @@ const ListItem = ({ item, index }) => {
       <Box>
         <Row>
           <Title>{item.title}</Title>
-          <Date>{item.date}</Date>
+          <DateEl>{item.date}</DateEl>
         </Row>
         <Row>
           <div>{item.employer}</div>
@@ -85,7 +85,7 @@ const ListItem = ({ item, index }) => {
           >
             {item.compensation}
           </Compensation>
-          <Number>{`№${index + 1}`}</Number>
+          <NumberEl>{`№${index + 1}`}</NumberEl>
         </Row>
       </Box>
     </Link>

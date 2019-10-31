@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import ListItem from './ListItem';
 
-import styled, { keyframes } from 'styled-components/macro';
-import { AnimationContext } from '../../contexts/AnimationContext';
+import styled, { keyframes, css } from 'styled-components/macro';
+import { AnimationContext } from '../../contexts/animationContext';
 
 const fadeIn = keyframes`
   0% {
@@ -18,15 +18,20 @@ const fadeIn = keyframes`
 const ItemBox = styled.article`
   display: flex;
   justify-content: center;
-  animation: ${({ isAnimated }) => (isAnimated ? fadeIn : 'unset')} 1s;
+  ${({ isAnimated }) =>
+    isAnimated &&
+    css`
+      animation: ${fadeIn} 1s;
+    `};
+  /* animation: ${({ isAnimated }) => (isAnimated ? fadeIn : 'unset')} 1s; */
 `;
 
-const ListItemBox = ({ dataStorage }) => {
+const ListItemBox = ({ dataCache }) => {
   const { listAnimation } = useContext(AnimationContext);
 
   return (
     <React.Fragment>
-      {dataStorage.items.map((item, index) => (
+      {dataCache.items.map((item, index) => (
         <ItemBox isAnimated={listAnimation} key={item.id}>
           <ListItem item={item} index={index} />
         </ItemBox>
