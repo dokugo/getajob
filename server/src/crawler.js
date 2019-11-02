@@ -94,7 +94,7 @@ const crawl = async searchKeywords => {
   const URL = getSearchUrl(searchKeywords);
   try {
     // console.clear();
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
     page.setRequestInterception(true);

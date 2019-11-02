@@ -1,15 +1,25 @@
 const express = require('express');
+const limit = require('express-rate-limit');
 const cors = require('cors');
 const crawl = require('./crawler');
 
 const app = express();
-app.use(express.json());
+
+const limiter = limit({
+  windowMs: 5 * 1000, // 5 second
+  max: 10, // requests per windowMs for each IP
+  message: JSON.stringify(
+    'Too many requests are being made from your IP, please try again after a second or two.'
+  )
+});
+
 app.use(cors());
+app.use(express.json());
 app.listen(9000, () => console.log('Nightcrawler app listening on port 9000'));
 
 console.clear();
 
-app.get('/api/search/:id', async (req, res) => {
+app.get('/api/search/:id', limiter, async (req, res) => {
   try {
     const searchKeywords = req.params.id;
     const data = await crawl(searchKeywords);

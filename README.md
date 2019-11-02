@@ -4,7 +4,7 @@
   - [x] refactor crawling core from promises to async/await
   - [x] get rid of cheerio
   - [ ] puppeteer outgoing requests throttling
-  - [ ] incoming api get requests throttling
+  - [x] incoming api get requests throttling
   - [ ] extend search parameters
   - [ ] crawl only in one chromium instance & in the same tab
 - [ ] client
