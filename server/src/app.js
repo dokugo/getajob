@@ -24,8 +24,11 @@ app.get('/api/search/:id', limiter, async (req, res) => {
     const searchKeywords = req.params.id;
     const data = await crawl(searchKeywords);
     console.log(data);
-    // res.setHeader('Content-Type', 'application/json');
-    res.status(200).send(data);
+    if (data && data.length) {
+      res.status(200).send(data);
+    } else {
+      res.status(200).send(JSON.stringify('Found nothing.'));
+    }
   } catch (err) {
     console.log(err);
   }
