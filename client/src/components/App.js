@@ -32,6 +32,16 @@ const App = () => {
     setIsAnimated(loadingState);
   }; */
 
+  /*   const test = async () => {
+    try {
+      const response = await fetch(`http://localhost:9000/api/search/null`);
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }; */
+
   if (dataStorage) {
     console.log(dataStorage);
   }
@@ -46,6 +56,7 @@ const App = () => {
         <Container isOpaque={dataStorage ? true : false}>
           <List />
         </Container>
+        {/* <button onClick={test}>test</button> */}
       </AppBox>
     </>
   );

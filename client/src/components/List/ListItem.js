@@ -29,7 +29,7 @@ const Link = styled.a`
   display: flex;
   padding: 12px 18px;
   border-radius: 8px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  /* box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); */
   background-color: #dff1e6;
   text-decoration: none;
   color: #000;

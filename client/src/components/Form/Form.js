@@ -63,6 +63,20 @@ const Form = () => {
 
       console.log(inputData);
 
+      /*       (async function sendRequest() {
+        try {
+          const response = await fetch(
+            `http://localhost:9000/api/search/${inputData}`
+          );
+          const data = await response.json();
+          setDataStorage(data);
+
+          toggleAnimation(true);
+        } catch (error) {
+          console.log('Error: ', error);
+        }
+      })(); */
+
       fetch(`http://localhost:9000/api/search/${inputData}`)
         .then(response => response.json())
         .then(data => {
@@ -71,7 +85,7 @@ const Form = () => {
           toggleAnimation(true);
           setIsLoading(false);
         })
-        .catch(e => console.log('Error: ', e));
+        .catch(error => console.log('Error: ', error));
     }
   };
 
