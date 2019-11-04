@@ -22,15 +22,17 @@ console.clear();
 app.get('/api/search/:id', limiter, async (req, res) => {
   try {
     const searchKeywords = req.params.id;
+
     const data = await crawl(searchKeywords);
     console.log(data);
+
     if (data && data.length) {
       res.status(200).send(data);
     } else {
-      res.status(200).send(JSON.stringify('Found nothing.'));
+      res.status(200).send(JSON.stringify([{ message: 'Found nothing.' }]));
     }
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -45,8 +47,8 @@ app.get('/api/search/:id', limiter, async (req, res) => {
     app.get('/api', async (req, res) => {
       res.status(200).send(data);
     });
-  } catch (err) {
-    console.error('Error: ', err);
+  } catch (error) {
+    console.error('Error: ', error);
   }
 }
 test(); */

@@ -50,16 +50,16 @@ const ListItemBox = ({ dataCache }) => {
 
   return (
     <React.Fragment>
-      {dataCache.items.length ? (
+      {dataCache.items[0].message === 'Found nothing.' ? (
+        <ItemBox isAnimated={listAnimation}>
+          <NoData>Found nothing.</NoData>
+        </ItemBox>
+      ) : (
         dataCache.items.map((item, index) => (
           <ItemBox isAnimated={listAnimation} key={item.id}>
             <ListItem item={item} index={index} />
           </ItemBox>
         ))
-      ) : (
-        <ItemBox isAnimated={listAnimation}>
-          <NoData>Found nothing</NoData>
-        </ItemBox>
       )}
     </React.Fragment>
   );
