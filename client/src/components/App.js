@@ -13,6 +13,13 @@ import { useContextSelector } from 'use-context-selector';
   right: 10px;
 `; */
 
+/* const Test = styled.button`
+  width: 500px;
+  height: 500px;
+  background: darkgreen;
+  color: darkgreen;
+`; */
+
 const App = () => {
   // console.log('App re-render');
 
@@ -33,13 +40,39 @@ const App = () => {
   }; */
 
   /*   const test = async () => {
-    try {
-      const response = await fetch(`http://localhost:9000/api/search/null`);
-      const data = await response.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
+    const response = await fetch(`http://localhost:9000/api/search/null`, {
+      headers: {
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0'
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+    // console.log(data[0]);
+    if (data.status === 'error') {
+      console.error(data.message);
     }
+  }; */
+
+  /*   const test = () => {
+    fetch(`http://localhost:9000/api/search/null`, {
+      headers: {
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data.status === 'error') {
+          console.error(data.message);
+        }
+      })
+      .catch(error => console.log('Error: ', error));
   }; */
 
   if (dataStorage) {
@@ -56,7 +89,7 @@ const App = () => {
         <Container isOpaque={dataStorage ? true : false}>
           <List />
         </Container>
-        {/* <button onClick={test}>test</button> */}
+        {/* <Test onClick={test}>test</Test> */}
       </AppBox>
     </>
   );

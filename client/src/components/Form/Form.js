@@ -63,25 +63,30 @@ const Form = () => {
 
       console.log(inputData);
 
-      /*       (async function sendRequest() {
-        try {
-          const response = await fetch(
-            `http://localhost:9000/api/search/${inputData}`
-          );
-          const data = await response.json();
-          setDataStorage(data);
+      /* (async function sendRequest() {
+        const response = await fetch(
+          `http://localhost:9000/api/search/${inputData}`
+        );
+        const data = await response.json();
+        setDataStorage(data);
 
-          toggleAnimation(true);
-        } catch (error) {
-          console.log('Error: ', error);
-        }
+        toggleAnimation(true);
       })(); */
 
       fetch(`http://localhost:9000/api/search/${inputData}`)
         .then(response => response.json())
-        .then(data => {
-          setDataStorage(data);
+        .then(response => {
+          if (response.data) {
+            setDataStorage(response.data);
+          } else {
+            setDataStorage([]);
+          }
 
+          /*           if (!Array.isArray(data) || !data.length) {
+            setDataStorage([]);
+          } else {
+            setDataStorage(data);
+          } */
           toggleAnimation(true);
           setIsLoading(false);
         })

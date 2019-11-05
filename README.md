@@ -21,6 +21,9 @@
 
 #### Reminders:
 
+- increase infinite scrolling items loading 
+- backend response messages refactoring 
+- backend app.js state refactoring 
 - separate fetch function 
 - found nothing / end msg refactoring + fade in / out animation
 - find better solution for form loading animation (setTimeout)
