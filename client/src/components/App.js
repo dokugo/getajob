@@ -5,75 +5,15 @@ import { hot } from 'react-hot-loader';
 import styled, { createGlobalStyle } from 'styled-components/macro';
 import { DataContext } from '../contexts/dataContext';
 import { useContextSelector } from 'use-context-selector';
-
-/* const Number = styled.div`
-  position: absolute; 
-  font-size: 40px;
-  line-height: 40px;
-  right: 10px;
-`; */
-
-/* const Test = styled.button`
-  width: 500px;
-  height: 500px;
-  background: darkgreen;
-  color: darkgreen;
-`; */
+// import Test from './Test/Test';
 
 const App = () => {
   // console.log('App re-render');
 
-  // const { dataStorage } = useContext(DataContext);
   const dataStorage = useContextSelector(
     DataContext,
     state => state.dataStorage
   );
-
-  /*   const [data, setData] = useState(null);
-  const handleDataUpdate = newData => {
-    setData(newData);
-  }; */
-
-  // const [isAnimated, setIsAnimated] = useState(null);
-  /*   const getLoadingState = loadingState => {
-    setIsAnimated(loadingState);
-  }; */
-
-  /*   const test = async () => {
-    const response = await fetch(`http://localhost:9000/api/search/null`, {
-      headers: {
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0'
-      }
-    });
-    const data = await response.json();
-    console.log(data);
-    // console.log(data[0]);
-    if (data.status === 'error') {
-      console.error(data.message);
-    }
-  }; */
-
-  /*   const test = () => {
-    fetch(`http://localhost:9000/api/search/null`, {
-      headers: {
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        if (data.status === 'error') {
-          console.error(data.message);
-        }
-      })
-      .catch(error => console.log('Error: ', error));
-  }; */
 
   if (dataStorage) {
     console.log(dataStorage);
@@ -83,13 +23,13 @@ const App = () => {
     <>
       <GlobalStyle />
       <AppBox>
+        {/* <Test /> */}
         <Navbar isAnimated={dataStorage ? true : false}>
           <Form />
         </Navbar>
         <Container isOpaque={dataStorage ? true : false}>
           <List />
         </Container>
-        {/* <Test onClick={test}>test</Test> */}
       </AppBox>
     </>
   );

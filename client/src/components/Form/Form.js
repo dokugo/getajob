@@ -63,26 +63,27 @@ const Form = () => {
 
       console.log(inputData);
 
-      /* (async function sendRequest() {
-        const response = await fetch(
-          `http://localhost:9000/api/search/${inputData}`
-        );
-        const data = await response.json();
-        setDataStorage(data);
-
-        toggleAnimation(true);
-      })(); */
-
-      fetch(`http://localhost:9000/api/search/${inputData}`)
+      fetch(`http://localhost:9000/api/search/${inputData}`, {
+        headers: {
+          'Cache-Control':
+            'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+          Pragma: 'no-cache',
+          Expires: '0'
+        }
+      })
         .then(response => response.json())
         .then(response => {
+          if (response.status === 'error') {
+            console.error(response.message);
+          }
+
           if (response.data) {
             setDataStorage(response.data);
           } else {
             setDataStorage([]);
           }
 
-          /*           if (!Array.isArray(data) || !data.length) {
+          /* if (!Array.isArray(data) || !data.length) {
             setDataStorage([]);
           } else {
             setDataStorage(data);
