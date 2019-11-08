@@ -1,5 +1,18 @@
 console.clear();
 
+/* process.on('warning', error => {
+  console.warn(error.stack);
+  console.log(process.listeners('exit'));
+  console.log(process.listeners('SIGINT'));
+  console.log(process.listeners('SIGTERM'));
+  console.log(process.listeners('SIGHUP'));
+
+  console.log(process.listenerCount('exit'));
+  console.log(process.listenerCount('SIGINT'));
+  console.log(process.listenerCount('SIGTERM'));
+  console.log(process.listenerCount('SIGHUP'));
+}); */
+
 const express = require('express');
 const limit = require('express-rate-limit');
 const cors = require('cors');
