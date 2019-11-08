@@ -2,11 +2,12 @@
 
 - [ ] server
   - [x] refactor crawling core from promises to async/await
-  - [x] get rid of cheerio
-  - [ ] puppeteer outgoing requests throttling
-  - [x] incoming api get requests throttling
+  - [x] get rid of cheerio (puppeteer eval instead)
+  - [x] incoming api get requests throttling (rate limit)
+  - [x] run single crawling async function per client (mutex)
+  - [x] spawn chromium pages insted of instances
+  - [ ] puppeteer next page requests throttling
   - [ ] extend search parameters
-  - [ ] crawl only in one chromium instance & in the same tab
 - [ ] client
   - [x] form validation
   - [x] api call (pseudo) throttling
@@ -21,22 +22,28 @@
 
 #### Reminders:
 
-- increase infinite scrolling items loading 
+- cleanup getNextPageLoop function
+- improve error handling on server
 - backend response messages refactoring 
-- backend app.js state refactoring 
+- separate api logic from mutex
+- store mutex lock state in redis instead of in-memory 
+
+- improve error handling on client
+- data context refactoring
+- increase infinite scrolling items loading 
+- true lazy loading instead of emulated infinite scrolling
+- try load more button
+- try pagination
+- find better solution for form loading animation (setTimeout)
 - separate fetch function 
 - found nothing / end msg refactoring + fade in / out animation
-- find better solution for form loading animation (setTimeout)
 - ternary refactoring
 - setState toggle refactoring
 - fade input placeholder on focus
 - sort out cors issue
+- configure browserlist
 
-- true lazy loading instead of emulated infinite scrolling
-- try load more button
-- try pagination
-
-- get pure links (cleanup link url params)
+- cleanup readme
 
 #### Completed:
 
