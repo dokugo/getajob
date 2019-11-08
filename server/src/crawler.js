@@ -90,11 +90,22 @@ const getPage = async (URL, page) => {
   }
 };
 
+let browser;
+
 const crawl = async searchKeywords => {
+  // testing browser windows size and screen size
+  // const URL = 'https://browsersize.com/';
   const URL = getSearchUrl(searchKeywords);
+
   try {
-    // console.clear();
-    const browser = await puppeteer.launch({ headless: true });
+    if (!browser) {
+      browser = await puppeteer.launch({
+        args: ['--window-size=1920,1080'],
+        defaultViewport: { width: 1920, height: 1080 },
+        headless: true
+      });
+    }
+
     const page = await browser.newPage();
 
     page.setRequestInterception(true);
@@ -110,7 +121,9 @@ const crawl = async searchKeywords => {
         request.continue();
       }
     });
-    page.setViewport({ width: 1920, height: 926 });
+
+    // default Chromium window.innerWidth & window.innerHeight: 1980x937 (969 window.innerHeight if bookmarks bar isn't present)
+    page.setViewport({ width: 1920, height: 937 });
 
     const result = await getPage(URL, page);
     const output = result.vacancies;
@@ -131,21 +144,21 @@ const crawl = async searchKeywords => {
         }
       }
 
-      await getNextPageLoop(
-        nextPageUrl
-      ) /* .then(() =>
-        console.log('end' , output)
-      ) */;
-      await browser.close();
+      await getNextPageLoop(nextPageUrl);
+
+      // await page.screenshot({ path: 'screenshot.png', fullPage: true });
+      // await browser.close();
+
+      await page.close();
       return updatedOutput;
     } else {
-      // console.log('last page');
-      // console.log('end' /* , output */);
-      await browser.close();
+      // await page.screenshot({ path: 'screenshot.png', fullPage: true });
+      // await browser.close();
+
+      await page.close();
       return output;
     }
     // console.log(output);
-    // await page.screenshot({ path: 'stealth-ma-result.png', fullPage: true });
   } catch (error) {
     console.error('Error: ', error);
   }
