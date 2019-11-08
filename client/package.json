@@ -19,6 +19,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "babelMacros": {
+    "styledComponents": {}
+  },
   "browserslist": {
     "production": [
       ">0.2%",
