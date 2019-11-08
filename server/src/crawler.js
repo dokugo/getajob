@@ -110,16 +110,24 @@ const crawl = async searchKeywords => {
 
     page.setRequestInterception(true);
     page.on('request', request => {
-      if (
+      if (request.resourceType() === 'document') {
+        request.continue();
+      } else {
+        request.abort();
+      }
+
+      // custom request interception; icons aren't blocked
+      /*       if (
         request.resourceType() === 'stylesheet' ||
         request.resourceType() === 'font' ||
         request.resourceType() === 'image' ||
-        request.resourceType() === 'script'
+        request.resourceType() === 'script' ||
+        request.resourceType() === 'media'
       ) {
         request.abort();
       } else {
         request.continue();
-      }
+      } */
     });
 
     // default Chromium window.innerWidth & window.innerHeight: 1980x937 (969 window.innerHeight if bookmarks bar isn't present)
