@@ -6,14 +6,16 @@
   - [x] incoming api get requests throttling (rate limit)
   - [x] run single crawling async function per client (mutex)
   - [x] spawn chromium pages insted of instances
-  - [ ] puppeteer next page requests throttling
   - [ ] extend search parameters
+  - [ ] try cluster mode
 - [ ] client
   - [x] form validation
   - [x] api call (pseudo) throttling
   - [x] infinite scrolling (without lazy loading)
   - [x] styling refactoring (css-in-js styled-components)
   - [x] adaptive layout
+  - [ ] improve interface logic
+  - [ ] add more functional interface elements
   - [ ] update color theme
   - [ ] create dark theme
   - [ ] extend search parameters ui
@@ -44,6 +46,11 @@
 - configure browserlist
 
 - cleanup readme
+- update node
+- perform depcheck
+- check package.json and other config files
+- rename idead: xtractor, ncrawler
+- try RYM crawling
 
 #### Completed:
 
@@ -56,6 +63,8 @@
 
 ###### Client:
 
+- disable form button when icon is changed
+- research on useContextSelector
 - search ui
 - fetch new data by keyword
 - data rendering
@@ -66,3 +75,8 @@
 - fade-in vacancies animation refactoring
 - balance infinite scrolling height trigger
 - (pseudo) request cancellation
+
+#### Discarded:
+
+- puppeteer next page requests throttling
+<!-- - form validation state icons -->
