@@ -79,7 +79,7 @@ const trySearch = async (searchKeywords, res) => {
     /*     if (!result) {
       res.status(500).json({
         status: 'error',
-        message: `Couldn't get data.`
+        message: 'Couldn't get data.'
       });
     } */
 
@@ -87,7 +87,7 @@ const trySearch = async (searchKeywords, res) => {
   } catch (error) {
     res.status(500).json({
       status: 'error',
-      message: error.message
+      message: `Couldn't get data. ${error.message}`
     });
   }
 };
