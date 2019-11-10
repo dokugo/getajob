@@ -5,7 +5,7 @@ const TestBox = styled.section`
   position: absolute;
   left: 0;
   right: 0;
-  top: 100px;
+  top: 230px;
   display: flex;
   justify-content: center;
   z-index: 9;
@@ -13,20 +13,23 @@ const TestBox = styled.section`
 
 const TestButton = styled.button`
   cursor: pointer;
-  width: 400px;
+  width: 640px;
   height: 200px;
-  background: darkgreen;
+  /* background: darkgreen; */
+  background: #198619;
   color: wheat;
   font-size: 60px;
   border: none;
   border-radius: 10px;
   outline: none;
-  transition: all 0.15s;
+  transition: all 0.2s;
   &:hover {
-    background: #198619;
+    /* background: #198619; */
+    background: darkgreen;
+    transform: scale(1.05, 1.05);
   }
   &:active {
-    transform: scale(1.05, 1.05);
+    transform: scale(0.95, 0.95);
   }
   /*   &:focus {
     background: seagreen;
@@ -45,7 +48,9 @@ const Test = () => {
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response);
+        if (response.status === 'OK') {
+          console.log(response);
+        }
         if (response.status === 'error') {
           console.error(response.message);
         }

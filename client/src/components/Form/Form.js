@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { IconWarning, IconError, IconLoading } from './FormIcons';
+import { IconLoading, IconWarning, IconError, IconSearch } from './FormIcons';
 import styled from 'styled-components/macro';
 import { AnimationContext } from '../../contexts/animationContext';
 import { DataContext } from '../../contexts/dataContext';
 import { useContextSelector } from 'use-context-selector';
-import SearchIcon from './SearchIcon';
-// import Button from './Button';
 
 /* import {
   FormItem,
@@ -36,32 +34,37 @@ const Form = () => {
   );
 
   const [inputData, setInputData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [validationState, setValidationState] = useState(null);
+  const [formState, setFormState] = useState({
+    loading: false,
+    warning: false,
+    error: false
+  });
 
   const handleInputChange = e => {
     if (e.target.value.length < 1 || e.target.value.trim().length < 1) {
       setInputData(null);
-      setValidationState('warning');
+      setFormState({ ...formState, warning: true });
+
       return;
     }
-    setValidationState(null);
+    setFormState({ ...formState, warning: false, error: false });
     setInputData(e.target.value);
   };
 
   const handleRequest = e => {
     e.preventDefault();
 
-    if (isLoading) {
+    if (formState.loading) {
       return;
     }
 
     if (inputData === null) {
-      setValidationState('error');
+      setFormState({ ...formState, warning: false, error: true });
+
       return;
     } else {
       toggleAnimation(false);
-      setIsLoading(true);
+      setFormState({ ...formState, loading: true });
 
       console.log(inputData);
 
@@ -91,7 +94,7 @@ const Form = () => {
             setDataStorage(data);
           } */
           toggleAnimation(true);
-          setIsLoading(false);
+          setFormState({ ...formState, loading: false });
         })
         .catch(error => console.log('Error: ', error));
     }
@@ -102,36 +105,33 @@ const Form = () => {
       <InputContainer>
         <InputBox>
           <InputItem>
-            <SearchButton>
-              <SearchIconContainer>
-                <SearchIcon />
-              </SearchIconContainer>
-            </SearchButton>
             <Input
               onChange={handleInputChange}
-              validationState={validationState}
+              formState={formState}
               type="text"
               name="search-request"
               placeholder="Search..."
               autoComplete="off"
             />
-            <IconContainer>
-              <IconError
-                type={'filled'}
-                show={validationState === 'error' ? true : false}
-              />
-              <IconWarning
-                type={'filled'}
-                show={validationState === 'warning' ? true : false}
-              />
-              <IconLoading show={isLoading ? true : false} />
-            </IconContainer>
+            <SearchButton>
+              <SearchIconContainer>
+                {formState.loading ? (
+                  <IconLoading />
+                ) : formState.error ? (
+                  <IconError type={'filled'} />
+                ) : formState.warning ? (
+                  <IconWarning type={'filled'} />
+                ) : (
+                  <IconSearch />
+                )}
+              </SearchIconContainer>
+            </SearchButton>
           </InputItem>
 
-          <Tooltip validationState={validationState}>
-            {validationState === 'warning'
+          <Tooltip formState={formState}>
+            {formState.warning
               ? `Search request can't be empty.`
-              : validationState === 'error'
+              : formState.error
               ? `Can't send empty request.`
               : null}
           </Tooltip>
@@ -179,39 +179,42 @@ const Input = styled.input`
   /* width: 300px; */
   width: 100%;
   height: 65px;
-  padding: 0px 36px;
-  padding-left: 70px;
+  padding: 0px 15px;
+  padding-right: 70px;
   /* padding-left: 45px; */
-  padding-bottom: 2px;
+  padding-bottom: 2.5px;
 
   box-sizing: border-box;
-  background-color: #f5fcf5;
-  /* border-radius: 5px; */
-  border-radius: 10px;
+  /* background-color: #f5fcf5; */
+  background-color: #e5f0e5;
+  border-radius: 8px;
+  /* border-radius: 10px; */
   color: #464646;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-width: 2px;
   border-style: solid;
-  border-color: ${({ validationState }) => {
-    if (validationState === 'warning') {
-      return '#faad14';
-    } else if (validationState === 'error') {
-      return '#dc3545';
-    } else return '#28a745';
-  }};
+  border-color: transparent;
+/*   border-color: ${({ formState }) => {
+  if (formState === 'warning') {
+    return '#faad14';
+  } else if (formState === 'error') {
+    return '#dc3545';
+  } else return 'transparent';
+}}; */
+outline: 0 none;
+
   &:focus {
-    outline: 0 none;
-    border-color: ${({ validationState }) => {
-      if (validationState === 'warning') {
-        return 'rgba(250, 166, 26, 0.749)';
-      } else if (validationState === 'error') {
-        return '#dc3545';
-      } else return '#28a745';
-    }};
-    box-shadow: ${({ validationState }) => {
-      if (validationState === 'warning') {
+/*     border-color: ${({ formState }) => {
+  if (formState === 'warning') {
+    return 'rgba(250, 166, 26, 0.749)';
+  } else if (formState === 'error') {
+    return '#dc3545';
+  } else return 'transparent';
+}}; */
+    box-shadow: ${({ formState }) => {
+      if (formState.warning) {
         return '0 0 0 0.2rem rgba(250, 166, 26, 0.3)';
-      } else if (validationState === 'error') {
+      } else if (formState.error) {
         return '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
       } else return '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
     }};
@@ -221,8 +224,9 @@ const Input = styled.input`
 const IconContainer = styled.span`
   position: absolute;
   right: 8px;
-  top: 50%;
-  margin-top: -17.5px;
+  /* top: calc(50% -17.5px); */
+  /* margin-top: 17.5px; */
+  margin-top: 15px;
   width: 35px;
   height: 35px;
   /* cursor: text; */
@@ -247,15 +251,13 @@ const Tooltip = styled.span`
   position: absolute;
   font-size: 14px;
   padding: 5px 5px;
-  color: ${({ validationState }) =>
-    validationState === 'warning'
-      ? '#b37700'
-      : validationState === 'error'
-      ? '#dc3545'
-      : null};
+  color: ${({ formState }) =>
+    formState.warning ? '#b37700' : formState.error ? '#dc3545' : null};
 `;
 
 const SearchButton = styled.button`
+  top: 0;
+  right: 0;
   padding: 0;
   border: 0;
   display: flex;
@@ -264,7 +266,7 @@ const SearchButton = styled.button`
   position: absolute;
   background: transparent;
   /* border-radius: 5px; */
-  border-radius: 10px;
+  border-radius: 7px;
   /* border: 1px solid blue; */
   outline: 0 none;
   box-sizing: border-box;

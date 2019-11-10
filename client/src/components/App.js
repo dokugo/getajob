@@ -47,8 +47,8 @@ const GlobalStyle = createGlobalStyle`
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background: #fff; */
-  /* background: #f5fcf5; */
-  background: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%) fixed;
+  background: #f5fcf5;
+  /* background: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%) fixed; */
   /* background: linear-gradient(to top, #d8e476 0%, #fffbf2 100%); */
   height: 100%;
   min-height: 100vh;
@@ -81,7 +81,7 @@ const Container = styled.main`
   flex-direction: column;
   margin: 0 auto;
   position: relative;
-  top: 0%;
+  top: 1%;
   opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease 0.5s;
 `;
