@@ -10,11 +10,11 @@ const DataContextProvider = ({ children }) => {
   const getItemsAmount = () => {
     const getItemsPerScreen = () => {
       const VIEWPORT_HEIGHT = window.innerHeight;
-      const HEADER_HEIGHT = 80;
+      const HEADER_HEIGHT = 115;
       const ITEM_HEIGHT = 134.5;
 
       for (let i = 1; i > 0; i++) {
-        const count = VIEWPORT_HEIGHT - HEADER_HEIGHT - ITEM_HEIGHT * i;
+        let count = VIEWPORT_HEIGHT - HEADER_HEIGHT - ITEM_HEIGHT * i;
         if (count < 0) {
           // console.log(i - 1);
           const itemsPerScreen = i - 1;
@@ -24,7 +24,8 @@ const DataContextProvider = ({ children }) => {
     };
 
     const getItemsToLoad = itemsPerScreen => {
-      return itemsPerScreen + itemsPerScreen / 2 + 1;
+      // return itemsPerScreen + itemsPerScreen / 2 + 1;
+      return itemsPerScreen + (itemsPerScreen / 3) * 2 + 2;
     };
 
     return getItemsToLoad(getItemsPerScreen());
@@ -56,7 +57,7 @@ const DataContextProvider = ({ children }) => {
     setTimeout(() => {
       const newDataChunk = dataStorage.slice(
         dataCache.items.length,
-        dataCache.items.length + 5
+        dataCache.items.length + 10
       );
       const newData = [...dataCache.items, ...newDataChunk];
       setDataCache({

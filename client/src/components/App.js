@@ -46,12 +46,15 @@ const GlobalStyle = createGlobalStyle`
     monospace; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
   /* background: #fff; */
   background: #f5fcf5;
+
+  /* background: linear-gradient(180deg, rgba(245,252,245,1) 0%, rgba(233,249,233,1) 100%); */
   /* background: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%) fixed; */
   /* background: linear-gradient(to top, #d8e476 0%, #fffbf2 100%); */
-  height: 100%;
-  min-height: 100vh;
+  /* height: 100%; */
+  /* min-height: 100vh; */
   }
 `;
 
@@ -71,7 +74,7 @@ const Navbar = styled.nav`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  height: 110px;
+  height: 115px;
   transition: all 0.5s ease 0s;
 `;
 
@@ -81,7 +84,8 @@ const Container = styled.main`
   flex-direction: column;
   margin: 0 auto;
   position: relative;
-  top: 1%;
+  top: 0%;
+  margin-top: 6px;
   opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease 0.5s;
 `;
