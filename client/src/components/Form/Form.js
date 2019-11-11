@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components/macro';
 import { AnimationContext } from '../../contexts/animationContext';
 import { DataContext } from '../../contexts/dataContext';
 import { useContextSelector } from 'use-context-selector';
@@ -9,7 +9,7 @@ import FormButton from './FormButton';
   FormItem,
   InputContainer,
   InputBox,
-  InputItem,
+  InputField,
   Input,
   IconContainer,
   Tooltip,
@@ -95,33 +95,28 @@ const Form = () => {
         .catch(error => console.log('Error: ', error));
     }
   };
-
   return (
     <FormItem onSubmit={handleRequest}>
-      <InputContainer>
-        <InputBox>
-          <InputItem>
-            <Input
-              onChange={handleInputChange}
-              formState={formState}
-              type="search"
-              title="Search something..."
-              name="search-request"
-              placeholder="Search..."
-              autoComplete="off"
-            />
-            <FormButton formState={formState} />
-          </InputItem>
+      <InputField>
+        <Input
+          onChange={handleInputChange}
+          formState={formState}
+          type="search"
+          title="Search"
+          name="search-request"
+          placeholder="Search..."
+          autoComplete="on"
+        />
+        <FormButton formState={formState} />
+      </InputField>
 
-          <Tooltip formState={formState}>
-            {formState.warning
-              ? `Search request can't be empty.`
-              : formState.error
-              ? `Can't send empty request.`
-              : null}
-          </Tooltip>
-        </InputBox>
-      </InputContainer>
+      <Tooltip formState={formState}>
+        {formState.warning
+          ? `Search request can't be empty.`
+          : formState.error
+          ? `Can't send empty request.`
+          : null}
+      </Tooltip>
     </FormItem>
   );
 };
@@ -129,30 +124,25 @@ const Form = () => {
 export default Form;
 
 const FormItem = styled.form`
-  width: 100%;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 640px;
-  @media (max-width: 670px) {
+  @media (max-width: 660px) {
     width: 100%;
   }
 `;
 
-const InputBox = styled.div`
+const InputField = styled.div`
   position: relative;
-
-  width: 100%;
+  width: 640px;
+  min-width: 100%;
+  @media (max-width: 660px) {
+    width: 100%;
+  }
 `;
 
-const InputItem = styled.div`
-  position: relative;
-
-  /* display: flex; */
-  /* align-items: center; */
+const autofill = keyframes`
+  to {
+    color: #464646;
+    background: #e5f0e5;
+  }
 `;
 
 const Input = styled.input`
@@ -166,44 +156,46 @@ const Input = styled.input`
   padding-right: 70px;
   padding-bottom: 2.5px;
   box-sizing: border-box;
-  /* background-color: #f5fcf5; */
   background-color: #e5f0e5;
   border-radius: 8px;
   color: #464646;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  border-width: 2px;
-  border-style: solid;
-  border-color: transparent;
-/*   border-color: ${({ formState }) => {
-  if (formState === 'warning') {
-    return '#faad14';
-  } else if (formState === 'error') {
-    return '#dc3545';
-  } else return 'transparent';
-}}; */
-outline: 0 none;
+  transition: box-shadow 0.15s ease-in-out;
+  /* border-style: solid; */
+  /* border-color: transparent; */
+  border-width: 0px;
+  outline: 0 none;
   &:focus {
-/*     border-color: ${({ formState }) => {
-  if (formState === 'warning') {
-    return 'rgba(250, 166, 26, 0.749)';
-  } else if (formState === 'error') {
-    return '#dc3545';
-  } else return 'transparent';
-}}; */
-    box-shadow: ${({ formState }) => {
-      if (formState.warning) {
-        return '0 0 0 0.2rem rgba(250, 166, 26, 0.3)';
-      } else if (formState.error) {
-        return '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
-      } else return '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
-    }};
+    box-shadow: ${({ formState }) =>
+      formState.warning
+        ? '0 0 0 3px rgba(232, 145, 15, 0.35)'
+        : formState.error
+        ? '0 0 0 3px rgba(220, 53, 69, 0.35)'
+        : '0 0 0 3px rgba(78, 169, 49, 0.35)'};
   }
-::-webkit-search-decoration,
-::-webkit-search-cancel-button,
-::-webkit-search-results-button,
-::-webkit-search-results-decoration {
-  display: none; 
-}
+
+  /* rgba(40, 167, 69, 0.35) */
+
+  /* rgba(68, 160, 89, 0.35) */
+  /* rgba(78, 169, 49, 0.35) */
+  ::-webkit-search-decoration,
+  ::-webkit-search-cancel-button,
+  ::-webkit-search-results-button,
+  ::-webkit-search-results-decoration {
+    display: none;
+  }
+  :-webkit-autofill {
+    animation-name: ${autofill};
+    animation-fill-mode: both;
+  }
+  /*   ::placeholder {
+    opacity: 0.65;
+    transition: opacity 0.15s ease-in-out;
+  }
+  &:hover {
+    ::placeholder {
+      opacity: 0.35;
+    }
+  } */
 `;
 
 const Tooltip = styled.span`
