@@ -14,9 +14,9 @@
   - [x] infinite scrolling (without lazy loading)
   - [x] styling refactoring (css-in-js styled-components)
   - [x] adaptive layout
-  - [ ] improve interface logic
+  - [x] improve interface logic
+  - [x] update color theme
   - [ ] add more functional interface elements
-  - [ ] update color theme
   - [ ] create dark theme
   - [ ] extend search parameters ui
 
@@ -49,7 +49,7 @@
 - update node
 - perform depcheck
 - check package.json and other config files
-- rename idead: xtractor, ncrawler
+- rename ideas: xtractor, nxtractor, ncrawler
 - try RYM crawling
 
 #### Completed:
@@ -80,3 +80,20 @@
 
 - puppeteer next page requests throttling
 <!-- - form validation state icons -->
+
+## bigger scale: implement large data amounts crawling toolkit
+
+- [ ] admin panel
+  - [ ] scheduling
+  - [ ] log monitor
+  - [ ] data downloading
+  - [ ] custom data rendering (e.g. for a specific site)
+- [ ] backend
+  - [ ] try pure async requests instead of puppeteer
+  - [ ] try cluster mode and worker threads
+  - [ ] increase live data crawling pace
+  - [ ] connect to the db
+  - [ ] write data to file system
+  - [ ] new scrapped data parsing methods
+
+- research on a faster fresh data collection methods (push, concat, spread, batching transactions)

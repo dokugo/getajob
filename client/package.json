@@ -12,9 +12,12 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "start-default": "react-scripts start",
     "build": "react-app-rewired build",
+    "build-default": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,6 +46,7 @@
     "react-app-rewire-hot-loader": "^2.0.1",
     "react-app-rewired": "^2.1.4",
     "react-hot-loader": "^4.12.15",
+    "source-map-explorer": "^2.1.0",
     "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
     "stylelint-config-recommended": "^2.2.0",
