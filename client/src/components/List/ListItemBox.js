@@ -7,11 +7,11 @@ import { useContextSelector } from 'use-context-selector';
 
 const fadeIn = keyframes`
   0% {
-    /* transform: translateY(100%); */
+    transform: translateY(100%);
     opacity: 0;
   }
   100% {
-    /* transform: translateY(0); */
+    transform: translateY(0);
     opacity: 1;
   }
 `;
@@ -19,7 +19,7 @@ const fadeIn = keyframes`
 const ItemBox = styled.article`
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 /*   &:last-of-type {
     margin-bottom: unset;
   } */;

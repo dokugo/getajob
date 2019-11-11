@@ -29,14 +29,20 @@ const Link = styled.a`
   display: flex;
   padding: 12px 18px;
   border-radius: 8px;
-  /* box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); */
-  background-color: #dff1e6;
+  /* background-color: #dff1e6; */
+
+  background-color: #e5f0e5;
+
+  /* background-color: #e5efe0; */
+
+  /* background-color: #e5efe5; */
+  /* background-color: #e3f1e3; */
   text-decoration: none;
   color: #000;
   width: 640px;
   box-sizing: border-box;
   &:focus {
-    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
     outline: 0 none;
   }
   &:hover ${Title} {
