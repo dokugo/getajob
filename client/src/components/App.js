@@ -5,6 +5,7 @@ import { hot } from 'react-hot-loader';
 import styled, { createGlobalStyle } from 'styled-components/macro';
 import { DataContext } from '../contexts/dataContext';
 import { useContextSelector } from 'use-context-selector';
+// import Start from './Test/Start/Start';
 // import Test from './Test/Test';
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
         {/* <Test /> */}
         <Navbar isAnimated={dataStorage ? true : false}>
           <Form />
+          {/* <Start isOpaque={dataStorage ? true : false} /> */}
         </Navbar>
         <Container isOpaque={dataStorage ? true : false}>
           <List />
@@ -60,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
 
 const AppBox = styled.div`
   height: 100vh;
-  padding: 0 10px;
+  padding: 0 15px;
 `;
 
 const Navbar = styled.nav`
@@ -76,6 +78,8 @@ const Navbar = styled.nav`
   box-sizing: border-box;
   height: 115px;
   transition: all 0.5s ease 0s;
+  display: flex;
+  flex-direction: column-reverse;
 `;
 
 const Container = styled.main`
