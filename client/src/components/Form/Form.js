@@ -21,10 +21,10 @@ import FormButton from './FormButton';
 const Form = () => {
   // console.log('Form re-render');
 
-  // const { toggleAnimation } = useContext(AnimationContext);
-  const toggleAnimation = useContextSelector(
+  // const { setListAnimation } = useContext(AnimationContext);
+  const setListAnimation = useContextSelector(
     AnimationContext,
-    state => state.toggleAnimation
+    state => state.setListAnimation
   );
 
   // const { setDataStorage } = useContext(DataContext);
@@ -61,7 +61,7 @@ const Form = () => {
       setFormState({ ...formState, warning: false, error: true });
       return;
     } else {
-      toggleAnimation(false);
+      setListAnimation(false);
       setFormState({ ...formState, loading: true });
 
       console.log(inputData);
@@ -89,7 +89,7 @@ const Form = () => {
           } else {
             setDataStorage(data);
           } */
-          toggleAnimation(true);
+          setListAnimation(true);
           setFormState({ ...formState, loading: false });
         })
         .catch(error => console.log('Error: ', error));
@@ -105,7 +105,7 @@ const Form = () => {
           title="Search"
           name="search-request"
           placeholder="Search..."
-          autoComplete="on"
+          autoComplete="off"
         />
         <FormButton formState={formState} />
       </InputField>

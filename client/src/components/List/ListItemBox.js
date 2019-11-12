@@ -7,7 +7,7 @@ import { useContextSelector } from 'use-context-selector';
 
 const fadeIn = keyframes`
   0% {
-    transform: translateY(100%);
+    transform: translateY(33%);
     opacity: 0;
   }
   100% {

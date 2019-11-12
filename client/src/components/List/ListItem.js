@@ -42,12 +42,15 @@ const Link = styled.a`
   width: 640px;
   box-sizing: border-box;
   &:focus {
-    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+    /* box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25); */
+    box-shadow: 0 0 0 3px rgba(78, 169, 49, 0.35);
     outline: 0 none;
   }
   &:hover ${Title} {
     text-decoration: underline;
-    color: seagreen;
+    /* color: seagreen; */
+    /* color: rgba(40, 167, 69, 1); */
+    color: rgba(78, 169, 49, 1);
   }
   @media (max-width: 670px) {
     width: 100%;
