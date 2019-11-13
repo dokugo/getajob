@@ -17,9 +17,9 @@ const FormButton = ({ formState, focusInput }) => {
           {loading ? (
             <IconLoading />
           ) : error ? (
-            <IconError type={'filled'} />
+            <IconError />
           ) : warning ? (
-            <IconWarning type={'filled'} />
+            <IconWarning />
           ) : (
             <IconSearch />
           )}
@@ -51,17 +51,16 @@ const Button = styled.button`
   transition: background-color 0.15s ease-in-out;
   pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'unset')};
   cursor: ${({ isDisabled }) => (isDisabled ? 'unset' : 'pointer')};
-  &:focus {
-    background-color: rgba(140, 160, 120, 0.15);
-  }
   &:hover {
-    background-color: ${({ isDisabled }) =>
-      isDisabled ? 'transparent' : 'rgba(140, 160, 120, 0.15)'};
-    /* isDisabled ? 'transparent' : 'rgba(167, 167, 167, 0.15)'}; */
+    background-color: ${({ isDisabled, theme }) =>
+      isDisabled ? 'transparent' : theme.button.hover};
+  }
+  &:focus {
+    background-color: ${({ theme }) => theme.button.focus};
   }
   &:active {
-    background-color: ${({ isDisabled }) =>
-      isDisabled ? 'transparent' : 'rgba(78, 169, 49, 0.15)'};
+    background-color: ${({ isDisabled, theme }) =>
+      isDisabled ? 'transparent' : theme.button.active};
   }
 `;
 

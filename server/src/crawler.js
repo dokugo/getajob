@@ -29,7 +29,7 @@ const getPage = async (URL, page) => {
             '[data-qa=vacancy-serp__vacancy-title]'
           )[i].textContent;
         },
-        compensation: i => {
+        salary: i => {
           return document.querySelectorAll(
             '[data-qa=vacancy-serp__vacancy-title]'
           )[i].parentNode.parentNode.parentNode.nextSibling.firstChild
@@ -69,7 +69,7 @@ const getPage = async (URL, page) => {
       for (let i = 0; i < vacanciesAmountOnPage; i++) {
         vacancies.push({
           title: getVacancyData.title(i),
-          compensation: getVacancyData.compensation(i),
+          salary: getVacancyData.salary(i),
           employer: getVacancyData.employer(i),
           date: getVacancyData.date(i),
           link: getVacancyData.link(i),

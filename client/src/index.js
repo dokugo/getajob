@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import AnimationContextProvider from './contexts/animationContext';
 import DataContextProvider from './contexts/dataContext';
 
 ReactDOM.render(
-  <AnimationContextProvider>
-    <DataContextProvider>
+  <DataContextProvider>
+    <AnimationContextProvider>
       <App />
-    </DataContextProvider>
-  </AnimationContextProvider>,
+    </AnimationContextProvider>
+  </DataContextProvider>,
   document.getElementById('root')
 );
 

@@ -1,68 +1,79 @@
-import React from 'react';
+import React, { useState } from 'react';
 import List from './List/List';
 import Form from './Form/Form';
 import { hot } from 'react-hot-loader';
-import styled, { createGlobalStyle } from 'styled-components/macro';
+import styled, {
+  createGlobalStyle,
+  ThemeProvider
+} from 'styled-components/macro';
 import { DataContext } from '../contexts/dataContext';
+import themeLight from '../themes/themeLight';
+import themeDark from '../themes/themeDark';
 import { useContextSelector } from 'use-context-selector';
+
 // import Start from './Test/Start/Start';
 // import Test from './Test/Test';
 
 const App = () => {
-  // console.log('App re-render');
-
   const dataStorage = useContextSelector(
     DataContext,
     state => state.dataStorage
   );
+
+  const stored = localStorage.getItem('isDarkMode');
+  const [isDarkMode, setIsDarkMode] = useState(
+    stored === 'true' ? true : false
+  );
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    localStorage.setItem('isDarkMode', !isDarkMode);
+  };
 
   if (dataStorage) {
     console.log(dataStorage);
   }
 
   return (
-    <>
+    <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
       <GlobalStyle />
       <AppBox>
         {/* <Test /> */}
         <Navbar isAnimated={dataStorage ? true : false}>
           <Form />
+          <button
+            onClick={toggleTheme}
+            style={{
+              background: 'rgba(191, 203, 189, 0.75)',
+              position: 'absolute',
+              right: '20px',
+              width: '65px',
+              height: '65px',
+              fontSize: '20px',
+              border: 'none',
+              padding: '0',
+              borderRadius: '5px',
+              outline: '0 none',
+              cursor: 'pointer'
+            }}
+          >
+            <span role="img" aria-label="theme icon">
+              {isDarkMode ? '🌚' : '🌞'}
+            </span>
+          </button>
           {/* <Start isOpaque={dataStorage ? true : false} /> */}
         </Navbar>
         <Container isOpaque={dataStorage ? true : false}>
           <List />
         </Container>
       </AppBox>
-    </>
+    </ThemeProvider>
   );
 };
 export default hot(module)(App);
 
-const GlobalStyle = createGlobalStyle`
-  body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace; */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  /* background: #fff; */
-  background: #f5fcf5;
-
-  /* background: linear-gradient(180deg, rgba(245,252,245,1) 0%, rgba(233,249,233,1) 100%); */
-  /* background: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%) fixed; */
-  /* background: linear-gradient(to top, #d8e476 0%, #fffbf2 100%); */
-  /* height: 100%; */
-  /* min-height: 100vh; */
-  }
-`;
-
 const AppBox = styled.div`
   height: 100vh;
-  padding: 0 15px;
+  padding: 0 12px;
 `;
 
 const Navbar = styled.nav`
@@ -76,7 +87,7 @@ const Navbar = styled.nav`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  height: 115px;
+  height: 125px;
   transition: all 0.5s ease 0s;
   display: flex;
   flex-direction: column-reverse;
@@ -89,7 +100,19 @@ const Container = styled.main`
   margin: 0 auto;
   position: relative;
   top: 0%;
-  margin-top: 6px;
   opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease 0.5s;
+`;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: ${({ theme }) => theme.global.background};
+  color: ${({ theme }) => theme.global.text};
+  }
 `;

@@ -5,15 +5,7 @@ import styled from 'styled-components/macro';
 import { DataContext } from '../../contexts/dataContext';
 import { useContextSelector } from 'use-context-selector';
 
-const Box = styled.section`
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  width: 100%;
-`;
-
 const List = () => {
-  // const { dataCache, fetchMoreData } = useContext(DataContext);
   const dataCache = useContextSelector(DataContext, state => state.dataCache);
   const fetchMoreData = useContextSelector(
     DataContext,
@@ -23,24 +15,33 @@ const List = () => {
   return (
     <Box>
       {dataCache && dataCache.items ? (
-        <InfiniteScroll
+        <ScrollingBox
           dataLength={dataCache.items.length}
           next={fetchMoreData}
           hasMore={dataCache.hasMore}
-          style={{ overflow: 'visible' }}
-          endMessage={
-            dataCache.items.length ? (
-              <p style={{ textAlign: 'center' }}>
-                <b> · · · </b>
-              </p>
-            ) : null
-          }
+          endMessage={dataCache.items.length ? <End>· · ·</End> : null}
         >
           <ListItemBox dataCache={dataCache} />
-        </InfiniteScroll>
+        </ScrollingBox>
       ) : null}
     </Box>
   );
 };
 
 export default List;
+
+const Box = styled.section`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const ScrollingBox = styled(InfiniteScroll)`
+  overflow: visible !important;
+`;
+
+const End = styled.p`
+  text-align: center;
+  font-weight: 700;
+`;

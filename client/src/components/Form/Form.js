@@ -1,33 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import styled, { keyframes } from 'styled-components/macro';
 import { AnimationContext } from '../../contexts/animationContext';
 import { DataContext } from '../../contexts/dataContext';
 import { useContextSelector } from 'use-context-selector';
 import FormButton from './FormButton';
 
-/* import {
-  FormItem,
-  InputContainer,
-  InputBox,
-  InputField,
-  Input,
-  IconContainer,
-  Tooltip,
-  ButtonBox,
-  Button
-} from './FormStyle.js';
- */
-
 const Form = () => {
-  // console.log('Form re-render');
-
-  // const { setListAnimation } = useContext(AnimationContext);
   const setListAnimation = useContextSelector(
     AnimationContext,
     state => state.setListAnimation
   );
 
-  // const { setDataStorage } = useContext(DataContext);
   const setDataStorage = useContextSelector(
     DataContext,
     state => state.setDataStorage
@@ -161,8 +144,8 @@ const InputField = styled.div`
 
 const autofill = keyframes`
   to {
-    color: #464646;
-    background: #e5f0e5;
+    color: ${({ theme }) => theme.input.text};
+    background: ${({ theme }) => theme.input.background};
   }
 `;
 
@@ -177,27 +160,20 @@ const Input = styled.input`
   padding-right: 70px;
   padding-bottom: 2.5px;
   box-sizing: border-box;
-  background-color: #e5f0e5;
+  background-color: ${({ theme }) => theme.input.background};
   border-radius: 8px;
-  color: #464646;
+  color: ${({ theme }) => theme.input.text};
   transition: box-shadow 0.15s ease-in-out;
-  /* border-style: solid; */
-  /* border-color: transparent; */
   border-width: 0px;
   outline: 0 none;
   &:focus {
-    box-shadow: ${({ formState }) =>
+    box-shadow: ${({ formState, theme }) =>
       formState.warning
-        ? '0 0 0 3px rgba(232, 145, 15, 0.35)'
+        ? `0 0 0 3px ${theme.input.warning}`
         : formState.error
-        ? '0 0 0 3px rgba(220, 53, 69, 0.35)'
-        : '0 0 0 3px rgba(78, 169, 49, 0.35)'};
+        ? `0 0 0 3px ${theme.input.error}`
+        : `0 0 0 3px ${theme.input.default}`};
   }
-
-  /* rgba(40, 167, 69, 0.35) */
-
-  /* rgba(68, 160, 89, 0.35) */
-  /* rgba(78, 169, 49, 0.35) */
   ::-webkit-search-decoration,
   ::-webkit-search-cancel-button,
   ::-webkit-search-results-button,
@@ -208,12 +184,13 @@ const Input = styled.input`
     animation-name: ${autofill};
     animation-fill-mode: both;
   }
-  /*   ::placeholder {
+  ::placeholder {
+    color: ${({ theme }) => theme.input.text};
     opacity: 0.65;
-    transition: opacity 0.15s ease-in-out;
   }
-  &:hover {
+  /* &:hover {
     ::placeholder {
+      transition: opacity 0.15s ease-in-out;
       opacity: 0.35;
     }
   } */
@@ -223,6 +200,10 @@ const Tooltip = styled.span`
   position: absolute;
   font-size: 14px;
   padding: 5px 5px;
-  color: ${({ formState }) =>
-    formState.warning ? '#b37700' : formState.error ? '#dc3545' : null};
+  color: ${({ formState, theme }) =>
+    formState.warning
+      ? theme.tooltip.warning
+      : formState.error
+      ? theme.tooltip.error
+      : theme.tooltip.default};
 `;
