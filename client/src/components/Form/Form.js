@@ -35,6 +35,7 @@ const Form = () => {
 
   const [inputData, setInputData] = useState(null);
   const [formState, setFormState] = useState({
+    default: true,
     loading: false,
     warning: false,
     error: false
@@ -43,15 +44,36 @@ const Form = () => {
   const handleInputChange = e => {
     if (e.target.value.length < 1 || e.target.value.trim().length < 1) {
       setInputData(null);
-      setFormState({ ...formState, warning: true, error: false });
-      return;
+      setFormState({
+        ...formState,
+        warning: true,
+        error: false,
+        default: false
+      });
+    } else {
+      setInputData(e.target.value.trim());
+      setFormState({
+        ...formState,
+        warning: false,
+        error: false,
+        default: false
+      });
     }
-    setInputData(e.target.value.trim());
-    setFormState({ ...formState, warning: false, error: false });
+  };
+
+  const inputRef = createRef();
+  const focusInput = () => {
+    if (formState.default) {
+      inputRef.current.focus();
+    }
   };
 
   const handleRequest = e => {
     e.preventDefault();
+
+    if (!formState.default && !formState.warning) {
+      inputRef.current.blur();
+    }
 
     if (formState.loading) {
       return;
@@ -79,35 +101,34 @@ const Form = () => {
           if (response.status === 'error') {
             console.error(response.message);
           }
+
           if (response.data) {
             setDataStorage(response.data);
           } else {
             setDataStorage([]);
           }
-          /* if (!Array.isArray(data) || !data.length) {
-            setDataStorage([]);
-          } else {
-            setDataStorage(data);
-          } */
+
           setListAnimation(true);
-          setFormState({ ...formState, loading: false });
+          setFormState({ ...formState, loading: false, default: false });
         })
         .catch(error => console.log('Error: ', error));
     }
   };
+
   return (
     <FormItem onSubmit={handleRequest}>
       <InputField>
         <Input
           onChange={handleInputChange}
           formState={formState}
+          ref={inputRef}
           type="search"
           title="Search"
           name="search-request"
           placeholder="Search..."
           autoComplete="off"
         />
-        <FormButton formState={formState} />
+        <FormButton formState={formState} focusInput={focusInput} />
       </InputField>
 
       <Tooltip formState={formState}>

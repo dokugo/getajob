@@ -2,14 +2,16 @@ import React from 'react';
 import { IconLoading, IconWarning, IconError, IconSearch } from './FormIcons';
 import styled from 'styled-components/macro';
 
-const FormButton = ({ formState }) => {
+const FormButton = ({ formState, focusInput }) => {
   const { loading, warning, error } = formState;
+
   return (
     <ButtonContainer
       isDisabled={formState.loading || formState.warning || formState.error}
     >
       <Button
         isDisabled={formState.loading || formState.warning || formState.error}
+        onClick={focusInput}
       >
         <ButtonIconContainer>
           {loading ? (
