@@ -40,26 +40,11 @@ const App = () => {
         {/* <Test /> */}
         <Navbar isAnimated={dataStorage ? true : false}>
           <Form />
-          <button
-            onClick={toggleTheme}
-            style={{
-              background: 'rgba(191, 203, 189, 0.75)',
-              position: 'absolute',
-              right: '20px',
-              width: '65px',
-              height: '65px',
-              fontSize: '20px',
-              border: 'none',
-              padding: '0',
-              borderRadius: '5px',
-              outline: '0 none',
-              cursor: 'pointer'
-            }}
-          >
+          <ThemeButton onClick={toggleTheme}>
             <span role="img" aria-label="theme icon">
               {isDarkMode ? '🌚' : '🌞'}
             </span>
-          </button>
+          </ThemeButton>
           {/* <Start isOpaque={dataStorage ? true : false} /> */}
         </Navbar>
         <Container isOpaque={dataStorage ? true : false}>
@@ -102,6 +87,25 @@ const Container = styled.main`
   top: 0%;
   opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease 0.5s;
+`;
+
+const ThemeButton = styled.button`
+  color: ${({ theme }) => theme.global.text};
+  background-color: ${({ theme }) => theme.button.focus};
+  position: absolute;
+  right: 20px;
+  width: 65px;
+  height: 65px;
+  font-size: 20px;
+  border: none;
+  padding: 0;
+  border-radius: 8px;
+  outline: 0 none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  &:hover {
+    background-color: ${({ theme }) => theme.button.active};
+  }
 `;
 
 const GlobalStyle = createGlobalStyle`
