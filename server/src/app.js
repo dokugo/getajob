@@ -21,7 +21,8 @@ const mutex = require('./mutex');
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.listen(9000, () => console.log('Nightcrawler app listening on port 9000'));
+const port = process.env.PORT || 9000;
+app.listen(port, () => console.log('Nightcrawler app listening on port 9000'));
 
 const limiter = limit({
   windowMs: 5 * 1000, // 5 second

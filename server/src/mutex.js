@@ -23,7 +23,7 @@ const mutex = async (id, searchKeywords, res) => {
   // console.log('locksStorage: ', locksStorage);
 
   // limit parallel running puppeteer instances amount
-  if (Object.keys(locksStorage).length > 100) {
+  if (Object.keys(locksStorage).length > 10) {
     console.log(locksStorage);
 
     res.status(503).json({
