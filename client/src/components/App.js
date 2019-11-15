@@ -118,5 +118,6 @@ const GlobalStyle = createGlobalStyle`
   -moz-osx-font-smoothing: grayscale;
   background: ${({ theme }) => theme.global.background};
   color: ${({ theme }) => theme.global.text};
+  transition: background-color .2s ease-out;
   }
 `;

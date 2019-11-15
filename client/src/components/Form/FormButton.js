@@ -12,6 +12,7 @@ const FormButton = ({ formState, focusInput }) => {
       <Button
         isDisabled={formState.loading || formState.warning || formState.error}
         onClick={focusInput}
+        aria-label="Search button"
       >
         <ButtonIconContainer>
           {loading ? (

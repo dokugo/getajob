@@ -30,6 +30,7 @@
 - separate api logic from mutex
 - store mutex lock state in redis instead of in-memory 
 
+- animation context refactoring
 - improve error handling on client
 - data context refactoring
 - increase infinite scrolling items loading 
