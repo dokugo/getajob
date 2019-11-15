@@ -1,13 +1,15 @@
 {
-  "name": "nightcrawler",
+  "name": "nightcrawler-server",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --inspect src/app.js",
+    "dev": "nodemon --inspect src/app.js",
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "dokugo",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

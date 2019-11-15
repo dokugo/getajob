@@ -1,6 +1,6 @@
 {
-  "name": "client",
-  "version": "0.1.0",
+  "name": "nightcrawler-client",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "react": "^16.9.0",
@@ -12,10 +12,11 @@
     "use-context-selector": "^1.0.1"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "start-default": "react-scripts start",
-    "build": "react-app-rewired build",
-    "build-default": "react-scripts build",
+    "start": "react-scripts start",
+    "dev": "react-app-rewired start",
+    "build": "react-scripts build",
+    "now-build": "npm run build",
+    "temp-build": "react-scripts build && mv build dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'"

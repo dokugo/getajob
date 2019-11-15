@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "name": "nightcrawler",
+  "regions": ["arn1"],
+  "builds": [
+    {
+      "src": "/client/package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    { "src": "/static/(.*)", "dest": "/client/static/$1" },
+    { "src": "/favicon.ico", "dest": "/client/favicon.ico" },
+    { "src": "/robots.txt", "dest": "/client/robots.txt" },
+    { "src": "/manifest.json", "dest": "/client/manifest.json" },
+    { "src": "/precache-manifest.(.*)", "dest": "/precache-manifest.$1" },
+    {
+      "src": "/service-worker.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/service-worker.js"
+    },
+    { "src": "/(.*)", "dest": "/client/index.html" }
+  ]
+}

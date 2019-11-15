@@ -1,0 +1,12 @@
+.gitignore
+LICENSE
+README.md
+.vscode
+/server
+/client/build
+/client/.eslintrc.json
+/client/.prettierrc.json
+/client/.stylelintrc.json
+/client/config-overrides.js
+/client/README.md
+/client/package-lock.json
