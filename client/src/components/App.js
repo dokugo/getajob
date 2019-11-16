@@ -10,6 +10,7 @@ import { DataContext } from '../contexts/dataContext';
 import themeLight from '../themes/themeLight';
 import themeDark from '../themes/themeDark';
 import { useContextSelector } from 'use-context-selector';
+import ThemeButton from './ThemeButton';
 
 // import Start from './Test/Start/Start';
 // import Test from './Test/Test';
@@ -40,16 +41,12 @@ const App = () => {
         {/* <Test /> */}
         <Navbar isAnimated={dataStorage ? true : false}>
           <Form />
-          <ThemeButton onClick={toggleTheme}>
-            <span role="img" aria-label="theme icon">
-              {isDarkMode ? '🌚' : '🌞'}
-            </span>
-          </ThemeButton>
           {/* <Start isOpaque={dataStorage ? true : false} /> */}
         </Navbar>
         <Container isOpaque={dataStorage ? true : false}>
           <List />
         </Container>
+        <ThemeButton isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       </AppBox>
     </ThemeProvider>
   );
@@ -87,25 +84,6 @@ const Container = styled.main`
   top: 0%;
   opacity: ${({ isOpaque }) => (isOpaque ? 1 : 0)};
   transition: opacity 0.5s ease 0.5s;
-`;
-
-const ThemeButton = styled.button`
-  color: ${({ theme }) => theme.global.text};
-  background-color: ${({ theme }) => theme.button.focus};
-  position: absolute;
-  right: 20px;
-  width: 65px;
-  height: 65px;
-  font-size: 20px;
-  border: none;
-  padding: 0;
-  border-radius: 8px;
-  outline: 0 none;
-  cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
-  &:hover {
-    background-color: ${({ theme }) => theme.button.active};
-  }
 `;
 
 const GlobalStyle = createGlobalStyle`
