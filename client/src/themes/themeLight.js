@@ -1,7 +1,7 @@
 export default {
   global: {
     background: 'rgb(245, 252, 245)',
-    text: 'rgb(70, 70, 70)'
+    text: 'rgb(80, 80, 80)'
   },
   input: {
     background: 'rgb(229, 240, 229)',
@@ -28,12 +28,12 @@ export default {
   },
   card: {
     background: 'rgb(229, 240, 229)',
-    title: 'rgb(70, 70, 70)',
-    date: 'rgb(128, 128, 128)',
-    employer: 'rgb(90,90,90)',
+    title: 'rgba(0, 0, 0, 0.7)',
+    date: 'rgb(140, 140, 140)',
+    employer: 'rgb(80, 80, 80)',
     salary: 'rgb(106, 172, 0)',
-    noSalary: 'rgb(114, 118, 125)',
-    number: 'rgb(143, 188, 143)',
+    noSalary: 'rgb(140, 140, 140)',
+    number: 'rgb(140, 140, 140)',
     hover: 'rgb(120, 171, 104)',
     focus: 'rgba(120, 171, 104, 0.35)'
   }

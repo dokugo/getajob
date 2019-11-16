@@ -37,17 +37,20 @@ const Row = styled.div`
   margin-bottom: 5px;
 `;
 
-const Title = styled.span`
+const Title = styled.h6`
   color: ${({ theme }) => theme.card.title};
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 500;
-  margin-bottom: 15px;
+  margin: 0 0 15px 0;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
   max-width: 500px;
   flex-grow: 1;
+  @media (max-width: 670px) {
+    font-size: 18px;
+  }
 `;
 
 const Link = styled.a`
