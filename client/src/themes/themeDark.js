@@ -11,12 +11,12 @@ export default {
     error: 'rgba(220, 53, 69, 0.35)'
   },
   button: {
-    hover: 'rgba(114, 118, 125, 0.15)',
-    focus: 'rgba(114, 118, 125, 0.15)',
-    active: 'rgba(114, 118, 125, 0.2)'
+    hover: 'rgba(125, 125, 125, 0.15)',
+    focus: 'rgba(125, 125, 125, 0.15)',
+    active: 'rgba(125, 125, 125, 0.2)'
   },
   icon: {
-    search: 'rgb(115, 115, 115)',
+    search: 'rgb(125, 125, 125)',
     warning: 'rgba(232, 145, 15, 0.85)',
     error: 'rgba(220, 53, 69, 0.85)',
     loading: 'rgb(122, 169, 92)'
@@ -29,11 +29,11 @@ export default {
   card: {
     background: 'rgba(32, 34, 37, 0.3)',
     title: 'rgba(255, 255, 255, 0.70)',
-    date: 'rgb(114, 118, 125)',
+    date: 'rgb(125, 125, 125)',
     employer: 'rgb(175, 175, 175)',
     salary: 'rgb(122, 169, 92)',
-    noSalary: 'rgb(114, 118, 125)',
-    number: 'rgb(114, 118, 125)',
+    noSalary: 'rgb(125, 125, 125)',
+    number: 'rgb(125, 125, 125)',
     hover: 'rgb(122, 169, 92)',
     focus: 'rgba(122, 169, 92, 0.35)'
   }
