@@ -16,7 +16,7 @@ export default {
     active: 'rgba(120, 171, 104, 0.2)'
   },
   icon: {
-    search: 'rgb(115, 115, 115)',
+    search: 'rgb(125, 125, 125)',
     warning: 'rgb(232, 145, 15)',
     error: 'rgb(220, 53, 69)',
     loading: 'rgb(120, 171, 104)'

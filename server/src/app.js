@@ -49,6 +49,17 @@ app.get('/api/search/:id', limiter, async (req, res) => {
   }
 });
 
+/* const cities = require('./cities');
+app.get('/cities', limiter, async (req, res) => {
+  try {
+    const data = await cities();
+    console.log(data);
+    res.status(200).send(data);
+  } catch (error) {
+    console.log(error);
+  }
+}); */
+
 // run crawling on init for testing purposes
 /* async function test() {
   const data = await crawl('vue');

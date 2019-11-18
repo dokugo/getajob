@@ -13,6 +13,7 @@ const ThemeButton = ({ isDarkMode, toggleTheme }) => {
     >
       <span role="img" aria-label="theme icon">
         {isDarkMode ? '🌚' : '🌞'}
+        {/* isDarkMode ? '🌑' : '☀️' */}
       </span>
     </Button>
   );
@@ -44,4 +45,6 @@ const Button = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.button.active};
   }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 `;

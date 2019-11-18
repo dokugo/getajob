@@ -146,8 +146,7 @@ const crawl = async searchKeywords => {
       // destructuring can be used
       const { nextPageUrl } = result;
       let updatedOutput = [...output];
-      // eslint-disable-next-line no-inner-declarations
-      async function getNextPageLoop(nextPageUrl) {
+      const getNextPageLoop = async nextPageUrl => {
         const result = await getPage(nextPageUrl, page);
         // concatenate next page data to previous pages data
         updatedOutput = [...updatedOutput, ...result.vacancies];
@@ -155,7 +154,7 @@ const crawl = async searchKeywords => {
         if (result.nextPageUrl) {
           await getNextPageLoop(result.nextPageUrl);
         }
-      }
+      };
 
       await getNextPageLoop(nextPageUrl);
 
