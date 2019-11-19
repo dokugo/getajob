@@ -2,6 +2,7 @@
 LICENSE
 README.md
 .vscode
+.github
 /server
 /client/build
 /client/.eslintrc.json

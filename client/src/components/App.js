@@ -54,7 +54,7 @@ const App = () => {
 export default hot(module)(App);
 
 const AppBox = styled.div`
-  height: 100vh;
+  height: 100%;
   padding: 0 12px;
 `;
 
@@ -87,7 +87,11 @@ const Container = styled.main`
 `;
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    height:100%;
+  }
   body {
+  height:100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -97,5 +101,8 @@ const GlobalStyle = createGlobalStyle`
   background: ${({ theme }) => theme.global.background};
   color: ${({ theme }) => theme.global.text};
   transition: background-color .2s ease-out;
+  }
+  body > div {
+    height:100%;
   }
 `;

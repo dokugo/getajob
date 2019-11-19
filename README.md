@@ -16,32 +16,27 @@
   - [x] adaptive layout
   - [x] improve interface logic
   - [x] update color theme
+  - [x] create dark theme
   - [ ] add more functional interface elements
-  - [ ] create dark theme
   - [ ] extend search parameters ui
 
 ## Todo side notes
 
 #### Reminders:
 
-- cleanup getNextPageLoop function
+- include Moscow and SPB
+- set npm scripts for running from root folder
 - improve error handling on server
 - backend response messages refactoring 
 - separate api logic from mutex
 - store mutex lock state in redis instead of in-memory 
 
-- animation context refactoring
-- improve error handling on client
 - data context refactoring
-- increase infinite scrolling items loading 
 - true lazy loading instead of emulated infinite scrolling
+- improve error handling on client
 - try load more button
 - try pagination
-- find better solution for form loading animation (setTimeout)
 - separate fetch function 
-- found nothing / end msg refactoring + fade in / out animation
-- ternary refactoring
-- setState toggle refactoring
 - fade input placeholder on focus
 - sort out cors issue
 - configure browserlist
@@ -61,11 +56,10 @@
 - puppeteer stealth
 - promises to async/await refactoring
 - get requests processing
+- cleanup getNextPageLoop function
 
 ###### Client:
 
-- disable form button when icon is changed
-- research on useContextSelector
 - search ui
 - fetch new data by keyword
 - data rendering
@@ -76,11 +70,17 @@
 - fade-in vacancies animation refactoring
 - balance infinite scrolling height trigger
 - (pseudo) request cancellation
-
-#### Discarded:
-
-- puppeteer next page requests throttling
-<!-- - form validation state icons -->
+- form validation state icons
+- disable form button when icon is changed
+- research on useContextSelector
+- fix search button dark theme color
+- increase infinite scrolling items loading
+- theme button touch event
+- setState toggle refactoring
+- ternary refactoring
+- find better solution for form loading animation (setTimeout)
+- animation context refactoring
+- found nothing / end msg refactoring + fade in / out animation
 
 ## bigger scale: implement large data amounts crawling toolkit
 

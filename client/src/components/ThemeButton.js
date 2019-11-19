@@ -7,13 +7,13 @@ const ThemeButton = ({ isDarkMode, toggleTheme }) => {
   return (
     <Button
       onClick={toggleTheme}
-      onMouseEnter={() => setThemeButtonVisible(true)}
-      onMouseLeave={() => setThemeButtonVisible(false)}
+      onMouseEnter={() => setThemeButtonVisible(!themeButtonVisible)}
+      onMouseLeave={() => setThemeButtonVisible(!themeButtonVisible)}
       isVisible={themeButtonVisible}
     >
       <span role="img" aria-label="theme icon">
         {isDarkMode ? '🌚' : '🌞'}
-        {/* isDarkMode ? '🌑' : '☀️' */}
+        {/* {isDarkMode ? '🌑' : '☀️'} */}
       </span>
     </Button>
   );
@@ -39,7 +39,7 @@ const Button = styled.button`
   padding: 0 0 10px 10px;
   user-select: none;
   transition: 0.15s ease-in-out;
-  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0.33)};
   color: ${({ theme }) => theme.global.text};
   background-color: ${({ theme }) => theme.button.focus};
   &:hover {
