@@ -1,0 +1,13 @@
+{
+  "name": "nxtractor-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "author": "dokugo",
+  "license": "MIT",
+  "scripts": {
+    "server": "nodemon --inspect server/src/app.js",
+    "client": "cd client && npm run dev",
+    "install": "cd client && npm i && cd ../server && npm i"
+  }
+}

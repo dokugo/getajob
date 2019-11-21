@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-
 const ThemeButton = ({ isDarkMode, toggleTheme }) => {
   const [themeButtonVisible, setThemeButtonVisible] = useState(false);
 
@@ -12,8 +11,7 @@ const ThemeButton = ({ isDarkMode, toggleTheme }) => {
       isVisible={themeButtonVisible}
     >
       <span role="img" aria-label="theme icon">
-        {isDarkMode ? '🌚' : '🌞'}
-        {/* {isDarkMode ? '🌑' : '☀️'} */}
+        {isDarkMode ? '☀️' : '🌑'}
       </span>
     </Button>
   );
@@ -23,20 +21,20 @@ export default ThemeButton;
 
 const Button = styled.button`
   cursor: pointer;
-  width: 65px;
-  height: 65px;
+  width: 50px;
+  height: 50px;
   font-size: 20px;
   border: none;
   outline: 0 none;
   position: fixed;
-  left: 0;
+  right: 0;
   bottom: 0;
-  border-radius: 0px 100px 0 0;
+  border-radius: 100px 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-start;
-  padding: 0 0 10px 10px;
+  align-items: flex-end;
+  padding: 0 6px 6px 0;
   user-select: none;
   transition: 0.15s ease-in-out;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0.33)};

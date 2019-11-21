@@ -30,9 +30,9 @@ const App = () => {
     localStorage.setItem('isDarkMode', !isDarkMode);
   };
 
-  if (dataStorage) {
-    console.log(dataStorage);
-  }
+  // if (dataStorage) {
+  //   console.log(dataStorage);
+  // }
 
   return (
     <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>

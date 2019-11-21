@@ -69,7 +69,7 @@ const Form = () => {
       setListAnimation(false);
       setFormState({ ...formState, loading: true });
 
-      console.log(inputData);
+      // console.log(inputData);
 
       // fetch(`http://localhost:9000/api/search/${inputData}`, {
       fetch(`https://nxtractor.herokuapp.com/api/search/${inputData}`, {
