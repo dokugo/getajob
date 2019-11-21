@@ -1,5 +1,3 @@
-/* const puppeteer = require('puppeteer'); */
-
 const puppeteer = require('puppeteer-extra');
 const stealth = require('puppeteer-extra-plugin-stealth')();
 const hiddenUserAgent = require('puppeteer-extra-plugin-anonymize-ua');
@@ -23,7 +21,7 @@ const getPage = async (URL, page) => {
         ? document.querySelector('[data-qa=pager-next]').href
         : null;
 
-      const getVacancyData = {
+      const getData = {
         title: i => {
           return document.querySelectorAll(
             '[data-qa=vacancy-serp__vacancy-title]'
@@ -61,26 +59,26 @@ const getPage = async (URL, page) => {
         }
       };
 
-      const vacanciesAmountOnPage = document.querySelectorAll(
+      const itemsAmount = document.querySelectorAll(
         'span.g-user-content > a.bloko-link'
       ).length;
 
-      const vacancies = [];
-      for (let i = 0; i < vacanciesAmountOnPage; i++) {
-        vacancies.push({
-          title: getVacancyData.title(i),
-          salary: getVacancyData.salary(i),
-          employer: getVacancyData.employer(i),
-          date: getVacancyData.date(i),
-          link: getVacancyData.link(i),
-          id: getVacancyData.id(i)
+      const data = [];
+      for (let i = 0; i < itemsAmount; i++) {
+        data.push({
+          title: getData.title(i),
+          salary: getData.salary(i),
+          employer: getData.employer(i),
+          date: getData.date(i),
+          link: getData.link(i),
+          id: getData.id(i)
         });
       }
 
       if (nextPageUrl) {
-        return { vacancies, nextPageUrl };
+        return { data, nextPageUrl };
       } else {
-        return { vacancies };
+        return { data };
       }
     });
 
@@ -93,8 +91,6 @@ const getPage = async (URL, page) => {
 let browser;
 
 const crawl = async searchKeywords => {
-  // testing browser windows size and screen size
-  // const URL = 'https://browsersize.com/';
   const URL = getSearchUrl(searchKeywords);
 
   try {
@@ -112,6 +108,9 @@ const crawl = async searchKeywords => {
     }
 
     const page = await browser.newPage();
+
+    // default Chromium window.innerWidth & window.innerHeight: 1980x937 (969 window.innerHeight if bookmarks bar isn't present)
+    page.setViewport({ width: 1920, height: 937 });
 
     page.setRequestInterception(true);
     page.on('request', request => {
@@ -135,22 +134,18 @@ const crawl = async searchKeywords => {
       } */
     });
 
-    // default Chromium window.innerWidth & window.innerHeight: 1980x937 (969 window.innerHeight if bookmarks bar isn't present)
-    page.setViewport({ width: 1920, height: 937 });
-
     const result = await getPage(URL, page);
-    const output = result.vacancies;
 
-    // get next page if it is exists
-    if (result.nextPageUrl) {
-      // destructuring can be used
-      const { nextPageUrl } = result;
-      let updatedOutput = [...output];
+    const { data, nextPageUrl } = result;
+
+    // get next page if it exists
+    if (nextPageUrl) {
+      let multipageData = [...data];
+
       const getNextPageLoop = async nextPageUrl => {
         const result = await getPage(nextPageUrl, page);
         // concatenate next page data to previous pages data
-        updatedOutput = [...updatedOutput, ...result.vacancies];
-        // console.log(result)
+        multipageData = [...multipageData, ...result.data];
         if (result.nextPageUrl) {
           await getNextPageLoop(result.nextPageUrl);
         }
@@ -162,15 +157,14 @@ const crawl = async searchKeywords => {
       // await browser.close();
 
       await page.close();
-      return updatedOutput;
+      return multipageData;
     } else {
       // await page.screenshot({ path: 'screenshot.png', fullPage: true });
       // await browser.close();
 
       await page.close();
-      return output;
+      return data;
     }
-    // console.log(output);
   } catch (error) {
     console.error('Error: ', error);
   }

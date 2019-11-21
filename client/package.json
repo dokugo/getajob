@@ -2,15 +2,9 @@
   "name": "nightcrawler-client",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-infinite-scroll-component": "^4.5.3",
-    "react-scripts": "3.1.1",
-    "react-transition-group": "^4.3.0",
-    "styled-components": "^5.0.0-beta.11",
-    "use-context-selector": "^1.0.1"
-  },
+  "description": "",
+  "author": "dokugo",
+  "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
     "dev": "react-app-rewired start",
@@ -38,6 +32,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-infinite-scroll-component": "^4.5.3",
+    "react-scripts": "3.1.1",
+    "react-transition-group": "^4.3.0",
+    "styled-components": "^5.0.0-beta.11",
+    "use-context-selector": "^1.0.1"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.10.2",

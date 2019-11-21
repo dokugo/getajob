@@ -1,31 +1,19 @@
 console.clear();
 
-/* process.on('warning', error => {
-  console.warn(error.stack);
-  console.log(process.listeners('exit'));
-  console.log(process.listeners('SIGINT'));
-  console.log(process.listeners('SIGTERM'));
-  console.log(process.listeners('SIGHUP'));
-
-  console.log(process.listenerCount('exit'));
-  console.log(process.listenerCount('SIGINT'));
-  console.log(process.listenerCount('SIGTERM'));
-  console.log(process.listenerCount('SIGHUP'));
-}); */
-
 const express = require('express');
-const limit = require('express-rate-limit');
 const cors = require('cors');
+const limit = require('express-rate-limit');
+
 const mutex = require('./mutex');
 
+const PORT = process.env.PORT || 9000;
 const app = express();
 app.use(cors());
 app.use(express.json());
-const port = process.env.PORT || 9000;
-app.listen(port, () => console.log('Nightcrawler app listening on port 9000'));
+app.listen(PORT, () => console.log('Nightcrawler app listening on port 9000'));
 
 const limiter = limit({
-  windowMs: 5 * 1000, // 5 second
+  windowMs: 5 * 1000, // 5 seconds
   max: 3, // requests per windowMs for each IP
   message: JSON.stringify({
     status: 'error',
@@ -38,7 +26,7 @@ const handleSearchRequest = (lockID, searchKeywords, res) => {
   return mutex(lockID, searchKeywords, res);
 };
 
-app.get('/api/search/:id', limiter, async (req, res) => {
+app.get('/search/:id', limiter, async (req, res) => {
   try {
     const searchKeywords = req.params.id;
     const lockID = req.ip;
@@ -59,20 +47,3 @@ app.get('/cities', limiter, async (req, res) => {
     console.log(error);
   }
 }); */
-
-// run crawling on init for testing purposes
-/* async function test() {
-  const data = await crawl('vue');
-  try {
-    console.log(data);
-    app.get('/', async (req, res) => {
-      return res.status(200).send('GET root');
-    });
-    app.get('/api', async (req, res) => {
-      res.status(200).send(data);
-    });
-  } catch (error) {
-    console.error('Error: ', error);
-  }
-}
-test(); */

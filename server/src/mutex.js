@@ -6,16 +6,16 @@ const acquire = async id => {
   if (!locksStorage[id]) {
     locksStorage[id] = id;
 
-    console.log(`Lock acquired for ${locksStorage[id]}`);
+    // console.log(`Lock acquired for ${locksStorage[id]}`);
     return 'acquired';
   } else {
-    console.log(`Already locked for ${locksStorage[id]}`);
+    // console.log(`Already locked for ${locksStorage[id]}`);
     return 'locked';
   }
 };
 
 const release = async id => {
-  console.log(`Lock released from ${locksStorage[id]}`);
+  // console.log(`Lock released from ${locksStorage[id]}`);
   delete locksStorage[id];
 };
 
@@ -24,7 +24,7 @@ const mutex = async (id, searchKeywords, res) => {
 
   // limit parallel running puppeteer instances amount
   if (Object.keys(locksStorage).length > 10) {
-    console.log(locksStorage);
+    // console.log(locksStorage);
 
     res.status(503).json({
       status: 'error',
@@ -48,7 +48,7 @@ const mutex = async (id, searchKeywords, res) => {
     }
 
     const result = await trySearch(searchKeywords, res);
-    console.log(result);
+    // console.log(result);
 
     if (result && result.length) {
       res.status(200).json({
@@ -75,7 +75,7 @@ const trySearch = async (searchKeywords, res) => {
   try {
     const result = await crawl(searchKeywords);
 
-    // seems unutilized
+    // unutilized
     /*     if (!result) {
       res.status(500).json({
         status: 'error',

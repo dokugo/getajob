@@ -1,10 +1,10 @@
 {
-  "short_name": "Nightcrawler",
-  "name": "Nightcrawler Client",
+  "short_name": "nxtractor",
+  "name": "nxtractor client",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "32x32",
       "type": "image/x-icon"
     }
   ],

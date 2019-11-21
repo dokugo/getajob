@@ -1,35 +1,44 @@
-## ~~Intended functionality~~ Todo
+### To run dev version:
 
-- [ ] server
-  - [x] refactor crawling core from promises to async/await
-  - [x] get rid of cheerio (puppeteer eval instead)
-  - [x] incoming api get requests throttling (rate limit)
-  - [x] run single crawling async function per client (mutex)
-  - [x] spawn chromium pages insted of instances
+### `npm install`
+### `npm run server`
+### `npm run client`
+
+
+## Todo
+
+- [ ] **server**
+  - [x] async/await crawling core
+  - [x] move from cheerio to puppeteer
+  - [x] api rate limit
+  - [x] spawn chromium pages instead of instances
+  - [x] crawling function mutex lock
   - [ ] extend search parameters
   - [ ] try cluster mode
-- [ ] client
+- [ ] **client**
   - [x] form validation
-  - [x] api call (pseudo) throttling
-  - [x] infinite scrolling (without lazy loading)
-  - [x] styling refactoring (css-in-js styled-components)
+  - [x] double api call blocking
+  - [x] infinite scrolling
+  - [x] css-in-js styled-components
   - [x] adaptive layout
-  - [x] improve interface logic
+  - [x] form validation ui elements
   - [x] update color theme
   - [x] create dark theme
-  - [ ] add more functional interface elements
   - [ ] extend search parameters ui
 
-## Todo side notes
+## Side notes
 
-#### Reminders:
+#### In progress:
+
+###### Server:
 
 - include Moscow and SPB
-- set npm scripts for running from root folder
 - improve error handling on server
 - backend response messages refactoring 
 - separate api logic from mutex
 - store mutex lock state in redis instead of in-memory 
+
+###### Client:
 
 - data context refactoring
 - true lazy loading instead of emulated infinite scrolling
@@ -38,15 +47,18 @@
 - try pagination
 - separate fetch function 
 - fade input placeholder on focus
-- sort out cors issue
-- configure browserlist
 
+###### Other:
+
+- setup .env vars
+- setup serviceWorker
+- setup manifest.json
+- check package.json and other config files
 - cleanup readme
 - update node
 - perform depcheck
-- check package.json and other config files
-- rename ideas: xtractor, nxtractor, ncrawler
-- try RYM crawling
+- configure browserlist
+- rename ideas: xtractor, nxtractor, ncrawler, digger, seeker, pitman, ferret, stylet, scout
 
 #### Completed:
 
@@ -57,6 +69,7 @@
 - promises to async/await refactoring
 - get requests processing
 - cleanup getNextPageLoop function
+- sort out cors issue
 
 ###### Client:
 
@@ -82,19 +95,7 @@
 - animation context refactoring
 - found nothing / end msg refactoring + fade in / out animation
 
-## bigger scale: implement large data amounts crawling toolkit
+###### Other:
 
-- [ ] admin panel
-  - [ ] scheduling
-  - [ ] log monitor
-  - [ ] data downloading
-  - [ ] custom data rendering (e.g. for a specific site)
-- [ ] backend
-  - [ ] try pure async requests instead of puppeteer
-  - [ ] try cluster mode and worker threads
-  - [ ] increase live data crawling pace
-  - [ ] connect to the db
-  - [ ] write data to file system
-  - [ ] new scrapped data parsing methods
-
-- research on a faster fresh data collection methods (push, concat, spread, batching transactions)
+- set npm scripts for running from root folder
+- restructure readme
