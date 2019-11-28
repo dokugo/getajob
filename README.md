@@ -1,11 +1,19 @@
-### To run dev version:
+## 😱 Just Get a Job Already.
 
-### `npm install`
-### `npm run server`
-### `npm run client`
+Gets the vacancies in my hometown from the local (`RU`) job search website via headless browser crawling made with [`Puppeteer`](https://github.com/puppeteer/puppeteer). For an example, try to search with the keywords such as `js` or `react`.
 
 
-## Todo
+###### Please note that if you try to use [`https://getajob.now.sh`](https://getajob.now.sh), you might experience slow first-loading period since the free-tier Heroku instance "gets asleep" if it receives no web traffic in a 30-minute period and takes some time to get itself out of sleep, usually around 15 seconds.
+
+### Run the dev version locally
+
+``` shell
+npm install
+npm run server
+npm run client
+```
+
+### Todo 📑
 
 - [ ] **server**
   - [x] async/await crawling core
@@ -26,12 +34,13 @@
   - [x] create dark theme
   - [ ] extend search parameters ui
 
-## Side notes
+### Personal side notes ✍️
 
-#### In progress:
+<details><summary>In progress</summary>
 
 ###### Server:
 
+- rewrite crawling selector to class construct
 - include Moscow and SPB
 - improve error handling on server
 - backend response messages refactoring 
@@ -50,6 +59,7 @@
 
 ###### Other:
 
+- convert favicon
 - setup .env vars
 - setup serviceWorker
 - setup manifest.json
@@ -58,9 +68,11 @@
 - update node
 - perform depcheck
 - configure browserlist
-- rename ideas: xtractor, nxtractor, ncrawler, digger, seeker, pitman, ferret, stylet, scout
+- rename heroku instance
 
-#### Completed:
+</details>
+
+<details><summary>Completed</summary>
 
 ###### Server:
 
@@ -99,3 +111,6 @@
 
 - set npm scripts for running from root folder
 - restructure readme
+- rename ideas: getajob, xtractor, nxtractor, ncrawler, digger, seeker, pitman, ferret, stylet, scout
+
+</details>
