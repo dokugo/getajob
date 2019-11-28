@@ -71,8 +71,8 @@ const Form = () => {
 
       // console.log(inputData);
 
-      fetch(`http://localhost:9000/search/${inputData}`, {
-        // fetch(`https://nxtractor.herokuapp.com/search/${inputData}`, {
+      // fetch(`http://localhost:9000/search/${inputData}`, {
+      fetch(`https://nxtractor.herokuapp.com/search/${inputData}`, {
         headers: {
           'Cache-Control':
             'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',

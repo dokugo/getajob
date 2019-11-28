@@ -11,7 +11,7 @@ const ThemeButton = ({ isDarkMode, toggleTheme }) => {
       isVisible={themeButtonVisible}
     >
       <span role="img" aria-label="theme icon">
-        {isDarkMode ? '☀️' : '🌑'}
+        {isDarkMode ? '☀️' : '🌒'}
       </span>
     </Button>
   );

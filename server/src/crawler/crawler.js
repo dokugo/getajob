@@ -91,9 +91,9 @@ const getPage = async (URL, page) => {
 let browser;
 
 const crawl = async searchKeywords => {
-  const URL = getSearchUrl(searchKeywords);
-
   try {
+    const URL = getSearchUrl(searchKeywords);
+
     if (!browser) {
       browser = await puppeteer.launch({
         args: [

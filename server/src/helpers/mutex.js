@@ -1,4 +1,4 @@
-const crawl = require('./crawler');
+const crawl = require('../crawler/crawler');
 
 const locksStorage = {};
 
@@ -19,18 +19,17 @@ const release = async id => {
   delete locksStorage[id];
 };
 
-const mutex = async (id, searchKeywords, res) => {
+const mutex = async (id, searchKeywords, response) => {
   // console.log('locksStorage: ', locksStorage);
 
   // limit parallel running puppeteer instances amount
   if (Object.keys(locksStorage).length > 10) {
     // console.log(locksStorage);
 
-    res.status(503).json({
+    return response.status(503).json({
       status: 'error',
       message: 'Server is busy.'
     });
-    return;
   }
 
   let lockState;
@@ -39,28 +38,27 @@ const mutex = async (id, searchKeywords, res) => {
     lockState = await acquire(id);
 
     if (lockState === 'locked') {
-      res.statusMessage = 'Enhance Your Calm';
-      res.status(420).json({
+      response.statusMessage = 'Enhance Your Calm';
+      return response.status(420).json({
         status: 'error',
         message: 'Previous request is still processing.'
       });
-      return;
     }
 
-    const result = await trySearch(searchKeywords, res);
+    const result = await trySearch(searchKeywords, response);
     // console.log(result);
 
     if (result && result.length) {
-      res.status(200).json({
+      response.status(200).json({
         status: 'OK',
         message: 'Data successfully delivered.',
         data: result
       });
     } else {
-      res.status(200).json({ status: 'OK', message: 'Found nothing.' });
+      response.status(200).json({ status: 'OK', message: 'Found nothing.' });
     }
   } catch (error) {
-    res.status(409).json({
+    response.status(409).json({
       status: 'error',
       message: error.message
     });
@@ -71,13 +69,13 @@ const mutex = async (id, searchKeywords, res) => {
   }
 };
 
-const trySearch = async (searchKeywords, res) => {
+const trySearch = async (searchKeywords, response) => {
   try {
     const result = await crawl(searchKeywords);
 
     // unutilized
     /*     if (!result) {
-      res.status(500).json({
+      response.status(500).json({
         status: 'error',
         message: 'Couldn't get data.'
       });
@@ -85,7 +83,7 @@ const trySearch = async (searchKeywords, res) => {
 
     return result;
   } catch (error) {
-    res.status(500).json({
+    response.status(500).json({
       status: 'error',
       message: `Couldn't get data. ${error.message}`
     });
