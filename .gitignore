@@ -1,17 +1,17 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/server/node_modules
-/client/node_modules
+server/node_modules
+client/node_modules
 
 # testing
-/client/coverage
+client/coverage
 
 # workflows
 # .github
 
 # production
-/client/build
+client/build
 
 # misc
 .DS_Store
@@ -25,4 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 
 #temporarily ignore unused server files
-/server/src/cities.js
+server/src/crawler/cities.js
+server/src/helpers/stealthcheck.js
+
+#environment variables
+server/.env

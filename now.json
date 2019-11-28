@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "nightcrawler",
+  "name": "getajob",
   "regions": ["arn1"],
   "builds": [
     {
