@@ -1,6 +1,6 @@
-## 😱 Just Get a Job Already.
+## 😱 Just Get a Job Already
 
-Gets the vacancies in my hometown from the local (`RU`) job search website via headless browser crawling made with [`Puppeteer`](https://github.com/puppeteer/puppeteer). For an example, try to search with the keywords such as `js` or `react`.
+Gets the vacancies in my hometown from the local (`RU`) job search website via headless browser crawling made with [`Puppeteer`](https://github.com/puppeteer/puppeteer). For example, try to search with the keywords such as `js` or `react`.
 
 
 ###### Please note that if you try to use [`https://getajob.now.sh`](https://getajob.now.sh), you might experience slow first-loading period since the free-tier Heroku instance "gets asleep" if it receives no web traffic in a 30-minute period and takes some time to get itself out of sleep, usually around 15 seconds.
@@ -13,7 +13,7 @@ npm run server
 npm run client
 ```
 
-### Todo 📑
+### Todo
 
 - [ ] **server**
   - [x] async/await crawling core
@@ -34,7 +34,7 @@ npm run client
   - [x] create dark theme
   - [ ] extend search parameters ui
 
-### Personal side notes ✍️
+### Personal side notes
 
 <details><summary>In progress</summary>
 
