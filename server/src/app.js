@@ -5,6 +5,7 @@ const cors = require('cors');
 const limit = require('express-rate-limit');
 
 const mutex = require('./helpers/mutex');
+const responses = require('./helpers/responses');
 
 const PORT = process.env.PORT || 9000;
 const app = express();
@@ -15,6 +16,8 @@ app.listen(PORT, () => console.log(`Server is listening on port ${PORT}.`));
 const limiter = limit({
   windowMs: 5 * 1000, // 5 seconds
   max: 3, // requests per windowMs for each IP
+  skipSuccessfulRequests: true,
+  skipFailedRequests: true,
   message: JSON.stringify({
     status: 'error',
     message:
@@ -22,8 +25,9 @@ const limiter = limit({
   })
 });
 
-const handleSearchRequest = (lockID, searchKeywords, response) => {
-  return mutex(lockID, searchKeywords, response);
+const handleSearchRequest = async (lockID, searchKeywords, response) => {
+  const state = await mutex(lockID, searchKeywords);
+  return responses(state, response);
 };
 
 app.get('/search/:id', limiter, async (request, response) => {
@@ -31,7 +35,7 @@ app.get('/search/:id', limiter, async (request, response) => {
     const searchKeywords = request.params.id;
     const lockID = request.ip;
 
-    handleSearchRequest(lockID, searchKeywords, response);
+    await handleSearchRequest(lockID, searchKeywords, response);
   } catch (error) {
     console.log(error);
   }

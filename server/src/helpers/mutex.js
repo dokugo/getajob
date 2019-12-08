@@ -5,7 +5,6 @@ const locksStorage = {};
 const acquire = async id => {
   if (!locksStorage[id]) {
     locksStorage[id] = id;
-
     // console.log(`Lock acquired for ${locksStorage[id]}`);
     return 'acquired';
   } else {
@@ -20,52 +19,27 @@ const release = async id => {
 };
 
 const mutex = async (id, searchKeywords, response) => {
-  // console.log('locksStorage: ', locksStorage);
-
-  // limit parallel running puppeteer instances amount
-  if (Object.keys(locksStorage).length > 10) {
-    // console.log(locksStorage);
-
-    return response.status(503).json({
-      status: 'error',
-      message: 'Server is busy.'
-    });
-  }
+  // limit parallel running puppeteer jobs amount
+  if (Object.keys(locksStorage).length > 10) return { status: 'BUSY' };
 
   let lockState;
 
   try {
     lockState = await acquire(id);
 
-    if (lockState === 'locked') {
-      response.statusMessage = 'Enhance Your Calm';
-      return response.status(420).json({
-        status: 'error',
-        message: 'Previous request is still processing.'
-      });
-    }
+    if (lockState === 'locked') return { status: 'IN_PROCESS' };
 
     const result = await trySearch(searchKeywords, response);
-    // console.log(result);
 
     if (result && result.length) {
-      response.status(200).json({
-        status: 'OK',
-        message: 'Data successfully delivered.',
-        data: result
-      });
+      return { status: 'DATA_FOUND', data: result };
     } else {
-      response.status(200).json({ status: 'OK', message: 'Found nothing.' });
+      return { status: 'DATA_NOT_FOUND' };
     }
   } catch (error) {
-    response.status(409).json({
-      status: 'error',
-      message: error.message
-    });
+    return { status: 'ERROR', error: error };
   } finally {
-    if (lockState === 'acquired') {
-      await release(id);
-    }
+    if (lockState === 'acquired') await release(id);
   }
 };
 
@@ -73,20 +47,9 @@ const trySearch = async (searchKeywords, response) => {
   try {
     const result = await crawl(searchKeywords);
 
-    // unutilized
-    /*     if (!result) {
-      response.status(500).json({
-        status: 'error',
-        message: 'Couldn't get data.'
-      });
-    } */
-
     return result;
   } catch (error) {
-    response.status(500).json({
-      status: 'error',
-      message: `Couldn't get data. ${error.message}`
-    });
+    return { status: 'CRAWLER_ERROR', error: error };
   }
 };
 
