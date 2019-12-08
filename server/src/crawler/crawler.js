@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer-extra');
 const stealth = require('puppeteer-extra-plugin-stealth')();
 const hiddenUserAgent = require('puppeteer-extra-plugin-anonymize-ua');
 
+const getPage = require('./getpage');
+
 puppeteer.use(stealth);
 puppeteer.use(hiddenUserAgent({ makeWindows: true }));
 
@@ -10,82 +12,6 @@ const getSearchUrl = searchKeywords => {
   const params = `order_by=publication_time&area=112&text=`;
   const URL = `${rootDomain}${params}${searchKeywords}`;
   return URL;
-};
-
-const getPage = async (URL, page) => {
-  try {
-    await page.goto(URL, { waitUntil: 'networkidle2', timeout: 0 });
-
-    const parsePage = await page.evaluate(() => {
-      const nextPageUrl = document.querySelector('[data-qa=pager-next]')
-        ? document.querySelector('[data-qa=pager-next]').href
-        : null;
-
-      const getData = {
-        title: i => {
-          return document.querySelectorAll(
-            '[data-qa=vacancy-serp__vacancy-title]'
-          )[i].textContent;
-        },
-        salary: i => {
-          return document.querySelectorAll(
-            '[data-qa=vacancy-serp__vacancy-title]'
-          )[i].parentNode.parentNode.parentNode.nextSibling.firstChild
-            ? document.querySelectorAll(
-                '[data-qa=vacancy-serp__vacancy-title]'
-              )[i].parentNode.parentNode.parentNode.nextSibling.firstChild
-                .textContent
-            : 'Зарплата не указана';
-        },
-        employer: i => {
-          return document
-            .querySelectorAll('[data-qa=vacancy-serp__vacancy-employer]')
-            [i].textContent.trim();
-        },
-        date: i => {
-          return document.querySelectorAll(
-            '[data-qa=vacancy-serp__vacancy-date] span'
-          )[i].textContent;
-        },
-        link: i => {
-          return document.querySelectorAll(
-            'span.g-user-content > a.bloko-link'
-          )[i].href;
-        },
-        id: i => {
-          return document
-            .querySelectorAll('span.g-user-content > a.bloko-link')
-            [i].href.replace(/[^0-9]+/g, '');
-        }
-      };
-
-      const itemsAmount = document.querySelectorAll(
-        'span.g-user-content > a.bloko-link'
-      ).length;
-
-      const data = [];
-      for (let i = 0; i < itemsAmount; i++) {
-        data.push({
-          title: getData.title(i),
-          salary: getData.salary(i),
-          employer: getData.employer(i),
-          date: getData.date(i),
-          link: getData.link(i),
-          id: getData.id(i)
-        });
-      }
-
-      if (nextPageUrl) {
-        return { data, nextPageUrl };
-      } else {
-        return { data };
-      }
-    });
-
-    return parsePage;
-  } catch (error) {
-    console.error('Error: ', error);
-  }
 };
 
 let browser;
@@ -146,9 +72,7 @@ const crawl = async searchKeywords => {
         const result = await getPage(nextPageUrl, page);
         // concatenate next page data to previous pages data
         multipageData = [...multipageData, ...result.data];
-        if (result.nextPageUrl) {
-          await getNextPageLoop(result.nextPageUrl);
-        }
+        if (result.nextPageUrl) await getNextPageLoop(result.nextPageUrl);
       };
 
       await getNextPageLoop(nextPageUrl);
