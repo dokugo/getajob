@@ -46,21 +46,15 @@ const Form = () => {
 
   const inputRef = createRef();
   const focusInput = () => {
-    if (formState.default) {
-      inputRef.current.focus();
-    }
+    if (formState.default) inputRef.current.focus();
   };
 
   const handleRequest = e => {
     e.preventDefault();
 
-    if (!formState.default && !formState.warning) {
-      inputRef.current.blur();
-    }
+    if (!formState.default && !formState.warning) inputRef.current.blur();
 
-    if (formState.loading) {
-      return;
-    }
+    if (formState.loading) return;
 
     if (inputData === null) {
       setFormState({ ...formState, warning: false, error: true });
@@ -71,8 +65,10 @@ const Form = () => {
 
       // console.log(inputData);
 
-      // fetch(`http://localhost:9000/search/${inputData}`, {
-      fetch(`https://nxtractor.herokuapp.com/search/${inputData}`, {
+      const DOMAIN =
+        process.env.REACT_APP_PROD_API_ROUTE || 'http://localhost:9000';
+
+      fetch(`${DOMAIN}/search/${inputData}`, {
         headers: {
           'Cache-Control':
             'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
@@ -82,9 +78,7 @@ const Form = () => {
       })
         .then(response => response.json())
         .then(response => {
-          if (response.status === 'error') {
-            console.error(response.message);
-          }
+          if (response.status === 'error') console.error(response.message);
 
           if (response.data) {
             setDataStorage(response.data);
