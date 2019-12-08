@@ -40,11 +40,9 @@ npm run client
 
 ###### Server:
 
-- rewrite crawling selector to class construct
 - include Moscow and SPB
 - improve error handling on server
 - backend response messages refactoring 
-- separate api logic from mutex
 - store mutex lock state in redis instead of in-memory 
 
 ###### Client:
@@ -60,7 +58,6 @@ npm run client
 ###### Other:
 
 - convert favicon
-- setup .env vars
 - setup serviceWorker
 - setup manifest.json
 - check package.json and other config files
@@ -68,7 +65,6 @@ npm run client
 - update node
 - perform depcheck
 - configure browserlist
-- rename heroku instance
 
 </details>
 
@@ -82,6 +78,8 @@ npm run client
 - get requests processing
 - cleanup getNextPageLoop function
 - sort out cors issue
+- rewrite crawling selector
+- separate api route response logic from mutex
 
 ###### Client:
 
@@ -106,11 +104,13 @@ npm run client
 - find better solution for form loading animation (setTimeout)
 - animation context refactoring
 - found nothing / end msg refactoring + fade in / out animation
+- setup .env vars
 
 ###### Other:
 
 - set npm scripts for running from root folder
 - restructure readme
 - rename ideas: getajob, xtractor, nxtractor, ncrawler, digger, seeker, pitman, ferret, stylet, scout
+- rename heroku instance
 
 </details>
