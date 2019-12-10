@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer-extra');
 const stealth = require('puppeteer-extra-plugin-stealth')();
 const hiddenUserAgent = require('puppeteer-extra-plugin-anonymize-ua');
 
-const getPage = require('./getpage');
+const getPage = require('./getPage');
 
 puppeteer.use(stealth);
 puppeteer.use(hiddenUserAgent({ makeWindows: true }));

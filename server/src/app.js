@@ -5,7 +5,7 @@ const cors = require('cors');
 const limit = require('express-rate-limit');
 
 const mutex = require('./helpers/mutex');
-const responses = require('./helpers/responses');
+const responseList = require('./helpers/responseList');
 
 const PORT = process.env.PORT || 9000;
 const app = express();
@@ -25,9 +25,14 @@ const limiter = limit({
   })
 });
 
-const handleSearchRequest = async (lockID, searchKeywords, response) => {
-  const state = await mutex(lockID, searchKeywords);
-  return responses(state, response);
+const requestHandler = async (lockID, searchKeywords) => {
+  const request = await mutex(lockID, searchKeywords);
+  return request;
+};
+
+const responseHandler = async (data, responseObject) => {
+  const response = await responseList(data, responseObject);
+  return response;
 };
 
 app.get('/search/:id', limiter, async (request, response) => {
@@ -35,19 +40,11 @@ app.get('/search/:id', limiter, async (request, response) => {
     const searchKeywords = request.params.id;
     const lockID = request.ip;
 
-    await handleSearchRequest(lockID, searchKeywords, response);
+    const data = await requestHandler(lockID, searchKeywords);
+    const processedResponse = await responseHandler(data, response);
+
+    return processedResponse;
   } catch (error) {
     console.log(error);
   }
 });
-
-/* const cities = require('./cities');
-app.get('/cities', limiter, async (request, response) => {
-  try {
-    const data = await cities();
-    console.log(data);
-    response.status(200).send(data);
-  } catch (error) {
-    console.log(error);
-  }
-}); */

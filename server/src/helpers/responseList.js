@@ -1,4 +1,4 @@
-const responses = (state, response) => {
+const responseList = (state, response) => {
   switch (state.status) {
     case 'BUSY':
       return response.status(503).json({
@@ -6,7 +6,7 @@ const responses = (state, response) => {
         message: 'Server is busy.'
       });
 
-    case 'IN_PROCESS':
+    case 'IN_PROGRESS':
       response.statusMessage = 'Enhance Your Calm';
       return response.status(420).json({
         status: 'error',
@@ -27,9 +27,9 @@ const responses = (state, response) => {
       });
 
     case 'MUTEX_ERROR':
-      return response.status(409).json({
+      return response.status(500).json({
         status: 'error',
-        message: state.error.message
+        message: `Data processing error. ${state.error.message}`
       });
 
     case 'CRAWLER_ERROR':
@@ -46,4 +46,4 @@ const responses = (state, response) => {
   }
 };
 
-module.exports = responses;
+module.exports = responseList;

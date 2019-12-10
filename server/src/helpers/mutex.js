@@ -12,13 +12,12 @@ const acquire = async id => {
     return 'locked';
   }
 };
-
 const release = async id => {
   // console.log(`Lock released from ${locksStorage[id]}`);
   delete locksStorage[id];
 };
 
-const mutex = async (id, searchKeywords, response) => {
+const mutex = async (id, searchKeywords) => {
   // limit parallel running puppeteer jobs amount
   if (Object.keys(locksStorage).length > 10) return { status: 'BUSY' };
 
@@ -27,27 +26,26 @@ const mutex = async (id, searchKeywords, response) => {
   try {
     lockState = await acquire(id);
 
-    if (lockState === 'locked') return { status: 'IN_PROCESS' };
+    if (lockState === 'locked') return { status: 'IN_PROGRESS' };
 
-    const result = await trySearch(searchKeywords, response);
+    const result = await getData(searchKeywords);
+    return result;
+  } catch (error) {
+    return { status: 'MUTEX_ERROR', error: error };
+  } finally {
+    if (lockState === 'acquired') await release(id);
+  }
+};
+
+const getData = async searchKeywords => {
+  try {
+    const result = await crawl(searchKeywords);
 
     if (result && result.length) {
       return { status: 'DATA_FOUND', data: result };
     } else {
       return { status: 'DATA_NOT_FOUND' };
     }
-  } catch (error) {
-    return { status: 'ERROR', error: error };
-  } finally {
-    if (lockState === 'acquired') await release(id);
-  }
-};
-
-const trySearch = async (searchKeywords, response) => {
-  try {
-    const result = await crawl(searchKeywords);
-
-    return result;
   } catch (error) {
     return { status: 'CRAWLER_ERROR', error: error };
   }
