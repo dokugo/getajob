@@ -13,6 +13,8 @@ npm run server
 npm run client
 ```
 
+Don't forget to use [`puppeteer-heroku-buildpack`](https://github.com/jontewks/puppeteer-heroku-buildpack.git) in order to try Heroku deployment.
+
 ### Todo
 
 - [ ] **server**
