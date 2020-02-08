@@ -3,9 +3,9 @@ console.clear();
 const express = require('express');
 const cors = require('cors');
 const limit = require('express-rate-limit');
-const mutex = require('./helpers/mutex');
-const responseList = require('./helpers/responseList');
 const { validateData } = require('./helpers/utils');
+const lock = require('./helpers/lock');
+const crawler = require('./crawler/crawler');
 
 const PORT = process.env.PORT || 9000;
 const app = express();
@@ -25,25 +25,26 @@ const limiter = limit({
   })
 });
 
-const requestHandler = async (lockId, searchKeywords) => {
-  const request = await mutex(lockId, searchKeywords);
-  return request;
-};
-
-const responseHandler = async (data, responseObject) => {
-  const response = await responseList(data, responseObject);
-  return response;
-};
-
-app.get('/search/:id', limiter, async (request, response) => {
+app.get('/search/:keywords', limiter, async (request, response) => {
   try {
-    if (!request.params.id) {
+    const lockId = request.ip;
+
+    const isLocked = lock.acquire(lockId);
+    if (isLocked) {
+      response.statusMessage = 'Enhance Your Calm';
+      return response.status(420).send({
+        message: `Server is busy.`,
+        status: 'error'
+      });
+    }
+
+    if (!request.params.keywords) {
       return response
         .status(400)
         .send({ message: 'Missing data.', status: 'error' });
     }
 
-    const searchKeywords = request.params.id.trim();
+    const searchKeywords = request.params.keywords.trim();
 
     if (!validateData(searchKeywords)) {
       return response
@@ -51,12 +52,23 @@ app.get('/search/:id', limiter, async (request, response) => {
         .send({ message: 'Incorrect data.', status: 'error' });
     }
 
-    const lockId = request.ip;
+    const data = await crawler(searchKeywords);
 
-    const data = await requestHandler(lockId, searchKeywords);
-    const processedResponse = await responseHandler(data, response);
+    lock.release(lockId);
 
-    return processedResponse;
+    if (data && data.length) {
+      return response.status(200).send({
+        message: `Data fetched successfully.`,
+        status: 'OK',
+        data: data
+      });
+    } else {
+      return response.status(200).send({
+        message: `Data not found.`,
+        status: 'OK',
+        data: null
+      });
+    }
   } catch (error) {
     console.log(error);
   }
