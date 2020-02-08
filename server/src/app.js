@@ -3,9 +3,9 @@ console.clear();
 const express = require('express');
 const cors = require('cors');
 const limit = require('express-rate-limit');
-
 const mutex = require('./helpers/mutex');
 const responseList = require('./helpers/responseList');
+const { validateData } = require('./helpers/utils');
 
 const PORT = process.env.PORT || 9000;
 const app = express();
@@ -25,8 +25,8 @@ const limiter = limit({
   })
 });
 
-const requestHandler = async (lockID, searchKeywords) => {
-  const request = await mutex(lockID, searchKeywords);
+const requestHandler = async (lockId, searchKeywords) => {
+  const request = await mutex(lockId, searchKeywords);
   return request;
 };
 
@@ -37,10 +37,23 @@ const responseHandler = async (data, responseObject) => {
 
 app.get('/search/:id', limiter, async (request, response) => {
   try {
-    const searchKeywords = request.params.id;
-    const lockID = request.ip;
+    if (!request.params.id) {
+      return response
+        .status(400)
+        .send({ message: 'Missing data.', status: 'error' });
+    }
 
-    const data = await requestHandler(lockID, searchKeywords);
+    const searchKeywords = request.params.id.trim();
+
+    if (!validateData(searchKeywords)) {
+      return response
+        .status(400)
+        .send({ message: 'Incorrect data.', status: 'error' });
+    }
+
+    const lockId = request.ip;
+
+    const data = await requestHandler(lockId, searchKeywords);
     const processedResponse = await responseHandler(data, response);
 
     return processedResponse;
