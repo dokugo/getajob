@@ -1,13 +1,15 @@
 console.clear();
 
+const PORT = process.env.PORT || 9000;
+
 const express = require('express');
 const cors = require('cors');
 const limit = require('express-rate-limit');
 const { validateData } = require('./helpers/utils');
 const lock = require('./helpers/lock');
 const crawler = require('./crawler/crawler');
+const { errorHandler, notFound404 } = require('./middlewares/middlewares');
 
-const PORT = process.env.PORT || 9000;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -25,13 +27,16 @@ const limiter = limit({
   })
 });
 
-app.get('/search/:keywords', limiter, async (request, response) => {
+app.get('/search/:keywords', limiter, async (request, response, next) => {
   try {
     const lockId = request.ip;
 
     const isLocked = lock.acquire(lockId);
     if (isLocked) {
       response.statusMessage = 'Enhance Your Calm';
+
+      lock.release(lockId);
+
       return response.status(420).send({
         message: `Server is busy.`,
         status: 'error'
@@ -39,6 +44,8 @@ app.get('/search/:keywords', limiter, async (request, response) => {
     }
 
     if (!request.params.keywords) {
+      lock.release(lockId);
+
       return response
         .status(400)
         .send({ message: 'Missing data.', status: 'error' });
@@ -47,6 +54,8 @@ app.get('/search/:keywords', limiter, async (request, response) => {
     const searchKeywords = request.params.keywords.trim();
 
     if (!validateData(searchKeywords)) {
+      lock.release(lockId);
+
       return response
         .status(400)
         .send({ message: 'Incorrect data.', status: 'error' });
@@ -70,6 +79,10 @@ app.get('/search/:keywords', limiter, async (request, response) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    lock.release(request.ip);
+    next(error);
   }
 });
+
+app.use(errorHandler);
+app.use(notFound404);

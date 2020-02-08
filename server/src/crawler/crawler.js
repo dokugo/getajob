@@ -17,37 +17,36 @@ const getSearchUrl = searchKeywords => {
 let browser;
 
 const crawl = async searchKeywords => {
-  try {
-    const URL = getSearchUrl(searchKeywords);
+  const URL = getSearchUrl(searchKeywords);
 
-    if (!browser) {
-      browser = await puppeteer.launch({
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-gpu',
-          '--window-size=1920,1080'
-        ],
-        defaultViewport: { width: 1920, height: 1080 },
-        headless: true
-      });
+  if (!browser) {
+    browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-gpu',
+        '--window-size=1920,1080'
+      ],
+      defaultViewport: { width: 1920, height: 1080 },
+      headless: true
+    });
+  }
+
+  const page = await browser.newPage();
+
+  // default Chromium window.innerWidth & window.innerHeight: 1980x937 (969 window.innerHeight if bookmarks bar isn't present)
+  page.setViewport({ width: 1920, height: 937 });
+
+  page.setRequestInterception(true);
+  page.on('request', request => {
+    if (request.resourceType() === 'document') {
+      request.continue();
+    } else {
+      request.abort();
     }
 
-    const page = await browser.newPage();
-
-    // default Chromium window.innerWidth & window.innerHeight: 1980x937 (969 window.innerHeight if bookmarks bar isn't present)
-    page.setViewport({ width: 1920, height: 937 });
-
-    page.setRequestInterception(true);
-    page.on('request', request => {
-      if (request.resourceType() === 'document') {
-        request.continue();
-      } else {
-        request.abort();
-      }
-
-      // custom request interception; icons aren't blocked
-      /*       if (
+    // custom request interception; icons aren't blocked
+    /*       if (
         request.resourceType() === 'stylesheet' ||
         request.resourceType() === 'font' ||
         request.resourceType() === 'image' ||
@@ -58,39 +57,36 @@ const crawl = async searchKeywords => {
       } else {
         request.continue();
       } */
-    });
+  });
 
-    const result = await getPage(URL, page);
+  const result = await getPage(URL, page);
 
-    const { data, nextPageUrl } = result;
+  const { data, nextPageUrl } = result;
 
-    // get next page if it exists
-    if (nextPageUrl) {
-      let multipageData = [...data];
+  // get next page if it exists
+  if (nextPageUrl) {
+    let multipageData = [...data];
 
-      const getNextPageLoop = async nextPageUrl => {
-        const result = await getPage(nextPageUrl, page);
-        // concatenate next page data to previous pages data
-        multipageData = [...multipageData, ...result.data];
-        if (result.nextPageUrl) await getNextPageLoop(result.nextPageUrl);
-      };
+    const getNextPageLoop = async nextPageUrl => {
+      const result = await getPage(nextPageUrl, page);
+      // concatenate next page data to previous pages data
+      multipageData = [...multipageData, ...result.data];
+      if (result.nextPageUrl) await getNextPageLoop(result.nextPageUrl);
+    };
 
-      await getNextPageLoop(nextPageUrl);
+    await getNextPageLoop(nextPageUrl);
 
-      // await page.screenshot({ path: 'screenshot.png', fullPage: true });
-      // await browser.close();
+    // await page.screenshot({ path: 'screenshot.png', fullPage: true });
+    // await browser.close();
 
-      await page.close();
-      return multipageData;
-    } else {
-      // await page.screenshot({ path: 'screenshot.png', fullPage: true });
-      // await browser.close();
+    await page.close();
+    return multipageData;
+  } else {
+    // await page.screenshot({ path: 'screenshot.png', fullPage: true });
+    // await browser.close();
 
-      await page.close();
-      return data;
-    }
-  } catch (error) {
-    console.error('Error: ', error);
+    await page.close();
+    return data;
   }
 };
 
