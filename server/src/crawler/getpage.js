@@ -22,14 +22,10 @@ const getPage = async (URL, page) => {
       },
 
       salary: i => {
-        return document.querySelectorAll(
-          '[data-qa=vacancy-serp__vacancy-title]'
-        )[i].parentNode.parentNode.parentNode.nextSibling.firstChild
-          ? document.querySelectorAll('[data-qa=vacancy-serp__vacancy-title]')[
-              i
-            ].parentNode.parentNode.parentNode.nextSibling.firstChild
-              .textContent
-          : 'Зарплата не указана';
+        return (
+          document.querySelectorAll('.vacancy-serp-item__row_header')[i]
+            .lastElementChild.textContent || 'Зарплата не указана'
+        );
       },
 
       employer: i => {
