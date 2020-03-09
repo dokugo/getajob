@@ -4,6 +4,7 @@ import { AnimationContext } from '../../contexts/animationContext';
 import { DataContext } from '../../contexts/dataContext';
 import { useContextSelector } from 'use-context-selector';
 import FormButton from './FormButton';
+const DOMAIN = process.env.REACT_APP_PROD_API_ROUTE || 'http://localhost:9000';
 
 const Form = () => {
   const setListAnimation = useContextSelector(
@@ -63,19 +64,7 @@ const Form = () => {
       setListAnimation(false);
       setFormState({ ...formState, loading: true });
 
-      // console.log(inputData);
-
-      const DOMAIN =
-        process.env.REACT_APP_PROD_API_ROUTE || 'http://localhost:9000';
-
-      fetch(`${DOMAIN}/search/${inputData}`, {
-        headers: {
-          'Cache-Control':
-            'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-          Pragma: 'no-cache',
-          Expires: '0'
-        }
-      })
+      fetch(`${DOMAIN}/search/${inputData}`)
         .then(response => response.json())
         .then(response => {
           if (response.status === 'error') console.error(response.message);
@@ -113,7 +102,7 @@ const Form = () => {
         {formState.warning
           ? `Search request can't be empty.`
           : formState.error
-          ? `Can't send empty request.`
+          ? `Can't send incomplete request.`
           : null}
       </Tooltip>
     </FormItem>
@@ -194,7 +183,7 @@ const Input = styled.input`
 const Tooltip = styled.span`
   position: absolute;
   font-size: 14px;
-  padding: 5px 5px;
+  padding: 5px 10px;
   color: ${({ formState, theme }) =>
     formState.warning
       ? theme.tooltip.warning

@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 9000;
 
 const express = require('express');
 const cors = require('cors');
-const router = require('./routes/routes');
+const router = require('./router/router');
 const { errorHandler, notFound404 } = require('./middlewares/middlewares');
 const limiter = require('./helpers/limiter');
 const app = express();

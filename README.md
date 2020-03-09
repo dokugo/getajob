@@ -3,7 +3,7 @@
 Gets the vacancies in my hometown from the local (`RU`) job search website via headless browser crawling made with [`Puppeteer`](https://github.com/puppeteer/puppeteer). For example, try to search with the keywords such as `js` or `react`.
 
 
-###### Please note that if you try to use [`https://getajob.now.sh`](https://getajob.now.sh), you might experience slow first-loading period since the free-tier Heroku instance "gets asleep" if it receives no web traffic in a 30-minute period and takes some time to get itself out of sleep, usually around 15 seconds.
+###### ⚠️ Please note that if you try to use [`https://getajob.now.sh`](https://getajob.now.sh), you might experience slow first-loading period since the free-tier Heroku instance "gets asleep" if it receives no web traffic in a 30-minute period and takes some time to get itself out of sleep, usually around 15 seconds.
 
 ### Run the dev version locally
 
@@ -42,13 +42,13 @@ Don't forget to use [`puppeteer-heroku-buildpack`](https://github.com/jontewks/p
 
 ###### Server:
 
+- ⚠️ AWS lambdas
 - include Moscow and SPB
-- improve error handling on server
-- backend response messages refactoring 
 - store mutex lock state in redis instead of in-memory 
 
 ###### Client:
 
+- form refactoring
 - data context refactoring
 - true lazy loading instead of emulated infinite scrolling
 - improve error handling on client
@@ -82,6 +82,8 @@ Don't forget to use [`puppeteer-heroku-buildpack`](https://github.com/jontewks/p
 - sort out cors issue
 - rewrite crawling selector
 - separate api route response logic from mutex
+- improve error handling on server
+- backend response messages refactoring 
 
 ###### Client:
 

@@ -38,6 +38,7 @@ const ButtonContainer = styled.div`
   top: 0;
   right: 0;
   position: absolute;
+  display: flex;
 `;
 
 const Button = styled.button`
