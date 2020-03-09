@@ -60,4 +60,8 @@ router.get('/search/:keywords', async (request, response, next) => {
   }
 });
 
+router.get('/', (request, response, next) => {
+  return response.send('Index.');
+});
+
 module.exports = router;
